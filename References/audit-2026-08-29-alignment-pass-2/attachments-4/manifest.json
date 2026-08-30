@@ -1,0 +1,32 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "0BED7595-57FB-4853-BA7E-4235D7F9F5DC.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-break-menu-icon_0_B59920F4-7BC2-478C-85A0-566305D84EE6.png",
+        "timestamp" : 1787988687.796
+      }
+    ],
+    "testIdentifier" : "ViewRenderingTests/testBreakMenuIconUsesExplicitWhiteForeground()",
+    "testIdentifierURL" : "test://com.apple.xcode/NanaFlow/NanaFlowTests/ViewRenderingTests/testBreakMenuIconUsesExplicitWhiteForeground"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "132E8D85-2813-49FA-BCED-6BEA32DB4A11.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-main-break-toolbar-polished_0_E5116E84-E98D-4B5E-A874-EC08BAE2BD9B.png",
+        "timestamp" : 1787988687.869
+      }
+    ],
+    "testIdentifier" : "ViewRenderingTests/testMainToolbarVisualRendersAtFlowSize()",
+    "testIdentifierURL" : "test://com.apple.xcode/NanaFlow/NanaFlowTests/ViewRenderingTests/testMainToolbarVisualRendersAtFlowSize"
+  }
+]

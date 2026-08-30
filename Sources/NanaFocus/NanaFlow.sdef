@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dictionary SYSTEM "file://localhost/System/Library/DTDs/sdef.dtd">
+<dictionary title="NanaFlow API">
+  <suite name="NanaFlow Suite" code="Flow" description="Suite for NanaFlow commands.">
+    <command name="start" code="StartCom" description="Start or resume the current session."><cocoa class="NanaFlow.StartScriptCommand"/><result type="text" description="The name of the started session."/></command>
+    <command name="stop" code="StopComm" description="Stops the current session."><cocoa class="NanaFlow.StopScriptCommand"/><result type="text" description="The name of the stopped session."/></command>
+    <command name="skip" code="SkipComm" description="Skips the current session."><cocoa class="NanaFlow.SkipScriptCommand"/><result type="text" description="The name of the next pending session."/></command>
+    <command name="previous" code="PrevComm" description="Reloads the current or previous session."><cocoa class="NanaFlow.PreviousScriptCommand"/><result type="text" description="The name of the next pending session."/></command>
+    <command name="reset" code="ResetCom" description="Resets the session progress."><cocoa class="NanaFlow.ResetScriptCommand"/><result type="text" description="The name of the next pending session."/></command>
+    <command name="show" code="ShowComm" description="Shows the NanaFlow app window."><cocoa class="NanaFlow.ShowScriptCommand"/><result type="text" description="The name of the current session."/></command>
+    <command name="hide" code="HideComm" description="Hides the NanaFlow app window."><cocoa class="NanaFlow.HideScriptCommand"/><result type="text" description="The name of the current session."/></command>
+    <command name="getPhase" code="PhaseCom" description="Gets the current phase."><cocoa class="NanaFlow.GetCurrentPhaseScriptCommand"/><result type="text" description="The name of the current session."/></command>
+    <command name="getTime" code="TimeComm" description="Gets the remaining time."><cocoa class="NanaFlow.GetRemainingTimeScriptCommand"/><result type="text" description="The remaining time of the current session."/></command>
+    <command name="setTitle" code="TitleCom" description="Sets the session title."><cocoa class="NanaFlow.SetSessionTitleScriptCommand"/><parameter name="to" code="TiPa" description="Session title" type="text"><cocoa key="titleParameter"/></parameter><result type="text" description="The title of the current session."/></command>
+    <command name="getTitle" code="GetTiCom" description="Gets the current session title."><cocoa class="NanaFlow.GetSessionTitleScriptCommand"/><result type="text" description="The name of the current session."/></command>
+  </suite>
+</dictionary>

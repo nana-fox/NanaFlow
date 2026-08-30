@@ -1,0 +1,5 @@
+"CFBundleDisplayName" = "NanaFlow";
+"CFBundleName" = "NanaFlow";
+"NSAppleEventsUsageDescription" = "NanaFlow potrzebuje dostępu do Twojej przeglądarki, aby móc blokować adresy URL z Twojej listy zablokowanych.";
+"NSCalendarsFullAccessUsageDescription" = "NanaFlow potrzebuje dostępu do Twojego kalendarza, aby zsynchronizować ukończone sesje.";
+"NSUserNotificationUsageDescription" = "NanaFlow uses notifications to tell you when a session ends.";

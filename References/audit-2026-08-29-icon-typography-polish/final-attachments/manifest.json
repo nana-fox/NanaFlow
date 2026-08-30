@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "6F20AE90-86E5-4B92-BEEE-37E007540D5A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-main-break-toolbar-polished_0_E9CA0E8D-BEC3-479B-9B51-5926BDC8A3F7.png",
+        "timestamp" : 1787980558.015
+      }
+    ],
+    "testIdentifier" : "ViewRenderingTests/testMainToolbarVisualRendersAtFlowSize()",
+    "testIdentifierURL" : "test://com.apple.xcode/NanaFlow/NanaFlowTests/ViewRenderingTests/testMainToolbarVisualRendersAtFlowSize"
+  }
+]

@@ -1,0 +1,5 @@
+"CFBundleDisplayName" = "NanaFlow";
+"CFBundleName" = "NanaFlow";
+"NSAppleEventsUsageDescription" = "NanaFlowは、ブロックリストにあるURLをブロックするために、あなたのブラウザにアクセスする必要があります。";
+"NSCalendarsFullAccessUsageDescription" = "NanaFlowは、完了したセッションを同期させるために、お客様のカレンダーに書き込みたいと考えています。";
+"NSUserNotificationUsageDescription" = "NanaFlow uses notifications to tell you when a session ends.";

@@ -1,0 +1,5 @@
+"CFBundleDisplayName" = "NanaFlow";
+"CFBundleName" = "NanaFlow";
+"NSAppleEventsUsageDescription" = "NanaFlow, engelleme listenizdeki URL'leri engelleyebilmek için tarayıcınıza erişim izni istiyor.";
+"NSCalendarsFullAccessUsageDescription" = "NanaFlow, tamamlanan oturumları senkronize etmek için takviminize yazmak istiyor.";
+"NSUserNotificationUsageDescription" = "NanaFlow uses notifications to tell you when a session ends.";

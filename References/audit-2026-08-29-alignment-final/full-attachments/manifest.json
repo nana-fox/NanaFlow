@@ -1,0 +1,239 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "DB793405-179D-41E0-AB0A-8EC271011543.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-calendar-chooser_0_C75CAD2A-6575-45AD-946C-B439C3314839.png",
+        "timestamp" : 1787989052.403
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "9D7F4585-4D79-4989-ACB2-91E093B0D804.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-calendar-alert_0_348BFDAA-2EB2-4049-9EC1-EADFF2ECACC3.png",
+        "timestamp" : 1787989052.401
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "77A4C26E-0AF3-49A8-A42F-E400B657B355.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-notification-alert_0_30965A52-1B1D-495A-AA35-78323F63BCA7.png",
+        "timestamp" : 1787989052.385
+      }
+    ],
+    "testIdentifier" : "PermissionParityTests/testPermissionAlertsAndEmptyCalendarChooserRender()",
+    "testIdentifierURL" : "test://com.apple.xcode/NanaFlow/NanaFlowTests/PermissionParityTests/testPermissionAlertsAndEmptyCalendarChooserRender"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "51A2B739-491B-426F-8A7B-CCE4F861B0A6.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-pro-unlocked_0_B0B7304D-651E-463F-8F6D-D64D11AF63D6.png",
+        "timestamp" : 1787989052.75
+      }
+    ],
+    "testIdentifier" : "ProUnlockedParityTests/testProUnlockedViewRenders()",
+    "testIdentifierURL" : "test://com.apple.xcode/NanaFlow/NanaFlowTests/ProUnlockedParityTests/testProUnlockedViewRenders"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "CA51BA35-6E9B-4CC0-9378-F50255513DF6.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-break-menu-icon_0_73A0E49F-28F7-4B94-8DE3-E4738832CBA1.png",
+        "timestamp" : 1787989053.016
+      }
+    ],
+    "testIdentifier" : "ViewRenderingTests/testBreakMenuIconUsesExplicitWhiteForeground()",
+    "testIdentifierURL" : "test://com.apple.xcode/NanaFlow/NanaFlowTests/ViewRenderingTests/testBreakMenuIconUsesExplicitWhiteForeground"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "5F53AC0F-A2A2-422D-ACA6-89CC9414B66E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "cycle-celebration_0_82BF9537-9B6B-4487-9672-B0D7D6C51EFA.png",
+        "timestamp" : 1787989053.486
+      }
+    ],
+    "testIdentifier" : "ViewRenderingTests/testCycleCelebrationRendersWhiteParticlesOverTheLongBreak()",
+    "testIdentifierURL" : "test://com.apple.xcode/NanaFlow/NanaFlowTests/ViewRenderingTests/testCycleCelebrationRendersWhiteParticlesOverTheLongBreak"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "1354F541-8A39-4E90-87E5-40A2220810AB.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-fullscreen-break_0_9DA1463B-94C3-4B24-851C-DB8B467C8E7C.png",
+        "timestamp" : 1787989053.514
+      }
+    ],
+    "testIdentifier" : "ViewRenderingTests/testFullscreenBreakUsesDedicatedWindowInsteadOfMutatingMainWindow()",
+    "testIdentifierURL" : "test://com.apple.xcode/NanaFlow/NanaFlowTests/ViewRenderingTests/testFullscreenBreakUsesDedicatedWindowInsteadOfMutatingMainWindow"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "7558D4AA-1224-4946-8955-C02BDE4CC5E2.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-main-long-break_0_E8AB7820-55C5-4FDF-BBF8-9834E187E56C.png",
+        "timestamp" : 1787989053.567
+      }
+    ],
+    "testIdentifier" : "ViewRenderingTests/testLongBreakMatchesFlowVisibleContract()",
+    "testIdentifierURL" : "test://com.apple.xcode/NanaFlow/NanaFlowTests/ViewRenderingTests/testLongBreakMatchesFlowVisibleContract"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "5036D6F0-2421-46E8-9882-9909CA530958.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-main-break-toolbar-polished_0_31188A1D-E003-4FCF-9904-6F68D80E14DA.png",
+        "timestamp" : 1787989053.601
+      }
+    ],
+    "testIdentifier" : "ViewRenderingTests/testMainToolbarVisualRendersAtFlowSize()",
+    "testIdentifierURL" : "test://com.apple.xcode/NanaFlow/NanaFlowTests/ViewRenderingTests/testMainToolbarVisualRendersAtFlowSize"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "B6C62EC0-D0B7-4B62-BECA-189D174AA115.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-mini-timer_0_6E099624-7012-419D-A1BD-E31B26280915.png",
+        "timestamp" : 1787989053.631
+      }
+    ],
+    "testIdentifier" : "ViewRenderingTests/testMiniTimerRenders()",
+    "testIdentifierURL" : "test://com.apple.xcode/NanaFlow/NanaFlowTests/ViewRenderingTests/testMiniTimerRenders"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "44EBBD90-82CA-4184-BF3A-BD3DB9664509.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "settings-volume-control_0_600B9125-7EC9-4A85-9030-2C3F7523001F.png",
+        "timestamp" : 1787989053.713
+      }
+    ],
+    "testIdentifier" : "ViewRenderingTests/testSettingsVolumeControlRendersAtFlowsCompactRowSize()",
+    "testIdentifierURL" : "test://com.apple.xcode/NanaFlow/NanaFlowTests/ViewRenderingTests/testSettingsVolumeControlRendersAtFlowsCompactRowSize"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "AEB654D9-BF16-4E35-861D-DCFBBC83F702.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-sessions-tag-colors_0_A76603A2-B9F2-4CFC-B582-8663933FC4B4.png",
+        "timestamp" : 1787989053.762
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "859F6191-21B2-48CB-BD6F-BA9FF74E7366.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-statistics-tag-colors_0_DE778B08-E616-44DA-A34F-33FB1197B0EE.png",
+        "timestamp" : 1787989053.759
+      }
+    ],
+    "testIdentifier" : "ViewRenderingTests/testStatisticsAndAllSessionsRenderWithHistory()",
+    "testIdentifierURL" : "test://com.apple.xcode/NanaFlow/NanaFlowTests/ViewRenderingTests/testStatisticsAndAllSessionsRenderWithHistory"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "F9B825C3-008D-481A-BD72-D24C4F8350CF.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-widget-quote-small-520_0_51EFBAFC-6A02-4514-97DC-29B85620D458.png",
+        "timestamp" : 1787989054.161
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "E5B7DC23-D092-4A95-B6AD-5690DACBD269.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-widget-quote-extraLarge-3_0_1B5AACFB-90AF-40BF-8131-9C9B6E824325.png",
+        "timestamp" : 1787989054.158
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "32676A22-6CD0-4EAE-BDDA-F035B36DAA5C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-widget-quote-large-2_0_27F99067-B1E3-4A50-A7F4-B95CC2ADE832.png",
+        "timestamp" : 1787989054.153
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "8939DEB2-E9E4-40AE-84AA-5F8FFCB34F2F.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-widget-quote-small-0_0_9F87D25A-CD40-4A6C-A99A-6A97AF2FBBE8.png",
+        "timestamp" : 1787989054.149
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "BA47BE7A-5275-408C-BE0D-769BF49FAC0A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-widget-quote-medium_0_B03D2EB4-66EF-4E08-B70F-5F81EEECD3CC.png",
+        "timestamp" : 1787989054.146
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "3613FDBC-5069-4BC8-9C5E-C83BBF123067.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-widget-statistics-small_0_305300D6-EB85-4492-9F42-CF5ABCA590BF.png",
+        "timestamp" : 1787989054.145
+      }
+    ],
+    "testIdentifier" : "WidgetParityTests/testFlowWidgetViewsRender()",
+    "testIdentifierURL" : "test://com.apple.xcode/NanaFlow/NanaFlowTests/WidgetParityTests/testFlowWidgetViewsRender"
+  }
+]

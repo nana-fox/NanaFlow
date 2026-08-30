@@ -1,0 +1,5 @@
+"CFBundleDisplayName" = "NanaFlow";
+"CFBundleName" = "NanaFlow";
+"NSAppleEventsUsageDescription" = "NanaFlow需要訪問你的瀏覽器才能封鎖列表中的URL。";
+"NSCalendarsFullAccessUsageDescription" = "NanaFlow想要寫入你的日曆以同步已完成的專注的時間。";
+"NSUserNotificationUsageDescription" = "NanaFlow uses notifications to tell you when a session ends.";

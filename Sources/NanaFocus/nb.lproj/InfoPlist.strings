@@ -1,0 +1,5 @@
+"CFBundleDisplayName" = "NanaFlow";
+"CFBundleName" = "NanaFlow";
+"NSAppleEventsUsageDescription" = "NanaFlow trenger tilgang til nettleseren din for å kunne blokkere URL-er på blokkeringslisten din.";
+"NSCalendarsFullAccessUsageDescription" = "NanaFlow ønsker å lagre til kalenderen din for å synkronisere fullførte økter.";
+"NSUserNotificationUsageDescription" = "NanaFlow uses notifications to tell you when a session ends.";

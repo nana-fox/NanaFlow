@@ -1,0 +1,26 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "097EAA48-5073-4B1F-B374-6F1611C1D6CA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-widget-quote-medium_0_78E62844-393B-4642-9991-A8E0CE08AF72.png",
+        "timestamp" : 1787852628.578
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "3F747F13-4447-4021-B97B-4F265E632A90.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-widget-statistics-small_0_B3F64424-E8F6-4D86-A162-3525B556F983.png",
+        "timestamp" : 1787852628.577
+      }
+    ],
+    "testIdentifier" : "WidgetParityTests/testFlowWidgetViewsRender()",
+    "testIdentifierURL" : "test://com.apple.xcode/NanaFlow/NanaFlowTests/WidgetParityTests/testFlowWidgetViewsRender"
+  }
+]

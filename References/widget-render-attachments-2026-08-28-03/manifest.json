@@ -1,0 +1,53 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "80AAFC05-9E44-40F1-8DF8-144728F7CF30.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-widget-quote-extraLarge_0_E0D39229-A982-44B2-B8AB-174225DED35D.png",
+        "timestamp" : 1787852802.119
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "C2102A1C-5CB2-431C-88A8-2796D343C695.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-widget-quote-large_0_C447FFDF-A261-4742-91C1-03F7634361CF.png",
+        "timestamp" : 1787852802.111
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "02D29ECD-9B34-4887-BE71-58162A2865CC.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-widget-quote-small_0_6BAF38BC-C795-409B-96E3-CDDAB857E6AD.png",
+        "timestamp" : 1787852802.107
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "11ACBF25-292D-444B-B70F-A22E92EF0A1F.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-widget-quote-medium_0_F9CAF292-82D7-4B0E-8B68-447137693031.png",
+        "timestamp" : 1787852802.099
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "9983AEC4-F71F-4E22-B212-2967D56E19D3.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-widget-statistics-small_0_856CD167-D92F-4D92-9011-C9F00E1CDDA0.png",
+        "timestamp" : 1787852802.098
+      }
+    ],
+    "testIdentifier" : "WidgetParityTests/testFlowWidgetViewsRender()",
+    "testIdentifierURL" : "test://com.apple.xcode/NanaFlow/NanaFlowTests/WidgetParityTests/testFlowWidgetViewsRender"
+  }
+]

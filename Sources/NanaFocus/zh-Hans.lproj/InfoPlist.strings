@@ -1,0 +1,3 @@
+"NSUserNotificationUsageDescription" = "NanaFlow 使用通知提醒您专注或休息已经结束。";
+"NSCalendarsFullAccessUsageDescription" = "NanaFlow 需要完整的日历访问权限，以便把已完成的专注会话写入您选择的日历。";
+"NSAppleEventsUsageDescription" = "NanaFlow 需要访问浏览器，以便在专注期间阻断列表中的网站。";

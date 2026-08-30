@@ -1,0 +1,14 @@
+.DS_Store
+*.profraw
+*.xcresult
+
+# Xcode build output and per-user state
+DerivedData/
+build/
+dist/
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+
+# Web prototype dependencies and generated output
+Design/flow-ui-prototype/node_modules/
+Design/flow-ui-prototype/dist/

@@ -1,0 +1,5 @@
+"CFBundleDisplayName" = "NanaFlow";
+"CFBundleName" = "NanaFlow";
+"NSAppleEventsUsageDescription" = "차단 목록에서 URL을 차단하려면 NanaFlow가 브라우저에 액세스해야합니다.";
+"NSCalendarsFullAccessUsageDescription" = "완료된 세션을 동기화하려면 NanaFlow가 캘린더에 액세스해야합니다.";
+"NSUserNotificationUsageDescription" = "NanaFlow uses notifications to tell you when a session ends.";

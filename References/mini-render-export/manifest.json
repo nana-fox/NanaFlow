@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "E73EDA99-3D26-489B-8E1F-969192D7DBA6.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-mini-timer_0_5AB09913-FFA3-4352-BB7E-BAE89B983D68.png",
+        "timestamp" : 1787851577.228
+      }
+    ],
+    "testIdentifier" : "ViewRenderingTests/testMiniTimerRenders()",
+    "testIdentifierURL" : "test://com.apple.xcode/NanaFlow/NanaFlowTests/ViewRenderingTests/testMiniTimerRenders"
+  }
+]

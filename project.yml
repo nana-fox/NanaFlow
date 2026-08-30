@@ -1,0 +1,91 @@
+name: NanaFlow
+options:
+  bundleIdPrefix: com.nanafox
+  deploymentTarget:
+    macOS: "15.0"
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MACOSX_DEPLOYMENT_TARGET: "15.0"
+targets:
+  NanaFlow:
+    type: application
+    platform: macOS
+    sources:
+      - Sources/NanaFocus
+      - Sources/NanaShared
+    dependencies:
+      - target: NanaFlowWidget
+    info:
+      path: Sources/NanaFocus/Info.plist
+      properties:
+        CFBundleDisplayName: NanaFlow
+        CFBundleIconFile: NanaFlow
+        LSApplicationCategoryType: public.app-category.productivity
+        LSUIElement: true
+        NSUserNotificationUsageDescription: NanaFlow uses notifications to tell you when a session ends.
+        NSCalendarsFullAccessUsageDescription: NanaFlow can add completed focus sessions to your calendar.
+        NSAppleEventsUsageDescription: NanaFlow needs access to your browser to block websites during focus sessions.
+        NSAppleScriptEnabled: true
+        OSAScriptingDefinition: NanaFlow
+        CFBundleURLTypes:
+          - CFBundleURLName: com.nanafox.NanaFlow
+            CFBundleURLSchemes:
+              - nanaflow
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.nanafox.NanaFlow
+        PRODUCT_NAME: NanaFlow
+        GENERATE_INFOPLIST_FILE: false
+        CODE_SIGN_STYLE: Automatic
+        ENABLE_APP_SANDBOX: YES
+      configs:
+        Release:
+          CODE_SIGN_ENTITLEMENTS: Sources/NanaFocus/NanaFlow.entitlements
+  NanaFlowWidget:
+    type: app-extension
+    platform: macOS
+    sources:
+      - Sources/NanaFlowWidget
+      - Sources/NanaShared
+      - path: Sources/NanaFocus
+        includes:
+          - "**/*.lproj/Localizable.strings"
+        buildPhase: resources
+    info:
+      path: Sources/NanaFlowWidget/Info.plist
+      properties:
+        CFBundleDisplayName: NanaFlow Widgets
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.nanafox.NanaFlow.Widget
+        PRODUCT_NAME: NanaFlowWidget
+        CODE_SIGN_STYLE: Automatic
+        ENABLE_APP_SANDBOX: YES
+        SKIP_INSTALL: YES
+      configs:
+        Release:
+          CODE_SIGN_ENTITLEMENTS: Sources/NanaFlowWidget/NanaFlowWidget.entitlements
+  NanaFlowTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - Tests/NanaFocusTests
+    dependencies:
+      - target: NanaFlow
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.nanafox.NanaFlowTests
+        GENERATE_INFOPLIST_FILE: true
+schemes:
+  NanaFlow:
+    build:
+      targets:
+        NanaFlow: all
+        NanaFlowTests: [test]
+    test:
+      gatherCoverageData: true
+      targets:
+        - NanaFlowTests

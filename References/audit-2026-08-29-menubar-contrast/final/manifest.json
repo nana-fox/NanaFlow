@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "A4BFE285-B33E-4F81-B40B-53F2C38B690B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-menu-bar-high-contrast_0_8FCEF23F-A40B-4A71-A591-1CDF125FE273.png",
+        "timestamp" : 1787990217.226
+      }
+    ],
+    "testIdentifier" : "ViewRenderingTests/testMenuBarDefaultMatchesFlowsTimerAndHalfCircle()",
+    "testIdentifierURL" : "test://com.apple.xcode/NanaFlow/NanaFlowTests/ViewRenderingTests/testMenuBarDefaultMatchesFlowsTimerAndHalfCircle"
+  }
+]

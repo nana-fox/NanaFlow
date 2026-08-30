@@ -1,0 +1,1171 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0095E12A477C16694BE11840 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 58C854D974B18F22C8857F85 /* InfoPlist.strings */; };
+		01040F0C4F7AD3DDADC3E4AA /* AppWindowActivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF45926A3280FE738C6D7B5 /* AppWindowActivation.swift */; };
+		020EF4AA91B1CAC50844070B /* FullscreenBreakView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84360186BBEE189AC86972A /* FullscreenBreakView.swift */; };
+		04F34D0476CDC6125890BE88 /* TimerControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B2BCE0A33AC6329EE8963D /* TimerControllerTests.swift */; };
+		0521BF0B1EA8656C16C2178C /* NanaFlow-bowl-v2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 0CD83176171CB4F28CB75568 /* NanaFlow-bowl-v2.aiff */; };
+		0652BABE6A90E3BFDB260108 /* SessionHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A27D6D8CA2C7738035962CB /* SessionHistory.swift */; };
+		0723204E18A2E5E6F0798AA8 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 0D4B0E722EA065DCDE6D8D67 /* Localizable.stringsdict */; };
+		0839D6DB55F25FA7BD7A5118 /* NanaFlow-bell-v2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 282EED14E7CC3DD4C6207D74 /* NanaFlow-bell-v2.aiff */; };
+		13B943F4051DB2821B5AC2B9 /* NanaFlow-pulse-v1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 8A0C477DCBA19ADDECB6E425 /* NanaFlow-pulse-v1.aiff */; };
+		18B0F668F090BB29C6631D2E /* TimerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C86D5D259969A222DF9ED2B /* TimerController.swift */; };
+		1D33E1E029D35B3FAEAFAABE /* SessionNotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4078D2EF4E047AC780D4570 /* SessionNotificationScheduler.swift */; };
+		1F2E50D7BCA2866EA8A51472 /* NanaFlow-pulse-v3.aiff in Resources */ = {isa = PBXBuildFile; fileRef = F283F36212FD5B759DAC815F /* NanaFlow-pulse-v3.aiff */; };
+		20CD3635339C1E05A788310A /* NanaFlow-bells.aiff in Resources */ = {isa = PBXBuildFile; fileRef = B0752F69C38CB7AD2E650C84 /* NanaFlow-bells.aiff */; };
+		21009EE169D97874353442EC /* NanaFlow.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9A32361AFA867CC5D6E3726B /* NanaFlow.icns */; };
+		2106B93FB1EBA58C44A1C293 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D28FDC65872A160B7F2F430E /* InfoPlist.strings */; };
+		21270FA5C5349B6CA635D0D7 /* NanaFlow-chime-v2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5D3C726DCDEFB35527A47A04 /* NanaFlow-chime-v2.aiff */; };
+		2588BA9F883395FCA39997AD /* NanaFlow-bell-v1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 55DF3FE8D1E2EB0AD4698F3C /* NanaFlow-bell-v1.aiff */; };
+		285D278120085AEE356A688F /* NanaFlow-chime-v1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 4019778D2A3DEA6C855A0CA2 /* NanaFlow-chime-v1.aiff */; };
+		28668DDD6B337D82D33CE78C /* GlobalHotkeyMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7703C7DE827A3873AAACB2F9 /* GlobalHotkeyMonitor.swift */; };
+		2D22A700E1B095BFC550F36F /* FocusSessionCalendarRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645E33216E0F12768F24027B /* FocusSessionCalendarRecorder.swift */; };
+		2DA1B817F7745226178C38E0 /* NotificationCopyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E32D3EEC01BB0592261A56F /* NotificationCopyTests.swift */; };
+		2F0582F5DCCDBC274E9DE4EF /* TimerEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C9563D7632F722F926353E /* TimerEngineTests.swift */; };
+		346E0631D5DDAB5DB8AC84E5 /* NanaFlow-chime.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 02BCA7F75D68AFCD5A4F2A28 /* NanaFlow-chime.aiff */; };
+		364BCAC424008F1DED9F57D0 /* TimerSyncView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9C349CE130ADE86DC9B852 /* TimerSyncView.swift */; };
+		394BA27ABE6699EF2CF3E04C /* TimerIcons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4E5DB3FD5B289AA6A626790 /* TimerIcons.xcassets */; };
+		3BF3431B302F5D4553CED292 /* NanaFlow-chord-v2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 41E47416EDB153356C1EA219 /* NanaFlow-chord-v2.aiff */; };
+		3C1E8ACA1BA28CF6C62F56DF /* TimerEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4ED5A09C9690C6A2498975 /* TimerEngine.swift */; };
+		3D56EA4F03BFAF494E9BF3E4 /* NanaFlow-ripple-v2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = C07BE21F21F96EA7EFEE72B3 /* NanaFlow-ripple-v2.aiff */; };
+		3FCD74E5772C2C2E904478EE /* BrowserURLController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC075F08AE1F7F81D70CB687 /* BrowserURLController.swift */; };
+		40DED3D4EA0E3BDD8CC00CCC /* NanaFlowCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52177FC851BA1B0B15204D4F /* NanaFlowCommands.swift */; };
+		4307933E838CB02DCDD8EAE9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 341E5A46D107CE1DE6B17679 /* InfoPlist.strings */; };
+		4421A22A89DFA68FD9C2F048 /* NanaFlow-bells-v3.aiff in Resources */ = {isa = PBXBuildFile; fileRef = F390D8C8E2281E722EF733F4 /* NanaFlow-bells-v3.aiff */; };
+		44CD28DC8C0E509F27A2F933 /* PhosphorIcons-LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = FA6E41CB03539DAC3EEE5F94 /* PhosphorIcons-LICENSE.txt */; };
+		4D784BF3160C4026A46FEABE /* NanaFlowWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F1889F4FF4E76BFCA46822 /* NanaFlowWidgetBundle.swift */; };
+		4DB088E35B66549349CFD8E1 /* NanaFlow-chord.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 71ADE1FC63A2598B8DCB8940 /* NanaFlow-chord.aiff */; };
+		500F7F332710D18ABA69D101 /* GlobalHotkeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9017CF768696A56F50CBC5 /* GlobalHotkeyTests.swift */; };
+		50BD03041A89F1BCEA3CBA7B /* NanaFlow-bells-v2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = FE6B68284E64588712E228C3 /* NanaFlow-bells-v2.aiff */; };
+		51C6C0F4393AF6F1513C57A3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4649464F9EC89698B86C7F7B /* InfoPlist.strings */; };
+		52659004745F7DDF46579EFD /* NanaFlow-harp.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 3634E40C6DD7E9B8DF12824D /* NanaFlow-harp.aiff */; };
+		537D4A24425B45AE5FD624C6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AAC0D4BD6B8BA4EA451027C9 /* InfoPlist.strings */; };
+		5A62E8B4438A383B160A18DF /* NanaFlow-milestone-v3.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 28C66332C88D0033535EDC8C /* NanaFlow-milestone-v3.aiff */; };
+		5A9A74AFF56BD2F1E4FB4070 /* NanaFlow-bell-v3.aiff in Resources */ = {isa = PBXBuildFile; fileRef = D6BE5AC0815BE0173D6406D9 /* NanaFlow-bell-v3.aiff */; };
+		5BB914A6E322EFA3F03B3E2F /* NanaFlow-harp-v3.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 50BCFB2480224C11640998CB /* NanaFlow-harp-v3.aiff */; };
+		5C6506853BC7238BA31F2F8B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7649219656C5458342A61D06 /* InfoPlist.strings */; };
+		5C76AF64FCF04ABFEDB9AD52 /* ViewRenderingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CAC045EC70A1E01E602E93 /* ViewRenderingTests.swift */; };
+		5CF5684428B3C98CB5949EA5 /* TimerPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84597998666511FBDB19AB2 /* TimerPersistenceTests.swift */; };
+		5D129D00B5B5CD8C38347E71 /* HelpViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12D7FD7BA938904E6F21912 /* HelpViews.swift */; };
+		5E3FD8252AF859BFDA65CEC0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9AC026175689AEB5D9CFB668 /* InfoPlist.strings */; };
+		5EDAC0E2020986C3B7413057 /* WidgetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60316323AC973705BB51C0 /* WidgetData.swift */; };
+		60A548B8A340ED05F34F328E /* TimerSyncParityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381D4BE749782FAA3A3583B7 /* TimerSyncParityTests.swift */; };
+		60C35DB87B1B37DA285591A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 848CC0CEBEADA96527F8C45C /* InfoPlist.strings */; };
+		61BBCE5B82AFCA5D278CC278 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BE25D749C5AF7CCC0B7A535B /* Localizable.strings */; };
+		61CEB50D4CC0334BAE33FD2E /* NanaFlow-milestone-v1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 16FEB935027D31A59B32A76C /* NanaFlow-milestone-v1.aiff */; };
+		6977450EDF8E95DCDDEEDF5F /* NanaFlow-harp-v1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 98E277A66156D9923BA2D509 /* NanaFlow-harp-v1.aiff */; };
+		6C1390502676AF8A7EC5B846 /* NanaFlowWidgetIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B514A382C3593B4E4372B71 /* NanaFlowWidgetIcon.png */; };
+		6CA0FD5AE99AFFECED45755F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EB62D041A95B737E7B22988D /* InfoPlist.strings */; };
+		6DE8503C8C6584930D1CC490 /* NanaFlowCalendarAccess.png in Resources */ = {isa = PBXBuildFile; fileRef = EC1DB1B6DFADD88F1777400D /* NanaFlowCalendarAccess.png */; };
+		6E48DBCF63C984C2307B01B4 /* NanaFlowWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0DC84A0673972421E338176E /* NanaFlowWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		6F35702FFD2C074145510829 /* NanaFlow.sdef in Resources */ = {isa = PBXBuildFile; fileRef = BBFB83E8B38EF32B16BA4CB8 /* NanaFlow.sdef */; };
+		6FFCE5AAA992B7472937DCF1 /* WidgetParityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A051339D8A6773AA2057DA91 /* WidgetParityTests.swift */; };
+		78AF1BC6D6190F409F7734B9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F9606A1A25229529DE887257 /* InfoPlist.strings */; };
+		79D6ECD7015A4B5DF8B06C47 /* NanaFlow-ripple-v3.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 1FFE82E479EA573D7CF66B42 /* NanaFlow-ripple-v3.aiff */; };
+		7AF84AA312CC057C4EB853D2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F79F0243FD78852E3D49C8BD /* InfoPlist.strings */; };
+		7BC5694206A6DDF3A41060CE /* NanaFlow-whistle-v1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 14A7C5C563CD94C7144A5008 /* NanaFlow-whistle-v1.aiff */; };
+		838AA96DEC5CD72987912CE8 /* BlockerConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB891A61F3491C5CCC99FF6 /* BlockerConfiguration.swift */; };
+		83FE145FA9680C6817806AE0 /* NanaFlow-bowl-v3.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 68C2C56D932C8112899304EB /* NanaFlow-bowl-v3.aiff */; };
+		8453CA824EE08C4BD2B3AA9D /* SessionExportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ABE7BF71C756EF65DE9D88 /* SessionExportTests.swift */; };
+		84A98EB0D99659EBF6D132BF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7330D741D6C2813C72E838F /* InfoPlist.strings */; };
+		8A60059B74AEFF1F8AF9E24E /* NanaFlowWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1462A6E7D3F08C3A61FA9F27 /* NanaFlowWidgets.swift */; };
+		8ACBBE03AEAB7BA1DB1635E3 /* NanaFlow-chord-v1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = F038F4188CAD928D1021F0EE /* NanaFlow-chord-v1.aiff */; };
+		8BBEEC1468919D9946293BAB /* NanaFlow-whistle.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 6ABBC5A63BEEF2E43D635C58 /* NanaFlow-whistle.aiff */; };
+		8F36591864DAB9F7140AF397 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6301D2ACC669CB28FD3F96BF /* InfoPlist.strings */; };
+		91AE1233CB4E04ECC083F6F1 /* NanaFlow-harp-v2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = FB001599710A5FBE5A53E195 /* NanaFlow-harp-v2.aiff */; };
+		9564D9A9C31C0ED308104223 /* NanaFlow-bowl.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 2F1E14F9B0300423E86BA33E /* NanaFlow-bowl.aiff */; };
+		95B9DECF928236F8B2C688E5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 34E5FB04CFE59EA523590DE8 /* InfoPlist.strings */; };
+		962D08E33CD766DE12108700 /* NanaFlow-pulse.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 9FB38AA3A67ECEBE3696F636 /* NanaFlow-pulse.aiff */; };
+		9734A1620F62BAE3183E83C2 /* AutomationParityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E3B82B6B7445DE574F4DF3 /* AutomationParityTests.swift */; };
+		98E6AB6B266BF9DE62091835 /* NanaFlow-ripple-v1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 56E042B1905CEB6E0664E801 /* NanaFlow-ripple-v1.aiff */; };
+		994189421AC0509EA6D092DF /* NanaFlow-whistle-v3.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 8F465CD2716090D7D5102F3C /* NanaFlow-whistle-v3.aiff */; };
+		99784748AF061A26F35AECFF /* NanaFocusApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908A3106159C5255ED3CB3C6 /* NanaFocusApp.swift */; };
+		9992A004AF18D722502ECACD /* NanaFlow-alarmClock-v2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = D24529A7048D4D2E8C8D2E8C /* NanaFlow-alarmClock-v2.aiff */; };
+		99CCD1E41C7B9EB64EE8C254 /* TimerPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D449FFEB60EA778A7E2FEE /* TimerPreferences.swift */; };
+		9D31F2309DF700945E7898CD /* NanaFlow-milestone.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 4852C57351AB6660A20AAE3C /* NanaFlow-milestone.aiff */; };
+		9DA4C1C9BF07B7E55F79766E /* ScriptCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7111FFA39E66B108C516D6 /* ScriptCommands.swift */; };
+		9F7B0832ABD20B55CFC03182 /* NanaFlow-alarmClock.aiff in Resources */ = {isa = PBXBuildFile; fileRef = DA0C2D5E5FB63437E1C6A462 /* NanaFlow-alarmClock.aiff */; };
+		9FB516951EFEFA06C9067D20 /* AutomationIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362507AB6BBB6AF9B68DA3E4 /* AutomationIntents.swift */; };
+		A0BA2B74A3A8552EFEEEDF77 /* NanaFlowShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0789DA272FB909EF43E3B8E1 /* NanaFlowShared.swift */; };
+		A3B00E32D2E8789DF778021C /* NanaFlow-chime-v3.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 3CF2F65AE5AD531B2FD89291 /* NanaFlow-chime-v3.aiff */; };
+		A51AE6799B9F7991AE61779C /* NanaFlowBlockedIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = D8F7F8B9A6A64A9BAFE65AE3 /* NanaFlowBlockedIcon.png */; };
+		A6E658F32E8315BC1C13AFF0 /* NanaFlow-alarmClock-v3.aiff in Resources */ = {isa = PBXBuildFile; fileRef = A7DFCFE82D0FC89D1FA311B6 /* NanaFlow-alarmClock-v3.aiff */; };
+		A75AEF7ABF7B98F5B7671B04 /* NanaFlowIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E80B3DDBCB82A6D66926E3 /* NanaFlowIcon.png */; };
+		A7D1DBB9E119DCDA071F8BD1 /* TimerTickSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39232441BB21ABEB7DB1A33C /* TimerTickSound.swift */; };
+		A981EE43562152865D6ECAFA /* PermissionViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712A37FF3CDCD6DDBECF091 /* PermissionViews.swift */; };
+		AED70435D6C01E6C03B78954 /* NanaFlow-whistle-v2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = EB7032748070B3679ACB5D51 /* NanaFlow-whistle-v2.aiff */; };
+		AF5E76145996FEB1183CDDAE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B1AD995E6059BF18A9D873F0 /* InfoPlist.strings */; };
+		B1B96417227F29BEE9EF435E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D27565A698B42225F9B17295 /* InfoPlist.strings */; };
+		B33F0913FDAC15089E9DD2D4 /* Blocked.html in Resources */ = {isa = PBXBuildFile; fileRef = 97D975215BE5E985853492CC /* Blocked.html */; };
+		B64834F6600D0EFCAC579F42 /* KeyboardShortcutRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CFC222D9DF00FC453CF885 /* KeyboardShortcutRecorder.swift */; };
+		B7F316C4B4D68C23B28814E6 /* TimerOptionsMenuContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F112A46B428396E73191DFB /* TimerOptionsMenuContent.swift */; };
+		B85CEF7036C668E2603C4448 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BE25D749C5AF7CCC0B7A535B /* Localizable.strings */; };
+		B8FED36FAAD089616FBCBF29 /* SessionExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC37D0CFFECF6C021FF8CBB2 /* SessionExporter.swift */; };
+		B9F0204767175B797F2BD0C2 /* TagManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FEEC352AFD46D628F8DE92 /* TagManagementView.swift */; };
+		BD485419788422276A06C898 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45F191F9B54830CC5B45C6F /* TimerView.swift */; };
+		BDA904A195CD9841CDD9A01A /* NanaFlow-alarmClock-v1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 63493FE65BF50A5955748332 /* NanaFlow-alarmClock-v1.aiff */; };
+		C0617B19C7C70664E78948E0 /* ProUnlockedParityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCE016C37AD408B9C805941 /* ProUnlockedParityTests.swift */; };
+		C23EF939C220AD75D257EEB4 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91381825E11524504B7CB359 /* WelcomeView.swift */; };
+		C2CABF3C26270744AB8118A0 /* NanaFlow-milestone-v2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = C465510F3F6C83336C202AED /* NanaFlow-milestone-v2.aiff */; };
+		C361D9FD0744D86A9859B14E /* TimerPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1455337F53D4F6E24B60EB /* TimerPersistence.swift */; };
+		C59D68D29E9B8426FAA0B733 /* SessionTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F6EBA8364D4217AF103200 /* SessionTags.swift */; };
+		C81A554BE4362CEF3CC901B3 /* TimerSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DF6506CBB537888C1D7C56 /* TimerSettingsView.swift */; };
+		D0ED927354F31EB74F6D7BFB /* ProUnlockedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B69AD237F2D858044DE60F1 /* ProUnlockedView.swift */; };
+		D637BB407D664446C015102D /* TimerPreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E720062209550B26D92A50C0 /* TimerPreferencesTests.swift */; };
+		DA7E64BAEA6138222806CE4F /* BlockerConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B65FC677BEB9CC95E2207C /* BlockerConfigurationTests.swift */; };
+		DC352877C3E871D4A74BEC8F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7EDE9B11109A8D3F7D6AB100 /* InfoPlist.strings */; };
+		DFAC6A8A9274416D60D903BD /* PermissionParityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D32A52B4B14ABFBFD66E88 /* PermissionParityTests.swift */; };
+		E2D6DCF0B3DAC123A62DE28A /* NanaFlow-ripple.aiff in Resources */ = {isa = PBXBuildFile; fileRef = B82C05DB43C7DB370292857D /* NanaFlow-ripple.aiff */; };
+		E6D3DFB577AB0697BBADAE42 /* NanaFlow-pulse-v2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 6A42BE66F2687975BFB42D4F /* NanaFlow-pulse-v2.aiff */; };
+		E7ED75CDDEF2F45C67310910 /* NanaFlow-bowl-v1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 117616D2112FDED3196CB952 /* NanaFlow-bowl-v1.aiff */; };
+		E80216D5EE91514E5B601B82 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE692CC9131BEA759CE6A35 /* StatisticsView.swift */; };
+		E8187476F51E44FA9DA54FE5 /* NanaFlowShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0789DA272FB909EF43E3B8E1 /* NanaFlowShared.swift */; };
+		EF26A72A5C136CD3E1957804 /* SessionTagTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7654F4DA858EAAB53B4667C /* SessionTagTests.swift */; };
+		EF5249D52A0C881C9355D677 /* NanaFlow-bell.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 3867D7D196EA6A6767A0674B /* NanaFlow-bell.aiff */; };
+		F185626724B7A4AF1A611829 /* BlockerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490CCCB4AEAB1933A59DF926 /* BlockerView.swift */; };
+		F2AA0437B07880F76B32CA29 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 027FA86D7D1DB2338073C419 /* InfoPlist.strings */; };
+		F3C80245F7788C34D1789037 /* CustomDurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134F77F20C4FF4A6C969ED94 /* CustomDurationView.swift */; };
+		F4DA45CB61AB10E4CBB48AD0 /* NanaFlowWelcomeBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A842B23E902FBFE9253B97A /* NanaFlowWelcomeBackground.png */; };
+		F6713F79E303FEB6BB659EE6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A51FA15B89DE8982526D6FFA /* InfoPlist.strings */; };
+		FC6880AE1A379D62527B3A4D /* NanaFlow-bells-v1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = CDB74F9E52839D02A7368DEA /* NanaFlow-bells-v1.aiff */; };
+		FDF2FF13DF65C99176A30A71 /* NanaFlow-chord-v3.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 2B7973B5651C67092EC36C43 /* NanaFlow-chord-v3.aiff */; };
+		FE86D5C01B6B049ABA25A26D /* SessionHistoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2025B0B869051A21F2F47D07 /* SessionHistoryTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CE80B8DC20F66DA09AAEDF74 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1CE60D9AB72E39DD4DF05B39 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D02A12EA7AF5752EDA81264E;
+			remoteInfo = NanaFlowWidget;
+		};
+		FF48110237218B2DECBD1511 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1CE60D9AB72E39DD4DF05B39 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F5A71727D1AA94E59C942E13;
+			remoteInfo = NanaFlow;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		531097C8F38E47D8E428E082 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				6E48DBCF63C984C2307B01B4 /* NanaFlowWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		027FA86D7D1DB2338073C419 /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		02BCA7F75D68AFCD5A4F2A28 /* NanaFlow-chime.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-chime.aiff"; sourceTree = "<group>"; };
+		04CAC045EC70A1E01E602E93 /* ViewRenderingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRenderingTests.swift; sourceTree = "<group>"; };
+		069B336F078CE406905EEEB9 /* NanaFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NanaFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0789DA272FB909EF43E3B8E1 /* NanaFlowShared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NanaFlowShared.swift; sourceTree = "<group>"; };
+		0C86D5D259969A222DF9ED2B /* TimerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerController.swift; sourceTree = "<group>"; };
+		0CD83176171CB4F28CB75568 /* NanaFlow-bowl-v2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-bowl-v2.aiff"; sourceTree = "<group>"; };
+		0DC84A0673972421E338176E /* NanaFlowWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NanaFlowWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E4F06921AC376E58B241210 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		117616D2112FDED3196CB952 /* NanaFlow-bowl-v1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-bowl-v1.aiff"; sourceTree = "<group>"; };
+		134F77F20C4FF4A6C969ED94 /* CustomDurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDurationView.swift; sourceTree = "<group>"; };
+		13E3B82B6B7445DE574F4DF3 /* AutomationParityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomationParityTests.swift; sourceTree = "<group>"; };
+		1462A6E7D3F08C3A61FA9F27 /* NanaFlowWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NanaFlowWidgets.swift; sourceTree = "<group>"; };
+		14A7C5C563CD94C7144A5008 /* NanaFlow-whistle-v1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-whistle-v1.aiff"; sourceTree = "<group>"; };
+		168AA4BD8C194AD6343B6F9E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = fr; path = fr.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		16FEB935027D31A59B32A76C /* NanaFlow-milestone-v1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-milestone-v1.aiff"; sourceTree = "<group>"; };
+		18E742AF955060A64A733F3E /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "pt-BR"; path = "pt-BR.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
+		1A27D6D8CA2C7738035962CB /* SessionHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionHistory.swift; sourceTree = "<group>"; };
+		1B5C7B9A480CEF24AF274C3C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1B69AD237F2D858044DE60F1 /* ProUnlockedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProUnlockedView.swift; sourceTree = "<group>"; };
+		1BA8BDCCA30B9FCE19CF5A93 /* NanaFlow.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NanaFlow.entitlements; sourceTree = "<group>"; };
+		1E32D3EEC01BB0592261A56F /* NotificationCopyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCopyTests.swift; sourceTree = "<group>"; };
+		1FFE82E479EA573D7CF66B42 /* NanaFlow-ripple-v3.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-ripple-v3.aiff"; sourceTree = "<group>"; };
+		2025B0B869051A21F2F47D07 /* SessionHistoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionHistoryTests.swift; sourceTree = "<group>"; };
+		21ABE7BF71C756EF65DE9D88 /* SessionExportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionExportTests.swift; sourceTree = "<group>"; };
+		2697A546448A4C2DFEB5BFB9 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = es; path = es.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		2712A37FF3CDCD6DDBECF091 /* PermissionViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionViews.swift; sourceTree = "<group>"; };
+		282EED14E7CC3DD4C6207D74 /* NanaFlow-bell-v2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-bell-v2.aiff"; sourceTree = "<group>"; };
+		28C66332C88D0033535EDC8C /* NanaFlow-milestone-v3.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-milestone-v3.aiff"; sourceTree = "<group>"; };
+		28EBA3FAE48011852252EA33 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		291965CB15C5398F458F3987 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2B7973B5651C67092EC36C43 /* NanaFlow-chord-v3.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-chord-v3.aiff"; sourceTree = "<group>"; };
+		2BF45926A3280FE738C6D7B5 /* AppWindowActivation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWindowActivation.swift; sourceTree = "<group>"; };
+		2D9841D42A8E37943195B4D2 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = uk; path = uk.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		2F112A46B428396E73191DFB /* TimerOptionsMenuContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerOptionsMenuContent.swift; sourceTree = "<group>"; };
+		2F1E14F9B0300423E86BA33E /* NanaFlow-bowl.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-bowl.aiff"; sourceTree = "<group>"; };
+		302B8D7E1F9AA59BFF488721 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = pl; path = pl.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		341E5A46D107CE1DE6B17679 /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = nb.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		34E5FB04CFE59EA523590DE8 /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		362507AB6BBB6AF9B68DA3E4 /* AutomationIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomationIntents.swift; sourceTree = "<group>"; };
+		3634E40C6DD7E9B8DF12824D /* NanaFlow-harp.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-harp.aiff"; sourceTree = "<group>"; };
+		381D4BE749782FAA3A3583B7 /* TimerSyncParityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerSyncParityTests.swift; sourceTree = "<group>"; };
+		3867D7D196EA6A6767A0674B /* NanaFlow-bell.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-bell.aiff"; sourceTree = "<group>"; };
+		38B5F604F4AC55C0BB1F9AFA /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = nl; path = nl.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		38D78725115E55C3BE3631C9 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ko; path = ko.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		39232441BB21ABEB7DB1A33C /* TimerTickSound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerTickSound.swift; sourceTree = "<group>"; };
+		3A842B23E902FBFE9253B97A /* NanaFlowWelcomeBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NanaFlowWelcomeBackground.png; sourceTree = "<group>"; };
+		3C4ED5A09C9690C6A2498975 /* TimerEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerEngine.swift; sourceTree = "<group>"; };
+		3CF2F65AE5AD531B2FD89291 /* NanaFlow-chime-v3.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-chime-v3.aiff"; sourceTree = "<group>"; };
+		3D5348B02246F03EE2008C28 /* NanaFlowWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NanaFlowWidget.entitlements; sourceTree = "<group>"; };
+		3F2E648008E0B303DE2FB728 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4019778D2A3DEA6C855A0CA2 /* NanaFlow-chime-v1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-chime-v1.aiff"; sourceTree = "<group>"; };
+		41E47416EDB153356C1EA219 /* NanaFlow-chord-v2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-chord-v2.aiff"; sourceTree = "<group>"; };
+		43B2BCE0A33AC6329EE8963D /* TimerControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerControllerTests.swift; sourceTree = "<group>"; };
+		45CFC222D9DF00FC453CF885 /* KeyboardShortcutRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShortcutRecorder.swift; sourceTree = "<group>"; };
+		4649464F9EC89698B86C7F7B /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = pl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		46B4E0AE627451D84F128C78 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4852C57351AB6660A20AAE3C /* NanaFlow-milestone.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-milestone.aiff"; sourceTree = "<group>"; };
+		490CCCB4AEAB1933A59DF926 /* BlockerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockerView.swift; sourceTree = "<group>"; };
+		49DF6506CBB537888C1D7C56 /* TimerSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerSettingsView.swift; sourceTree = "<group>"; };
+		4BB891A61F3491C5CCC99FF6 /* BlockerConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockerConfiguration.swift; sourceTree = "<group>"; };
+		4DCE016C37AD408B9C805941 /* ProUnlockedParityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProUnlockedParityTests.swift; sourceTree = "<group>"; };
+		4E1A0A7D1D6764C5799904A0 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		50BCFB2480224C11640998CB /* NanaFlow-harp-v3.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-harp-v3.aiff"; sourceTree = "<group>"; };
+		5144A1ED7DEEA3F5DC9D3A15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		52177FC851BA1B0B15204D4F /* NanaFlowCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NanaFlowCommands.swift; sourceTree = "<group>"; };
+		52EFD3908C6D0BED5A456DED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		532A3B30B9CCFE038BA6483E /* NanaFlowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NanaFlowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		55DF3FE8D1E2EB0AD4698F3C /* NanaFlow-bell-v1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-bell-v1.aiff"; sourceTree = "<group>"; };
+		56E042B1905CEB6E0664E801 /* NanaFlow-ripple-v1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-ripple-v1.aiff"; sourceTree = "<group>"; };
+		57F1889F4FF4E76BFCA46822 /* NanaFlowWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NanaFlowWidgetBundle.swift; sourceTree = "<group>"; };
+		58C854D974B18F22C8857F85 /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5B4FB7B993C2714032B31A28 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		5B9C349CE130ADE86DC9B852 /* TimerSyncView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerSyncView.swift; sourceTree = "<group>"; };
+		5D3C726DCDEFB35527A47A04 /* NanaFlow-chime-v2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-chime-v2.aiff"; sourceTree = "<group>"; };
+		61E80B3DDBCB82A6D66926E3 /* NanaFlowIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NanaFlowIcon.png; sourceTree = "<group>"; };
+		6301D2ACC669CB28FD3F96BF /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		63493FE65BF50A5955748332 /* NanaFlow-alarmClock-v1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-alarmClock-v1.aiff"; sourceTree = "<group>"; };
+		645E33216E0F12768F24027B /* FocusSessionCalendarRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusSessionCalendarRecorder.swift; sourceTree = "<group>"; };
+		68C2C56D932C8112899304EB /* NanaFlow-bowl-v3.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-bowl-v3.aiff"; sourceTree = "<group>"; };
+		6A42BE66F2687975BFB42D4F /* NanaFlow-pulse-v2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-pulse-v2.aiff"; sourceTree = "<group>"; };
+		6ABBC5A63BEEF2E43D635C58 /* NanaFlow-whistle.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-whistle.aiff"; sourceTree = "<group>"; };
+		6D27FCE605C4785F933FA6A4 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6DE692CC9131BEA759CE6A35 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
+		71ADE1FC63A2598B8DCB8940 /* NanaFlow-chord.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-chord.aiff"; sourceTree = "<group>"; };
+		740BC32D74214930B2BC751C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
+		74F596B3292ECAFF313CDB54 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = vi; path = vi.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		7649219656C5458342A61D06 /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		76FCABFBF647D37D0321AEE4 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7703C7DE827A3873AAACB2F9 /* GlobalHotkeyMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalHotkeyMonitor.swift; sourceTree = "<group>"; };
+		7D21F8A71838E20DDB5F8C93 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = it; path = it.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		7E9017CF768696A56F50CBC5 /* GlobalHotkeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalHotkeyTests.swift; sourceTree = "<group>"; };
+		7EDE9B11109A8D3F7D6AB100 /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = ca.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		82D449FFEB60EA778A7E2FEE /* TimerPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPreferences.swift; sourceTree = "<group>"; };
+		841FCF3C7DB59610C4B11172 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		848CC0CEBEADA96527F8C45C /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		8A0C477DCBA19ADDECB6E425 /* NanaFlow-pulse-v1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-pulse-v1.aiff"; sourceTree = "<group>"; };
+		8A6A41EA2297C9CE16F6788E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		8B514A382C3593B4E4372B71 /* NanaFlowWidgetIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NanaFlowWidgetIcon.png; sourceTree = "<group>"; };
+		8D7111FFA39E66B108C516D6 /* ScriptCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptCommands.swift; sourceTree = "<group>"; };
+		8EEC7A651766907C12A114A5 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = tr; path = tr.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		8F465CD2716090D7D5102F3C /* NanaFlow-whistle-v3.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-whistle-v3.aiff"; sourceTree = "<group>"; };
+		8FD4232C127145284C42124E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = sv; path = sv.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		908A3106159C5255ED3CB3C6 /* NanaFocusApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NanaFocusApp.swift; sourceTree = "<group>"; };
+		91381825E11524504B7CB359 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		97D975215BE5E985853492CC /* Blocked.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = Blocked.html; sourceTree = "<group>"; };
+		98E277A66156D9923BA2D509 /* NanaFlow-harp-v1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-harp-v1.aiff"; sourceTree = "<group>"; };
+		9A32361AFA867CC5D6E3726B /* NanaFlow.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = NanaFlow.icns; sourceTree = "<group>"; };
+		9AC026175689AEB5D9CFB668 /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9C60316323AC973705BB51C0 /* WidgetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetData.swift; sourceTree = "<group>"; };
+		9FB38AA3A67ECEBE3696F636 /* NanaFlow-pulse.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-pulse.aiff"; sourceTree = "<group>"; };
+		9FE3E84DEF6477FDDC721A73 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A051339D8A6773AA2057DA91 /* WidgetParityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetParityTests.swift; sourceTree = "<group>"; };
+		A2038F56F37DB5ECE8850C7A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A51FA15B89DE8982526D6FFA /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = vi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A6841F1C66F88961E4D5266F /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A7C9563D7632F722F926353E /* TimerEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerEngineTests.swift; sourceTree = "<group>"; };
+		A7DFCFE82D0FC89D1FA311B6 /* NanaFlow-alarmClock-v3.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-alarmClock-v3.aiff"; sourceTree = "<group>"; };
+		AAC0D4BD6B8BA4EA451027C9 /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = "pt-PT.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		AB54B3D54D07F71C602982AA /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ca; path = ca.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		AB955C494EE2594C09ECB8BE /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		AC075F08AE1F7F81D70CB687 /* BrowserURLController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserURLController.swift; sourceTree = "<group>"; };
+		AC37D0CFFECF6C021FF8CBB2 /* SessionExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionExporter.swift; sourceTree = "<group>"; };
+		AE7A74B4A989C064DEF51B51 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B0752F69C38CB7AD2E650C84 /* NanaFlow-bells.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-bells.aiff"; sourceTree = "<group>"; };
+		B0817C3D8BA82F6439303EC9 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
+		B1AD995E6059BF18A9D873F0 /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B2D2F2EA9DE9F022A87DE0B7 /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B4E5DB3FD5B289AA6A626790 /* TimerIcons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = TimerIcons.xcassets; sourceTree = "<group>"; };
+		B7330D741D6C2813C72E838F /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B82C05DB43C7DB370292857D /* NanaFlow-ripple.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-ripple.aiff"; sourceTree = "<group>"; };
+		BBFB83E8B38EF32B16BA4CB8 /* NanaFlow.sdef */ = {isa = PBXFileReference; path = NanaFlow.sdef; sourceTree = "<group>"; };
+		C07BE21F21F96EA7EFEE72B3 /* NanaFlow-ripple-v2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-ripple-v2.aiff"; sourceTree = "<group>"; };
+		C465510F3F6C83336C202AED /* NanaFlow-milestone-v2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-milestone-v2.aiff"; sourceTree = "<group>"; };
+		C84360186BBEE189AC86972A /* FullscreenBreakView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenBreakView.swift; sourceTree = "<group>"; };
+		CB963525944C0FBFF1D9C738 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CDB74F9E52839D02A7368DEA /* NanaFlow-bells-v1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-bells-v1.aiff"; sourceTree = "<group>"; };
+		D12D7FD7BA938904E6F21912 /* HelpViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViews.swift; sourceTree = "<group>"; };
+		D24529A7048D4D2E8C8D2E8C /* NanaFlow-alarmClock-v2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-alarmClock-v2.aiff"; sourceTree = "<group>"; };
+		D27565A698B42225F9B17295 /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D28FDC65872A160B7F2F430E /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D4078D2EF4E047AC780D4570 /* SessionNotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionNotificationScheduler.swift; sourceTree = "<group>"; };
+		D4D32A52B4B14ABFBFD66E88 /* PermissionParityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionParityTests.swift; sourceTree = "<group>"; };
+		D4E8AE68E54BCA53CA73F330 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = de; path = de.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		D6BE5AC0815BE0173D6406D9 /* NanaFlow-bell-v3.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-bell-v3.aiff"; sourceTree = "<group>"; };
+		D8F6EBA8364D4217AF103200 /* SessionTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTags.swift; sourceTree = "<group>"; };
+		D8F7F8B9A6A64A9BAFE65AE3 /* NanaFlowBlockedIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NanaFlowBlockedIcon.png; sourceTree = "<group>"; };
+		DA0C2D5E5FB63437E1C6A462 /* NanaFlow-alarmClock.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-alarmClock.aiff"; sourceTree = "<group>"; };
+		DA1455337F53D4F6E24B60EB /* TimerPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPersistence.swift; sourceTree = "<group>"; };
+		E08A366F44777DCF79300885 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = nb; path = nb.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		E2F25473826A8B11398FB4AD /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "pt-PT"; path = "pt-PT.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
+		E45F191F9B54830CC5B45C6F /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
+		E47E37B10E4978108B3F6552 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E4BB1842E40768ADB9DA27C8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ja; path = ja.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		E558BE58FCAC1BAFD3A8CE36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		E5FEEC352AFD46D628F8DE92 /* TagManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagManagementView.swift; sourceTree = "<group>"; };
+		E720062209550B26D92A50C0 /* TimerPreferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPreferencesTests.swift; sourceTree = "<group>"; };
+		E7654F4DA858EAAB53B4667C /* SessionTagTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTagTests.swift; sourceTree = "<group>"; };
+		E84597998666511FBDB19AB2 /* TimerPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPersistenceTests.swift; sourceTree = "<group>"; };
+		E9B65FC677BEB9CC95E2207C /* BlockerConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockerConfigurationTests.swift; sourceTree = "<group>"; };
+		EB62D041A95B737E7B22988D /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		EB7032748070B3679ACB5D51 /* NanaFlow-whistle-v2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-whistle-v2.aiff"; sourceTree = "<group>"; };
+		EC1DB1B6DFADD88F1777400D /* NanaFlowCalendarAccess.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NanaFlowCalendarAccess.png; sourceTree = "<group>"; };
+		F038F4188CAD928D1021F0EE /* NanaFlow-chord-v1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-chord-v1.aiff"; sourceTree = "<group>"; };
+		F283F36212FD5B759DAC815F /* NanaFlow-pulse-v3.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-pulse-v3.aiff"; sourceTree = "<group>"; };
+		F390D8C8E2281E722EF733F4 /* NanaFlow-bells-v3.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-bells-v3.aiff"; sourceTree = "<group>"; };
+		F6CF4112978F0F253BA440A4 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		F79F0243FD78852E3D49C8BD /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F9606A1A25229529DE887257 /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FA6E41CB03539DAC3EEE5F94 /* PhosphorIcons-LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "PhosphorIcons-LICENSE.txt"; sourceTree = "<group>"; };
+		FB001599710A5FBE5A53E195 /* NanaFlow-harp-v2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-harp-v2.aiff"; sourceTree = "<group>"; };
+		FE6B68284E64588712E228C3 /* NanaFlow-bells-v2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-bells-v2.aiff"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		4FF8C52E3431A829D16557AA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				069B336F078CE406905EEEB9 /* NanaFlow.app */,
+				532A3B30B9CCFE038BA6483E /* NanaFlowTests.xctest */,
+				0DC84A0673972421E338176E /* NanaFlowWidget.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		57EE5E091F18BEEC2CF3E289 /* NanaShared */ = {
+			isa = PBXGroup;
+			children = (
+				0789DA272FB909EF43E3B8E1 /* NanaFlowShared.swift */,
+			);
+			name = NanaShared;
+			path = Sources/NanaShared;
+			sourceTree = "<group>";
+		};
+		633855514B01A8DA26B20545 /* NanaFocus */ = {
+			isa = PBXGroup;
+			children = (
+				2BF45926A3280FE738C6D7B5 /* AppWindowActivation.swift */,
+				362507AB6BBB6AF9B68DA3E4 /* AutomationIntents.swift */,
+				97D975215BE5E985853492CC /* Blocked.html */,
+				4BB891A61F3491C5CCC99FF6 /* BlockerConfiguration.swift */,
+				490CCCB4AEAB1933A59DF926 /* BlockerView.swift */,
+				AC075F08AE1F7F81D70CB687 /* BrowserURLController.swift */,
+				134F77F20C4FF4A6C969ED94 /* CustomDurationView.swift */,
+				645E33216E0F12768F24027B /* FocusSessionCalendarRecorder.swift */,
+				C84360186BBEE189AC86972A /* FullscreenBreakView.swift */,
+				7703C7DE827A3873AAACB2F9 /* GlobalHotkeyMonitor.swift */,
+				D12D7FD7BA938904E6F21912 /* HelpViews.swift */,
+				5144A1ED7DEEA3F5DC9D3A15 /* Info.plist */,
+				7EDE9B11109A8D3F7D6AB100 /* InfoPlist.strings */,
+				58C854D974B18F22C8857F85 /* InfoPlist.strings */,
+				F9606A1A25229529DE887257 /* InfoPlist.strings */,
+				EB62D041A95B737E7B22988D /* InfoPlist.strings */,
+				6301D2ACC669CB28FD3F96BF /* InfoPlist.strings */,
+				B1AD995E6059BF18A9D873F0 /* InfoPlist.strings */,
+				D27565A698B42225F9B17295 /* InfoPlist.strings */,
+				341E5A46D107CE1DE6B17679 /* InfoPlist.strings */,
+				D28FDC65872A160B7F2F430E /* InfoPlist.strings */,
+				4649464F9EC89698B86C7F7B /* InfoPlist.strings */,
+				7649219656C5458342A61D06 /* InfoPlist.strings */,
+				AAC0D4BD6B8BA4EA451027C9 /* InfoPlist.strings */,
+				B7330D741D6C2813C72E838F /* InfoPlist.strings */,
+				9AC026175689AEB5D9CFB668 /* InfoPlist.strings */,
+				027FA86D7D1DB2338073C419 /* InfoPlist.strings */,
+				F79F0243FD78852E3D49C8BD /* InfoPlist.strings */,
+				A51FA15B89DE8982526D6FFA /* InfoPlist.strings */,
+				34E5FB04CFE59EA523590DE8 /* InfoPlist.strings */,
+				848CC0CEBEADA96527F8C45C /* InfoPlist.strings */,
+				45CFC222D9DF00FC453CF885 /* KeyboardShortcutRecorder.swift */,
+				1BA8BDCCA30B9FCE19CF5A93 /* NanaFlow.entitlements */,
+				9A32361AFA867CC5D6E3726B /* NanaFlow.icns */,
+				BBFB83E8B38EF32B16BA4CB8 /* NanaFlow.sdef */,
+				D8F7F8B9A6A64A9BAFE65AE3 /* NanaFlowBlockedIcon.png */,
+				EC1DB1B6DFADD88F1777400D /* NanaFlowCalendarAccess.png */,
+				52177FC851BA1B0B15204D4F /* NanaFlowCommands.swift */,
+				61E80B3DDBCB82A6D66926E3 /* NanaFlowIcon.png */,
+				3A842B23E902FBFE9253B97A /* NanaFlowWelcomeBackground.png */,
+				908A3106159C5255ED3CB3C6 /* NanaFocusApp.swift */,
+				2712A37FF3CDCD6DDBECF091 /* PermissionViews.swift */,
+				FA6E41CB03539DAC3EEE5F94 /* PhosphorIcons-LICENSE.txt */,
+				1B69AD237F2D858044DE60F1 /* ProUnlockedView.swift */,
+				8D7111FFA39E66B108C516D6 /* ScriptCommands.swift */,
+				AC37D0CFFECF6C021FF8CBB2 /* SessionExporter.swift */,
+				1A27D6D8CA2C7738035962CB /* SessionHistory.swift */,
+				D4078D2EF4E047AC780D4570 /* SessionNotificationScheduler.swift */,
+				D8F6EBA8364D4217AF103200 /* SessionTags.swift */,
+				6DE692CC9131BEA759CE6A35 /* StatisticsView.swift */,
+				E5FEEC352AFD46D628F8DE92 /* TagManagementView.swift */,
+				0C86D5D259969A222DF9ED2B /* TimerController.swift */,
+				3C4ED5A09C9690C6A2498975 /* TimerEngine.swift */,
+				B4E5DB3FD5B289AA6A626790 /* TimerIcons.xcassets */,
+				2F112A46B428396E73191DFB /* TimerOptionsMenuContent.swift */,
+				DA1455337F53D4F6E24B60EB /* TimerPersistence.swift */,
+				82D449FFEB60EA778A7E2FEE /* TimerPreferences.swift */,
+				49DF6506CBB537888C1D7C56 /* TimerSettingsView.swift */,
+				5B9C349CE130ADE86DC9B852 /* TimerSyncView.swift */,
+				39232441BB21ABEB7DB1A33C /* TimerTickSound.swift */,
+				E45F191F9B54830CC5B45C6F /* TimerView.swift */,
+				91381825E11524504B7CB359 /* WelcomeView.swift */,
+				BE25D749C5AF7CCC0B7A535B /* Localizable.strings */,
+				0D4B0E722EA065DCDE6D8D67 /* Localizable.stringsdict */,
+				7E0C30D1249014BDD1F70589 /* Sounds */,
+			);
+			name = NanaFocus;
+			path = Sources/NanaFocus;
+			sourceTree = "<group>";
+		};
+		77236D17317FE66C16D9ECA3 = {
+			isa = PBXGroup;
+			children = (
+				BC5F339F1D108712B3DED2FC /* NanaFlowWidget */,
+				633855514B01A8DA26B20545 /* NanaFocus */,
+				B39C9925B2AC6F7223D74EAD /* NanaFocusTests */,
+				57EE5E091F18BEEC2CF3E289 /* NanaShared */,
+				4FF8C52E3431A829D16557AA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7E0C30D1249014BDD1F70589 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				63493FE65BF50A5955748332 /* NanaFlow-alarmClock-v1.aiff */,
+				D24529A7048D4D2E8C8D2E8C /* NanaFlow-alarmClock-v2.aiff */,
+				A7DFCFE82D0FC89D1FA311B6 /* NanaFlow-alarmClock-v3.aiff */,
+				DA0C2D5E5FB63437E1C6A462 /* NanaFlow-alarmClock.aiff */,
+				55DF3FE8D1E2EB0AD4698F3C /* NanaFlow-bell-v1.aiff */,
+				282EED14E7CC3DD4C6207D74 /* NanaFlow-bell-v2.aiff */,
+				D6BE5AC0815BE0173D6406D9 /* NanaFlow-bell-v3.aiff */,
+				3867D7D196EA6A6767A0674B /* NanaFlow-bell.aiff */,
+				CDB74F9E52839D02A7368DEA /* NanaFlow-bells-v1.aiff */,
+				FE6B68284E64588712E228C3 /* NanaFlow-bells-v2.aiff */,
+				F390D8C8E2281E722EF733F4 /* NanaFlow-bells-v3.aiff */,
+				B0752F69C38CB7AD2E650C84 /* NanaFlow-bells.aiff */,
+				117616D2112FDED3196CB952 /* NanaFlow-bowl-v1.aiff */,
+				0CD83176171CB4F28CB75568 /* NanaFlow-bowl-v2.aiff */,
+				68C2C56D932C8112899304EB /* NanaFlow-bowl-v3.aiff */,
+				2F1E14F9B0300423E86BA33E /* NanaFlow-bowl.aiff */,
+				4019778D2A3DEA6C855A0CA2 /* NanaFlow-chime-v1.aiff */,
+				5D3C726DCDEFB35527A47A04 /* NanaFlow-chime-v2.aiff */,
+				3CF2F65AE5AD531B2FD89291 /* NanaFlow-chime-v3.aiff */,
+				02BCA7F75D68AFCD5A4F2A28 /* NanaFlow-chime.aiff */,
+				F038F4188CAD928D1021F0EE /* NanaFlow-chord-v1.aiff */,
+				41E47416EDB153356C1EA219 /* NanaFlow-chord-v2.aiff */,
+				2B7973B5651C67092EC36C43 /* NanaFlow-chord-v3.aiff */,
+				71ADE1FC63A2598B8DCB8940 /* NanaFlow-chord.aiff */,
+				98E277A66156D9923BA2D509 /* NanaFlow-harp-v1.aiff */,
+				FB001599710A5FBE5A53E195 /* NanaFlow-harp-v2.aiff */,
+				50BCFB2480224C11640998CB /* NanaFlow-harp-v3.aiff */,
+				3634E40C6DD7E9B8DF12824D /* NanaFlow-harp.aiff */,
+				16FEB935027D31A59B32A76C /* NanaFlow-milestone-v1.aiff */,
+				C465510F3F6C83336C202AED /* NanaFlow-milestone-v2.aiff */,
+				28C66332C88D0033535EDC8C /* NanaFlow-milestone-v3.aiff */,
+				4852C57351AB6660A20AAE3C /* NanaFlow-milestone.aiff */,
+				8A0C477DCBA19ADDECB6E425 /* NanaFlow-pulse-v1.aiff */,
+				6A42BE66F2687975BFB42D4F /* NanaFlow-pulse-v2.aiff */,
+				F283F36212FD5B759DAC815F /* NanaFlow-pulse-v3.aiff */,
+				9FB38AA3A67ECEBE3696F636 /* NanaFlow-pulse.aiff */,
+				56E042B1905CEB6E0664E801 /* NanaFlow-ripple-v1.aiff */,
+				C07BE21F21F96EA7EFEE72B3 /* NanaFlow-ripple-v2.aiff */,
+				1FFE82E479EA573D7CF66B42 /* NanaFlow-ripple-v3.aiff */,
+				B82C05DB43C7DB370292857D /* NanaFlow-ripple.aiff */,
+				14A7C5C563CD94C7144A5008 /* NanaFlow-whistle-v1.aiff */,
+				EB7032748070B3679ACB5D51 /* NanaFlow-whistle-v2.aiff */,
+				8F465CD2716090D7D5102F3C /* NanaFlow-whistle-v3.aiff */,
+				6ABBC5A63BEEF2E43D635C58 /* NanaFlow-whistle.aiff */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
+		B39C9925B2AC6F7223D74EAD /* NanaFocusTests */ = {
+			isa = PBXGroup;
+			children = (
+				13E3B82B6B7445DE574F4DF3 /* AutomationParityTests.swift */,
+				E9B65FC677BEB9CC95E2207C /* BlockerConfigurationTests.swift */,
+				7E9017CF768696A56F50CBC5 /* GlobalHotkeyTests.swift */,
+				1E32D3EEC01BB0592261A56F /* NotificationCopyTests.swift */,
+				D4D32A52B4B14ABFBFD66E88 /* PermissionParityTests.swift */,
+				4DCE016C37AD408B9C805941 /* ProUnlockedParityTests.swift */,
+				21ABE7BF71C756EF65DE9D88 /* SessionExportTests.swift */,
+				2025B0B869051A21F2F47D07 /* SessionHistoryTests.swift */,
+				E7654F4DA858EAAB53B4667C /* SessionTagTests.swift */,
+				43B2BCE0A33AC6329EE8963D /* TimerControllerTests.swift */,
+				A7C9563D7632F722F926353E /* TimerEngineTests.swift */,
+				E84597998666511FBDB19AB2 /* TimerPersistenceTests.swift */,
+				E720062209550B26D92A50C0 /* TimerPreferencesTests.swift */,
+				381D4BE749782FAA3A3583B7 /* TimerSyncParityTests.swift */,
+				04CAC045EC70A1E01E602E93 /* ViewRenderingTests.swift */,
+				A051339D8A6773AA2057DA91 /* WidgetParityTests.swift */,
+			);
+			name = NanaFocusTests;
+			path = Tests/NanaFocusTests;
+			sourceTree = "<group>";
+		};
+		BC5F339F1D108712B3DED2FC /* NanaFlowWidget */ = {
+			isa = PBXGroup;
+			children = (
+				E558BE58FCAC1BAFD3A8CE36 /* Info.plist */,
+				3D5348B02246F03EE2008C28 /* NanaFlowWidget.entitlements */,
+				57F1889F4FF4E76BFCA46822 /* NanaFlowWidgetBundle.swift */,
+				8B514A382C3593B4E4372B71 /* NanaFlowWidgetIcon.png */,
+				1462A6E7D3F08C3A61FA9F27 /* NanaFlowWidgets.swift */,
+				9C60316323AC973705BB51C0 /* WidgetData.swift */,
+			);
+			name = NanaFlowWidget;
+			path = Sources/NanaFlowWidget;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D02A12EA7AF5752EDA81264E /* NanaFlowWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 23BF77FEB3E0336BC6CF457C /* Build configuration list for PBXNativeTarget "NanaFlowWidget" */;
+			buildPhases = (
+				AC24EE8902C10B10653B7BEE /* Sources */,
+				FB6EF4671157FEC35EAB482D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NanaFlowWidget;
+			packageProductDependencies = (
+			);
+			productName = NanaFlowWidget;
+			productReference = 0DC84A0673972421E338176E /* NanaFlowWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		DA6C4602A34B4348E4F57090 /* NanaFlowTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7CF4786F3C80631BB9873092 /* Build configuration list for PBXNativeTarget "NanaFlowTests" */;
+			buildPhases = (
+				070E983BCD218B0FF5FCD0FB /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B576A9BD4F25E3F2F71988CF /* PBXTargetDependency */,
+			);
+			name = NanaFlowTests;
+			packageProductDependencies = (
+			);
+			productName = NanaFlowTests;
+			productReference = 532A3B30B9CCFE038BA6483E /* NanaFlowTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		F5A71727D1AA94E59C942E13 /* NanaFlow */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F3657EB0EF51ABBA32AE0B7D /* Build configuration list for PBXNativeTarget "NanaFlow" */;
+			buildPhases = (
+				22DA7570CA86DAF858613CAD /* Sources */,
+				81C445DF78AD1058AB36BCE4 /* Resources */,
+				531097C8F38E47D8E428E082 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				805BADCC8C74D11B6FBE3740 /* PBXTargetDependency */,
+			);
+			name = NanaFlow;
+			packageProductDependencies = (
+			);
+			productName = NanaFlow;
+			productReference = 069B336F078CE406905EEEB9 /* NanaFlow.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1CE60D9AB72E39DD4DF05B39 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					D02A12EA7AF5752EDA81264E = {
+						ProvisioningStyle = Automatic;
+					};
+					F5A71727D1AA94E59C942E13 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 3783E72C8CEC109B57452EE5 /* Build configuration list for PBXProject "NanaFlow" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				ca,
+				de,
+				en,
+				es,
+				fr,
+				it,
+				ja,
+				ko,
+				nb,
+				nl,
+				pl,
+				"pt-BR",
+				"pt-PT",
+				ru,
+				sv,
+				tr,
+				uk,
+				vi,
+				"zh-Hans",
+				"zh-Hant",
+			);
+			mainGroup = 77236D17317FE66C16D9ECA3;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 4FF8C52E3431A829D16557AA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F5A71727D1AA94E59C942E13 /* NanaFlow */,
+				DA6C4602A34B4348E4F57090 /* NanaFlowTests */,
+				D02A12EA7AF5752EDA81264E /* NanaFlowWidget */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		81C445DF78AD1058AB36BCE4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B33F0913FDAC15089E9DD2D4 /* Blocked.html in Resources */,
+				0095E12A477C16694BE11840 /* InfoPlist.strings in Resources */,
+				95B9DECF928236F8B2C688E5 /* InfoPlist.strings in Resources */,
+				AF5E76145996FEB1183CDDAE /* InfoPlist.strings in Resources */,
+				7AF84AA312CC057C4EB853D2 /* InfoPlist.strings in Resources */,
+				4307933E838CB02DCDD8EAE9 /* InfoPlist.strings in Resources */,
+				78AF1BC6D6190F409F7734B9 /* InfoPlist.strings in Resources */,
+				8F36591864DAB9F7140AF397 /* InfoPlist.strings in Resources */,
+				5E3FD8252AF859BFDA65CEC0 /* InfoPlist.strings in Resources */,
+				B1B96417227F29BEE9EF435E /* InfoPlist.strings in Resources */,
+				60C35DB87B1B37DA285591A4 /* InfoPlist.strings in Resources */,
+				F2AA0437B07880F76B32CA29 /* InfoPlist.strings in Resources */,
+				51C6C0F4393AF6F1513C57A3 /* InfoPlist.strings in Resources */,
+				5C6506853BC7238BA31F2F8B /* InfoPlist.strings in Resources */,
+				F6713F79E303FEB6BB659EE6 /* InfoPlist.strings in Resources */,
+				84A98EB0D99659EBF6D132BF /* InfoPlist.strings in Resources */,
+				6CA0FD5AE99AFFECED45755F /* InfoPlist.strings in Resources */,
+				2106B93FB1EBA58C44A1C293 /* InfoPlist.strings in Resources */,
+				537D4A24425B45AE5FD624C6 /* InfoPlist.strings in Resources */,
+				DC352877C3E871D4A74BEC8F /* InfoPlist.strings in Resources */,
+				B85CEF7036C668E2603C4448 /* Localizable.strings in Resources */,
+				0723204E18A2E5E6F0798AA8 /* Localizable.stringsdict in Resources */,
+				BDA904A195CD9841CDD9A01A /* NanaFlow-alarmClock-v1.aiff in Resources */,
+				9992A004AF18D722502ECACD /* NanaFlow-alarmClock-v2.aiff in Resources */,
+				A6E658F32E8315BC1C13AFF0 /* NanaFlow-alarmClock-v3.aiff in Resources */,
+				9F7B0832ABD20B55CFC03182 /* NanaFlow-alarmClock.aiff in Resources */,
+				2588BA9F883395FCA39997AD /* NanaFlow-bell-v1.aiff in Resources */,
+				0839D6DB55F25FA7BD7A5118 /* NanaFlow-bell-v2.aiff in Resources */,
+				5A9A74AFF56BD2F1E4FB4070 /* NanaFlow-bell-v3.aiff in Resources */,
+				EF5249D52A0C881C9355D677 /* NanaFlow-bell.aiff in Resources */,
+				FC6880AE1A379D62527B3A4D /* NanaFlow-bells-v1.aiff in Resources */,
+				50BD03041A89F1BCEA3CBA7B /* NanaFlow-bells-v2.aiff in Resources */,
+				4421A22A89DFA68FD9C2F048 /* NanaFlow-bells-v3.aiff in Resources */,
+				20CD3635339C1E05A788310A /* NanaFlow-bells.aiff in Resources */,
+				E7ED75CDDEF2F45C67310910 /* NanaFlow-bowl-v1.aiff in Resources */,
+				0521BF0B1EA8656C16C2178C /* NanaFlow-bowl-v2.aiff in Resources */,
+				83FE145FA9680C6817806AE0 /* NanaFlow-bowl-v3.aiff in Resources */,
+				9564D9A9C31C0ED308104223 /* NanaFlow-bowl.aiff in Resources */,
+				285D278120085AEE356A688F /* NanaFlow-chime-v1.aiff in Resources */,
+				21270FA5C5349B6CA635D0D7 /* NanaFlow-chime-v2.aiff in Resources */,
+				A3B00E32D2E8789DF778021C /* NanaFlow-chime-v3.aiff in Resources */,
+				346E0631D5DDAB5DB8AC84E5 /* NanaFlow-chime.aiff in Resources */,
+				8ACBBE03AEAB7BA1DB1635E3 /* NanaFlow-chord-v1.aiff in Resources */,
+				3BF3431B302F5D4553CED292 /* NanaFlow-chord-v2.aiff in Resources */,
+				FDF2FF13DF65C99176A30A71 /* NanaFlow-chord-v3.aiff in Resources */,
+				4DB088E35B66549349CFD8E1 /* NanaFlow-chord.aiff in Resources */,
+				6977450EDF8E95DCDDEEDF5F /* NanaFlow-harp-v1.aiff in Resources */,
+				91AE1233CB4E04ECC083F6F1 /* NanaFlow-harp-v2.aiff in Resources */,
+				5BB914A6E322EFA3F03B3E2F /* NanaFlow-harp-v3.aiff in Resources */,
+				52659004745F7DDF46579EFD /* NanaFlow-harp.aiff in Resources */,
+				61CEB50D4CC0334BAE33FD2E /* NanaFlow-milestone-v1.aiff in Resources */,
+				C2CABF3C26270744AB8118A0 /* NanaFlow-milestone-v2.aiff in Resources */,
+				5A62E8B4438A383B160A18DF /* NanaFlow-milestone-v3.aiff in Resources */,
+				9D31F2309DF700945E7898CD /* NanaFlow-milestone.aiff in Resources */,
+				13B943F4051DB2821B5AC2B9 /* NanaFlow-pulse-v1.aiff in Resources */,
+				E6D3DFB577AB0697BBADAE42 /* NanaFlow-pulse-v2.aiff in Resources */,
+				1F2E50D7BCA2866EA8A51472 /* NanaFlow-pulse-v3.aiff in Resources */,
+				962D08E33CD766DE12108700 /* NanaFlow-pulse.aiff in Resources */,
+				98E6AB6B266BF9DE62091835 /* NanaFlow-ripple-v1.aiff in Resources */,
+				3D56EA4F03BFAF494E9BF3E4 /* NanaFlow-ripple-v2.aiff in Resources */,
+				79D6ECD7015A4B5DF8B06C47 /* NanaFlow-ripple-v3.aiff in Resources */,
+				E2D6DCF0B3DAC123A62DE28A /* NanaFlow-ripple.aiff in Resources */,
+				7BC5694206A6DDF3A41060CE /* NanaFlow-whistle-v1.aiff in Resources */,
+				AED70435D6C01E6C03B78954 /* NanaFlow-whistle-v2.aiff in Resources */,
+				994189421AC0509EA6D092DF /* NanaFlow-whistle-v3.aiff in Resources */,
+				8BBEEC1468919D9946293BAB /* NanaFlow-whistle.aiff in Resources */,
+				21009EE169D97874353442EC /* NanaFlow.icns in Resources */,
+				6F35702FFD2C074145510829 /* NanaFlow.sdef in Resources */,
+				A51AE6799B9F7991AE61779C /* NanaFlowBlockedIcon.png in Resources */,
+				6DE8503C8C6584930D1CC490 /* NanaFlowCalendarAccess.png in Resources */,
+				A75AEF7ABF7B98F5B7671B04 /* NanaFlowIcon.png in Resources */,
+				F4DA45CB61AB10E4CBB48AD0 /* NanaFlowWelcomeBackground.png in Resources */,
+				44CD28DC8C0E509F27A2F933 /* PhosphorIcons-LICENSE.txt in Resources */,
+				394BA27ABE6699EF2CF3E04C /* TimerIcons.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB6EF4671157FEC35EAB482D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61BBCE5B82AFCA5D278CC278 /* Localizable.strings in Resources */,
+				6C1390502676AF8A7EC5B846 /* NanaFlowWidgetIcon.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		070E983BCD218B0FF5FCD0FB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9734A1620F62BAE3183E83C2 /* AutomationParityTests.swift in Sources */,
+				DA7E64BAEA6138222806CE4F /* BlockerConfigurationTests.swift in Sources */,
+				500F7F332710D18ABA69D101 /* GlobalHotkeyTests.swift in Sources */,
+				2DA1B817F7745226178C38E0 /* NotificationCopyTests.swift in Sources */,
+				DFAC6A8A9274416D60D903BD /* PermissionParityTests.swift in Sources */,
+				C0617B19C7C70664E78948E0 /* ProUnlockedParityTests.swift in Sources */,
+				8453CA824EE08C4BD2B3AA9D /* SessionExportTests.swift in Sources */,
+				FE86D5C01B6B049ABA25A26D /* SessionHistoryTests.swift in Sources */,
+				EF26A72A5C136CD3E1957804 /* SessionTagTests.swift in Sources */,
+				04F34D0476CDC6125890BE88 /* TimerControllerTests.swift in Sources */,
+				2F0582F5DCCDBC274E9DE4EF /* TimerEngineTests.swift in Sources */,
+				5CF5684428B3C98CB5949EA5 /* TimerPersistenceTests.swift in Sources */,
+				D637BB407D664446C015102D /* TimerPreferencesTests.swift in Sources */,
+				60A548B8A340ED05F34F328E /* TimerSyncParityTests.swift in Sources */,
+				5C76AF64FCF04ABFEDB9AD52 /* ViewRenderingTests.swift in Sources */,
+				6FFCE5AAA992B7472937DCF1 /* WidgetParityTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		22DA7570CA86DAF858613CAD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01040F0C4F7AD3DDADC3E4AA /* AppWindowActivation.swift in Sources */,
+				9FB516951EFEFA06C9067D20 /* AutomationIntents.swift in Sources */,
+				838AA96DEC5CD72987912CE8 /* BlockerConfiguration.swift in Sources */,
+				F185626724B7A4AF1A611829 /* BlockerView.swift in Sources */,
+				3FCD74E5772C2C2E904478EE /* BrowserURLController.swift in Sources */,
+				F3C80245F7788C34D1789037 /* CustomDurationView.swift in Sources */,
+				2D22A700E1B095BFC550F36F /* FocusSessionCalendarRecorder.swift in Sources */,
+				020EF4AA91B1CAC50844070B /* FullscreenBreakView.swift in Sources */,
+				28668DDD6B337D82D33CE78C /* GlobalHotkeyMonitor.swift in Sources */,
+				5D129D00B5B5CD8C38347E71 /* HelpViews.swift in Sources */,
+				B64834F6600D0EFCAC579F42 /* KeyboardShortcutRecorder.swift in Sources */,
+				40DED3D4EA0E3BDD8CC00CCC /* NanaFlowCommands.swift in Sources */,
+				E8187476F51E44FA9DA54FE5 /* NanaFlowShared.swift in Sources */,
+				99784748AF061A26F35AECFF /* NanaFocusApp.swift in Sources */,
+				A981EE43562152865D6ECAFA /* PermissionViews.swift in Sources */,
+				D0ED927354F31EB74F6D7BFB /* ProUnlockedView.swift in Sources */,
+				9DA4C1C9BF07B7E55F79766E /* ScriptCommands.swift in Sources */,
+				B8FED36FAAD089616FBCBF29 /* SessionExporter.swift in Sources */,
+				0652BABE6A90E3BFDB260108 /* SessionHistory.swift in Sources */,
+				1D33E1E029D35B3FAEAFAABE /* SessionNotificationScheduler.swift in Sources */,
+				C59D68D29E9B8426FAA0B733 /* SessionTags.swift in Sources */,
+				E80216D5EE91514E5B601B82 /* StatisticsView.swift in Sources */,
+				B9F0204767175B797F2BD0C2 /* TagManagementView.swift in Sources */,
+				18B0F668F090BB29C6631D2E /* TimerController.swift in Sources */,
+				3C1E8ACA1BA28CF6C62F56DF /* TimerEngine.swift in Sources */,
+				B7F316C4B4D68C23B28814E6 /* TimerOptionsMenuContent.swift in Sources */,
+				C361D9FD0744D86A9859B14E /* TimerPersistence.swift in Sources */,
+				99CCD1E41C7B9EB64EE8C254 /* TimerPreferences.swift in Sources */,
+				C81A554BE4362CEF3CC901B3 /* TimerSettingsView.swift in Sources */,
+				364BCAC424008F1DED9F57D0 /* TimerSyncView.swift in Sources */,
+				A7D1DBB9E119DCDA071F8BD1 /* TimerTickSound.swift in Sources */,
+				BD485419788422276A06C898 /* TimerView.swift in Sources */,
+				C23EF939C220AD75D257EEB4 /* WelcomeView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AC24EE8902C10B10653B7BEE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0BA2B74A3A8552EFEEEDF77 /* NanaFlowShared.swift in Sources */,
+				4D784BF3160C4026A46FEABE /* NanaFlowWidgetBundle.swift in Sources */,
+				8A60059B74AEFF1F8AF9E24E /* NanaFlowWidgets.swift in Sources */,
+				5EDAC0E2020986C3B7413057 /* WidgetData.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		805BADCC8C74D11B6FBE3740 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D02A12EA7AF5752EDA81264E /* NanaFlowWidget */;
+			targetProxy = CE80B8DC20F66DA09AAEDF74 /* PBXContainerItemProxy */;
+		};
+		B576A9BD4F25E3F2F71988CF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F5A71727D1AA94E59C942E13 /* NanaFlow */;
+			targetProxy = FF48110237218B2DECBD1511 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		0D4B0E722EA065DCDE6D8D67 /* Localizable.stringsdict */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AB54B3D54D07F71C602982AA /* ca */,
+				D4E8AE68E54BCA53CA73F330 /* de */,
+				8A6A41EA2297C9CE16F6788E /* en */,
+				2697A546448A4C2DFEB5BFB9 /* es */,
+				168AA4BD8C194AD6343B6F9E /* fr */,
+				7D21F8A71838E20DDB5F8C93 /* it */,
+				E4BB1842E40768ADB9DA27C8 /* ja */,
+				38D78725115E55C3BE3631C9 /* ko */,
+				E08A366F44777DCF79300885 /* nb */,
+				38B5F604F4AC55C0BB1F9AFA /* nl */,
+				302B8D7E1F9AA59BFF488721 /* pl */,
+				18E742AF955060A64A733F3E /* pt-BR */,
+				E2F25473826A8B11398FB4AD /* pt-PT */,
+				4E1A0A7D1D6764C5799904A0 /* ru */,
+				8FD4232C127145284C42124E /* sv */,
+				8EEC7A651766907C12A114A5 /* tr */,
+				2D9841D42A8E37943195B4D2 /* uk */,
+				74F596B3292ECAFF313CDB54 /* vi */,
+				B0817C3D8BA82F6439303EC9 /* zh-Hans */,
+				740BC32D74214930B2BC751C /* zh-Hant */,
+			);
+			name = Localizable.stringsdict;
+			sourceTree = "<group>";
+		};
+		BE25D749C5AF7CCC0B7A535B /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B2D2F2EA9DE9F022A87DE0B7 /* ca */,
+				E47E37B10E4978108B3F6552 /* de */,
+				52EFD3908C6D0BED5A456DED /* en */,
+				841FCF3C7DB59610C4B11172 /* es */,
+				A2038F56F37DB5ECE8850C7A /* fr */,
+				1B5C7B9A480CEF24AF274C3C /* it */,
+				AE7A74B4A989C064DEF51B51 /* ja */,
+				9FE3E84DEF6477FDDC721A73 /* ko */,
+				A6841F1C66F88961E4D5266F /* nb */,
+				0E4F06921AC376E58B241210 /* nl */,
+				291965CB15C5398F458F3987 /* pl */,
+				AB955C494EE2594C09ECB8BE /* pt-BR */,
+				28EBA3FAE48011852252EA33 /* pt-PT */,
+				6D27FCE605C4785F933FA6A4 /* ru */,
+				46B4E0AE627451D84F128C78 /* sv */,
+				76FCABFBF647D37D0321AEE4 /* tr */,
+				3F2E648008E0B303DE2FB728 /* uk */,
+				CB963525944C0FBFF1D9C738 /* vi */,
+				5B4FB7B993C2714032B31A28 /* zh-Hans */,
+				F6CF4112978F0F253BA440A4 /* zh-Hant */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		13CC7E615953977CAAB46BAB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nanafox.NanaFlowTests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NanaFlow.app/Contents/MacOS/NanaFlow";
+			};
+			name = Release;
+		};
+		40D5A8E9B4228E795D10962B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nanafox.NanaFlowTests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NanaFlow.app/Contents/MacOS/NanaFlow";
+			};
+			name = Debug;
+		};
+		4C7C48F2A73DDAD684C06FD6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Sources/NanaFocus/NanaFlow.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_APP_SANDBOX = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Sources/NanaFocus/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nanafox.NanaFlow;
+				PRODUCT_NAME = NanaFlow;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		6729DA6B1D9A5846C4F71D91 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_APP_SANDBOX = YES;
+				INFOPLIST_FILE = Sources/NanaFlowWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nanafox.NanaFlow.Widget;
+				PRODUCT_NAME = NanaFlowWidget;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		A5B87923E3140CC7D4658352 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_APP_SANDBOX = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Sources/NanaFocus/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nanafox.NanaFlow;
+				PRODUCT_NAME = NanaFlow;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		C308020A23345D3D01E5D9B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		C801B1EEF3288921AD7E3107 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		F1547060FBB0A5D1CBCB604F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Sources/NanaFlowWidget/NanaFlowWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_APP_SANDBOX = YES;
+				INFOPLIST_FILE = Sources/NanaFlowWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nanafox.NanaFlow.Widget;
+				PRODUCT_NAME = NanaFlowWidget;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		23BF77FEB3E0336BC6CF457C /* Build configuration list for PBXNativeTarget "NanaFlowWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6729DA6B1D9A5846C4F71D91 /* Debug */,
+				F1547060FBB0A5D1CBCB604F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		3783E72C8CEC109B57452EE5 /* Build configuration list for PBXProject "NanaFlow" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C801B1EEF3288921AD7E3107 /* Debug */,
+				C308020A23345D3D01E5D9B5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		7CF4786F3C80631BB9873092 /* Build configuration list for PBXNativeTarget "NanaFlowTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				40D5A8E9B4228E795D10962B /* Debug */,
+				13CC7E615953977CAAB46BAB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F3657EB0EF51ABBA32AE0B7D /* Build configuration list for PBXNativeTarget "NanaFlow" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5B87923E3140CC7D4658352 /* Debug */,
+				4C7C48F2A73DDAD684C06FD6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1CE60D9AB72E39DD4DF05B39 /* Project object */;
+}

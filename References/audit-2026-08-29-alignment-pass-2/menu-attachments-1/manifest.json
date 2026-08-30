@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001C04563EA3801C",
+        "deviceName" : "My Mac",
+        "exportedFileName" : "C2FF12C9-47A9-4713-99D8-1426F6920C05.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "nanaflow-break-menu-icon_0_1307B9FA-C247-4A0A-A2D4-9BBE894B59F7.png",
+        "timestamp" : 1787987073.868
+      }
+    ],
+    "testIdentifier" : "ViewRenderingTests/testBreakMenuIconUsesExplicitWhiteForeground()",
+    "testIdentifierURL" : "test://com.apple.xcode/NanaFlow/NanaFlowTests/ViewRenderingTests/testBreakMenuIconUsesExplicitWhiteForeground"
+  }
+]

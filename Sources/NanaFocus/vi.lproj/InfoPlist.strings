@@ -1,0 +1,5 @@
+"CFBundleDisplayName" = "NanaFlow";
+"CFBundleName" = "NanaFlow";
+"NSAppleEventsUsageDescription" = "NanaFlow cần quyền truy cập trình duyệt của bạn để chặn các URL trong danh sách chặn của bạn.";
+"NSCalendarsFullAccessUsageDescription" = "NanaFlow muốn ghi vào lịch của bạn để đồng bộ hóa các phiên đã hoàn thành.";
+"NSUserNotificationUsageDescription" = "NanaFlow uses notifications to tell you when a session ends.";
