@@ -19,7 +19,7 @@
 | Web 视觉原型 | Vite production build 通过；Sites 测试 4/4 通过 |
 | 凭证与危险模式扫描 | 未发现硬编码私钥、API Token 或生产代码强制解包 |
 
-2026-08-31 发现统计页内容高度 `272` 与主窗口内容高度 `240` 不一致。已通过失败测试复现并修正为共用 `TimerVisualMetrics.windowContentHeight`；同一测试、74 项视图回归及 212 项全量回归均通过。
+2026-08-31 实机复查确认：`272` 是主窗口的完整可见表面，`240` 只是为 32 pt 透明标题栏做的 SwiftUI 根布局补偿。一度将统计页改为 `240` 会在底部暴露 32 pt 白带；最终修复显式定义 `TimerVisualMetrics.windowFrameHeight = 272`，计时器和统计页共用这一可见表面高度，而根布局补偿仍保持 `240`。Computer Use 实际切换已确认两页均完整填满 `380×272`、无白带；74 项视图回归及 212 项全量回归均通过。
 
 测试环境曾输出 `com.apple.linkd.autoShortcut` 与 `FSFindFolder` 连接信息；它们来自测试进程无法连接对应 macOS 用户服务，未产生测试失败或编译警告。
 

@@ -123,14 +123,14 @@
 
 | 闸门 | 结果 | 证据 |
 |---|---|---|
-| 全量测试 | 212/212，0 failures | `/tmp/nanaflow-final-full-test.log`；包含主窗口与统计内容高度一致性回归 |
-| xcresult | 可复查 | `/tmp/nanaflow-final-test-derived.X5zRzS/Logs/Test/Test-NanaFlow-2026.08.31_08-45-32-+0800.xcresult` |
+| 全量测试 | 212/212，0 failures | `/tmp/nanaflow-final2-full-test.log`；包含主窗口可见表面完整填满的回归 |
+| xcresult | 可复查 | `/tmp/nanaflow-final2-derived.MeY1le/Logs/Test/Test-NanaFlow-2026.08.31_08-56-31-+0800.xcresult` |
 | 覆盖率 | 全 App 75.25%（7866/10453） | 同一 xcresult；本次尺寸派生与一致性断言已执行 |
 | App Intents 元数据 | 归一化 diff 为空 | `/tmp/nanaflow-window-parity-final-appintents.diff` |
 | AppleScript SDEF | 品牌与 Cocoa 类命名归一化后 diff 为空；自动化实机返回“长时间停顿” | `/tmp/nanaflow-window-parity-final-sdef.diff`；Script Editor 实机调用 |
 | Release entitlement | 契约测试通过；`ENABLE_APP_SANDBOX=YES` | Flow 已签名 entitlement + NanaFlow Release build settings / plist 机器核对 |
-| Analyze | `ANALYZE SUCCEEDED` | 干净 Release DerivedData、0 warning，日志 `/tmp/nanaflow-final-analyze.log` |
-| Release | 本地通用包可运行，主 App 与 Widget 均为 arm64 + x86_64 | `dist/NanaFlow-8b89b6e-macOS-universal.zip`；解压后深度签名校验通过，ZIP SHA-256 为 `3d66df3b3c235930dc48819ee97f18292277b07bbcea5268c1b2a5eb22e07e34` |
+| Analyze | `ANALYZE SUCCEEDED` | 干净 Release DerivedData、0 warning，日志 `/tmp/nanaflow-final2-analyze.log` |
+| Release | 本地通用包可运行，主 App 与 Widget 均为 arm64 + x86_64 | `dist/NanaFlow-5c71d97-macOS-universal.zip`；解压后深度签名校验通过，ZIP SHA-256 为 `4bd9ed71621e4783ea4b984fd580d9c0cdc3665b99d6d6aa15cf0dc2a9dda10d` |
 | Release 签名 | 未通过 | 本机无 Apple Developer identity；使用 `CODE_SIGNING_ALLOWED=NO` 构建 |
 | 运行态资源 | 通过 | 44 AIFF、ICNS/PNG（含 1254×1254 Alpha 日历授权图标）、简体中文权限说明、SDEF、欢迎背景、Widget、App Intents 均在包内 |
 | 稳态资源占用 | 通过 | 暂停且隐藏窗口时连续 6 次采样为 0.0–0.1% CPU、约 21 MB；运行态保持 1 Hz |
@@ -171,7 +171,7 @@
    AppleScript 的公开 SDEF 与只读 `getPhase` 已验；`previous` 现已结合 Flow 官方 Changelog 的“back button / cycle navigation”记录与 arm64 状态迁移分支完成复核：已开始的阶段重载当前计时，尚未开始的阶段退回上一阶段，且两种路径都不自动开始。该命令保留为独立自动化契约；当前 Flow 主窗回转按钮的 AX 明确为“重新开始周期”，因此主窗已改回 `resetCycle()`，不再误复用 `previous`。
 3. **生产签名与跨设备**：提供 Apple Developer Team 后，执行正式签名、App Group/iCloud KVS 双设备同步和 Widget 数据共享验收。
 4. **Widget 宿主验收**：四尺寸生产视图已完成原生尺寸渲染和同图设计 QA；未签名 Debug extension 无法在系统小组件图库稳定发现，仍需生产签名后验证拖放、配置面板与 App Group 数据刷新。
-5. **本地 Release 与正式签名边界**：当前 `dist/NanaFlow-8b89b6e-macOS-universal.zip` 内的 App 已以 ad-hoc 签名通过 `codesign --verify --deep --strict`；它适合本机功能与视觉验收。App Group、iCloud、Calendar、通知、浏览器自动化权限和 Widget Gallery 仍需 Apple Developer 证书及 provisioning profile，不能把本地可运行包冒充正式分发签名。
+5. **本地 Release 与正式签名边界**：当前 `dist/NanaFlow-5c71d97-macOS-universal.zip` 内的 App 已以 ad-hoc 签名通过 `codesign --verify --deep --strict`；它适合本机功能与视觉验收。App Group、iCloud、Calendar、通知、浏览器自动化权限和 Widget Gallery 仍需 Apple Developer 证书及 provisioning profile，不能把本地可运行包冒充正式分发签名。
 5. **评分入口**：Flow 的“为应用评分”会打开 App Store 原生评论流程；NanaFlow 当前本地构建保持无动作，因为 [Apple Lookup](https://itunes.apple.com/lookup?bundleId=com.nanafox.NanaFlow) 对 `com.nanafox.NanaFlow` 返回 `resultCount: 0`。在正式上架并取得 App Store ID 前，不把该文案错误接到官网、邮件或伪评论页；上架后补接真实商店评论地址并做运行验收。
 6. **标签权益态像素**：标签三段路由、字段、颜色语义和行为已经由 Flow 4.8 包内类型/文案与 NanaFlow 运行态证明，但 Flow 侧标签管理被 Pro 权益挡住，尚无合法同状态源截图，因此只声明结构与功能等价，不声明该新增页面已完成像素级同图验收。
 7. **多语言覆盖**：Flow 4.8 的 Base 与 20 个实际语言区均已在 NanaFlow 工程声明，全部 20 个 `Localizable.strings` 已进入主 App 与 Widget。繁中、日文、德文、韩文、法文、西班牙文、意大利文、加泰罗尼亚文、葡萄牙语两区、荷兰文和挪威文已完成主窗、菜单、设置、Timer Sync 与 Pro 页运行抽查，周期格式也已本地化；保留的英文同形词均有 Flow 官方资源或目标语言语义依据。其余 6 个语言区仍各有 63–70 个与英文相同的值需要逐项判断，周期格式仍是英文，且尚未完成逐页布局回归。因此语言目录覆盖已经闭环，但全部文案翻译与逐语言视觉验收尚未闭环。

@@ -326,9 +326,10 @@ final result: passed
 
 ## 主窗口与统计内容高度统一（2026-08-31）
 
-- 根因：主窗口使用 380×272 外框和 240 pt 内容区，统计页却单独声明 272 pt 内容高度，导致同窗路由内部仍有尺寸冲突。
-- 修复：统计页直接复用 `TimerVisualMetrics.windowContentHeight`；图表高度由页头和周期栏剩余空间推导，不再维护第二套总高度。
-- TDD：针对性测试先以 `272 != 240` 出现 2 个预期失败，修复后 1/1 通过；视图回归 74/74、全量回归 212/212 通过；Release 静态分析 0 warning。
-- 交付：`dist` 仅保留 `NanaFlow-8b89b6e-macOS-universal.zip` 与说明文件。ZIP 内只有一个 `NanaFlow.app`，主 App 与 Widget 均为 `arm64 + x86_64`，解压后二进制哈希一致且深度签名校验通过。
+- 根因：`272` 是 380×272 主窗的完整可见表面，`240` 是为 32 pt 透明标题栏保留的 SwiftUI 根布局补偿，二者不能互换。上一次将统计页误改为 240 pt，导致窗口底部露出 32 pt 白带。
+- 修复：新增唯一的 `TimerVisualMetrics.windowFrameHeight = 272`，计时器、统计页和 scene 默认尺寸共用它；`windowContentHeight = 240` 仅继续用于根布局补偿。
+- 运行验收：Computer Use 切换安装版计时器和统计页，两张截图均为 380×272，统计背景完整填满底部，无白带。修复前后证据为 `References/audit-2026-08-31-window-consistency/01-timer-before.png` 至 `04-statistics-full-surface-after.png`。
+- TDD：缺少可见窗框高度合同时先产生编译级 RED，最小修复后针对性测试 1/1、视图回归 74/74、全量回归 212/212 通过；Release 静态分析 0 warning。
+- 交付：`dist` 仅保留 `NanaFlow-5c71d97-macOS-universal.zip` 与说明文件。ZIP 内只有一个 `NanaFlow.app`，主 App 与 Widget 均为 `arm64 + x86_64`，解压后二进制哈希一致且深度签名校验通过。
 
 final result: passed

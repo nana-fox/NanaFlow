@@ -56,7 +56,7 @@ npm run test:sites
 `dist` 只保留一个版本化 ZIP，避免把松散 App、旧 ZIP 和已安装副本混为一谈。当前包为：
 
 ```text
-dist/NanaFlow-8b89b6e-macOS-universal.zip
+dist/NanaFlow-5c71d97-macOS-universal.zip
 ```
 
 ZIP 内只有一个 `NanaFlow.app`。退出旧版后，将它拖入“应用程序”并选择替换。

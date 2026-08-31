@@ -2,7 +2,7 @@
 
 目标：在不改变 Flow 数据、不绕过 Flow 付费权益、不替用户接受系统权限的前提下，把当前本地可运行 NanaFlow 提升为带真实 App Group、iCloud、Calendar、通知、浏览器自动化和 Widget 宿主能力的开发者签名构建，并以真实运行证据关闭系统级缺口。
 
-当前阻塞证据（2026-08-29）：本机 `security find-identity -v -p codesigning` 返回 `0 valid identities found`；两个标准 provisioning profile 目录合计 `0` 个 profile；Release build setting 的 `DEVELOPMENT_TEAM` 未设置。故当前 `dist/NanaFlow-8b89b6e-macOS-universal.zip` 只能作为 ad-hoc 本地验收包，不能证明正式 entitlement 可用。
+当前阻塞证据（2026-08-29）：本机 `security find-identity -v -p codesigning` 返回 `0 valid identities found`；两个标准 provisioning profile 目录合计 `0` 个 profile；Release build setting 的 `DEVELOPMENT_TEAM` 未设置。故当前 `dist/NanaFlow-5c71d97-macOS-universal.zip` 只能作为 ad-hoc 本地验收包，不能证明正式 entitlement 可用。
 
 ## 完成判定矩阵
 
