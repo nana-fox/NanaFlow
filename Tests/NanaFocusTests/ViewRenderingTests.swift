@@ -841,16 +841,21 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertEqual(StatisticsVisualMetrics.periodTitleWidth, 258)
     }
 
-    func testStatisticsUsesTheMainWindowContentHeight() {
+    func testStatisticsFillsTheVisibleMainWindowSurface() {
+        XCTAssertEqual(TimerVisualMetrics.windowFrameHeight, 272)
         XCTAssertEqual(
             StatisticsVisualMetrics.contentHeight,
-            TimerVisualMetrics.windowContentHeight
+            TimerVisualMetrics.windowFrameHeight
         )
         XCTAssertEqual(
             StatisticsVisualMetrics.headerHeight
                 + StatisticsVisualMetrics.periodSwitcherHeight
                 + StatisticsVisualMetrics.chartHeight,
-            TimerVisualMetrics.windowContentHeight
+            TimerVisualMetrics.windowFrameHeight
+        )
+        XCTAssertEqual(
+            TimerVisualMetrics.windowFrameHeight - TimerVisualMetrics.windowContentHeight,
+            32
         )
     }
 
