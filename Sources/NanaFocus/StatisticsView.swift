@@ -46,7 +46,7 @@ func statisticsShowsLabel(
 
 enum StatisticsVisualMetrics {
     static let windowWidth: CGFloat = 380
-    static let contentHeight = TimerVisualMetrics.windowContentHeight
+    static let contentHeight = TimerVisualMetrics.windowFrameHeight
     static let headerHeight: CGFloat = 49
     static let periodSwitcherHeight: CGFloat = 42
     static let periodPickerWidth: CGFloat = 300

@@ -23,7 +23,7 @@ struct NanaFlowApp: App {
                     controller.perform(command)
                 }
         }
-        .defaultSize(width: 380, height: 272)
+        .defaultSize(width: 380, height: TimerVisualMetrics.windowFrameHeight)
         .windowResizability(.contentMinSize)
         .windowStyle(.plain)
         .commands {

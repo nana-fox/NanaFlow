@@ -145,7 +145,7 @@ struct TimerView: View {
 
             topControls
         }
-        .frame(width: 380, height: 272)
+        .frame(width: 380, height: TimerVisualMetrics.windowFrameHeight)
         .foregroundStyle(foregroundColor)
     }
 
@@ -511,6 +511,7 @@ private struct TimerPrimaryButtonStyle: ButtonStyle {
 }
 
 enum TimerVisualMetrics {
+    static let windowFrameHeight: CGFloat = 272
     static let windowContentHeight: CGFloat = 240
     static let windowCornerRadius: CGFloat = 26
     static let titleFontSize: CGFloat = 20
