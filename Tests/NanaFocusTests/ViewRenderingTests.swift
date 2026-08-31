@@ -859,6 +859,47 @@ final class ViewRenderingTests: XCTestCase {
         )
     }
 
+    func testEveryEmbeddedMainPageReusesTheVisibleWindowHeight() throws {
+        let repositoryURL = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let settings = try String(
+            contentsOf: repositoryURL.appendingPathComponent("Sources/NanaFocus/TimerSettingsView.swift"),
+            encoding: .utf8
+        )
+        let durations = try String(
+            contentsOf: repositoryURL.appendingPathComponent("Sources/NanaFocus/CustomDurationView.swift"),
+            encoding: .utf8
+        )
+        let about = try String(
+            contentsOf: repositoryURL.appendingPathComponent("Sources/NanaFocus/HelpViews.swift"),
+            encoding: .utf8
+        )
+
+        XCTAssertTrue(settings.contains(".frame(width: 380, height: TimerVisualMetrics.windowFrameHeight)"))
+        XCTAssertTrue(durations.contains(".frame(width: 380, height: TimerVisualMetrics.windowFrameHeight)"))
+        XCTAssertTrue(about.contains("static let contentHeight = TimerVisualMetrics.windowFrameHeight"))
+        XCTAssertFalse(settings.contains(".frame(width: 380, height: 272)"))
+        XCTAssertFalse(durations.contains(".frame(width: 380, height: 272)"))
+    }
+
+    func testCustomDurationControlsExposeSpecificAccessibilityLabels() throws {
+        let repositoryURL = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let source = try String(
+            contentsOf: repositoryURL.appendingPathComponent("Sources/NanaFocus/CustomDurationView.swift"),
+            encoding: .utf8
+        )
+
+        XCTAssertTrue(source.contains("accessibilityLabel: \"减少\\(title)\""))
+        XCTAssertTrue(source.contains("accessibilityLabel: \"增加\\(title)\""))
+        XCTAssertTrue(source.contains(".accessibilityLabel(Text(LocalizedStringKey(accessibilityLabel)))"))
+        XCTAssertTrue(source.contains(".accessibilityLabel(Text(LocalizedStringKey(title)))"))
+    }
+
     func testMainTimerUsesThePhosphorIconsSelectedInTheDesign() throws {
         let repositoryURL = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()
@@ -1102,6 +1143,7 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertTrue(menuSource.contains("Button(\"统计\""))
         XCTAssertTrue(menuSource.contains("Button(\"设置…\""))
         XCTAssertTrue(menuSource.contains("Button(\"关于 NanaFlow\""))
+        XCTAssertFalse(menuSource.contains("关闭菜单"))
         XCTAssertFalse(menuSource.contains("编辑会话名称"))
         XCTAssertFalse(menuSource.contains("定时器同步"))
         XCTAssertFalse(timerSource.contains("TextField(\"标题\", text: $titleDraft)"))
@@ -1616,7 +1658,7 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertFalse(window.standardWindowButton(.miniaturizeButton)?.isHidden ?? true)
     }
 
-    func testChineseMenuLocalizationIsBundled() {
+    func testChineseMenuLocalizationIsBundled() throws {
         XCTAssertNotNil(Bundle.main.url(
             forResource: "Localizable",
             withExtension: "strings",
@@ -1629,6 +1671,14 @@ final class ViewRenderingTests: XCTestCase {
             subdirectory: nil,
             localization: "zh-Hans"
         ))
+
+        let appBundle = Bundle(for: TimerController.self)
+        let chineseURL = try XCTUnwrap(appBundle.url(forResource: "zh-Hans", withExtension: "lproj"))
+        let chineseBundle = try XCTUnwrap(Bundle(url: chineseURL))
+        XCTAssertEqual(
+            chineseBundle.localizedString(forKey: "新Fullscreen窗口", value: nil, table: "Localizable"),
+            "新建全屏窗口"
+        )
     }
 
     func testAllFlowLanguageRegionsShipCompleteBrandSafeLocalizations() throws {
