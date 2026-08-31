@@ -841,6 +841,19 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertEqual(StatisticsVisualMetrics.periodTitleWidth, 258)
     }
 
+    func testStatisticsUsesTheMainWindowContentHeight() {
+        XCTAssertEqual(
+            StatisticsVisualMetrics.contentHeight,
+            TimerVisualMetrics.windowContentHeight
+        )
+        XCTAssertEqual(
+            StatisticsVisualMetrics.headerHeight
+                + StatisticsVisualMetrics.periodSwitcherHeight
+                + StatisticsVisualMetrics.chartHeight,
+            TimerVisualMetrics.windowContentHeight
+        )
+    }
+
     func testMainTimerUsesThePhosphorIconsSelectedInTheDesign() throws {
         let repositoryURL = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()
