@@ -2,13 +2,13 @@
 
 目标：在不改变 Flow 数据、不绕过 Flow 付费权益、不替用户接受系统权限的前提下，把当前本地可运行 NanaFlow 提升为带真实 App Group、iCloud、Calendar、通知、浏览器自动化和 Widget 宿主能力的开发者签名构建，并以真实运行证据关闭系统级缺口。
 
-当前阻塞证据（2026-08-29）：本机 `security find-identity -v -p codesigning` 返回 `0 valid identities found`；两个标准 provisioning profile 目录合计 `0` 个 profile；Release build setting 的 `DEVELOPMENT_TEAM` 未设置。故当前 `dist/NanaFlow-5c71d97-macOS-universal.zip` 只能作为 ad-hoc 本地验收包，不能证明正式 entitlement 可用。
+当前阻塞证据（2026-08-29）：本机 `security find-identity -v -p codesigning` 返回 `0 valid identities found`；两个标准 provisioning profile 目录合计 `0` 个 profile；Release build setting 的 `DEVELOPMENT_TEAM` 未设置。故当前 `dist/NanaFlow-7d911b9-macOS-universal.zip` 只能作为 ad-hoc 本地验收包，不能证明正式 entitlement 可用。
 
 ## 完成判定矩阵
 
 | 要求 | 当前证据 | 判定 | 关闭条件 |
 |---|---|---|---|
-| 核心计时、菜单、设置、会话、统计、阻断器和辅助窗口 | 212/212 测试、Computer Use 运行态、`design-qa.md` 的同尺寸图 | 已证明当前实现可运行 | 保持全量门禁绿色 |
+| 核心计时、菜单、设置、会话、统计、阻断器和辅助窗口 | 214/214 测试、Computer Use 运行态、`design-qa.md` 的同尺寸图 | 已证明当前实现可运行 | 保持全量门禁绿色 |
 | 主 App 与 Widget 通用架构 | 当前 ZIP 内主 App 与 Widget 均为 `x86_64 arm64`，ad-hoc 深度校验通过 | 已证明本地包结构 | 正式签名后重新核对 |
 | 主 App 沙盒与系统 entitlement | `Sources/NanaFocus/NanaFlow.entitlements:5` 至 `Sources/NanaFocus/NanaFlow.entitlements:30` 声明完整，但 ad-hoc 包没有这些已授权 entitlement | 未证明运行权限 | 开发者签名包内 entitlement 与源码逐项一致 |
 | Widget App Group 与宿主发现 | `Sources/NanaFlowWidget/NanaFlowWidget.entitlements:5` 至 `Sources/NanaFlowWidget/NanaFlowWidget.entitlements:9` 声明同组；生产视图已渲染 | 宿主运行未证明 | Widget Gallery 可发现、添加、配置并读取共享数据 |
@@ -88,7 +88,7 @@
 | 数据 | 仅创建 NanaFlow 测试会话、日历项和浏览器测试规则 | 删除测试规则/日历项，恢复 NanaFlow 25:00 第一轮暂停态 | 3 |
 | 系统权限 | 用户主动授予通知、Calendar、自动化 | 由用户在系统设置撤销；不由自动化代替决定 | 4 |
 
-回滚后可接受状态：保留当前版本化 ZIP ad-hoc 本地包与 212 项绿色回归；所有依赖正式 entitlement 的能力继续明确显示 unavailable 或未验收。
+回滚后可接受状态：保留当前版本化 ZIP ad-hoc 本地包与 214 项绿色回归；所有依赖正式 entitlement 的能力继续明确显示 unavailable 或未验收。
 
 ---
 
