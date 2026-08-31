@@ -323,3 +323,12 @@ final result: passed
 - Copy/content：通过，气泡只保留数量数字；时间和日期语义继续由轴刻度及辅助功能标签承担。
 
 final result: passed
+
+## 主窗口与统计内容高度统一（2026-08-31）
+
+- 根因：主窗口使用 380×272 外框和 240 pt 内容区，统计页却单独声明 272 pt 内容高度，导致同窗路由内部仍有尺寸冲突。
+- 修复：统计页直接复用 `TimerVisualMetrics.windowContentHeight`；图表高度由页头和周期栏剩余空间推导，不再维护第二套总高度。
+- TDD：针对性测试先以 `272 != 240` 出现 2 个预期失败，修复后 1/1 通过；视图回归 74/74、全量回归 212/212 通过；Release 静态分析 0 warning。
+- 交付：`dist` 仅保留 `NanaFlow-8b89b6e-macOS-universal.zip` 与说明文件。ZIP 内只有一个 `NanaFlow.app`，主 App 与 Widget 均为 `arm64 + x86_64`，解压后二进制哈希一致且深度签名校验通过。
+
+final result: passed

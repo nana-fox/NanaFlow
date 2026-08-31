@@ -51,6 +51,16 @@ npm run build
 npm run test:sites
 ```
 
+## 本地安装包
+
+`dist` 只保留一个版本化 ZIP，避免把松散 App、旧 ZIP 和已安装副本混为一谈。当前包为：
+
+```text
+dist/NanaFlow-8b89b6e-macOS-universal.zip
+```
+
+ZIP 内只有一个 `NanaFlow.app`。退出旧版后，将它拖入“应用程序”并选择替换。
+
 ## 签名边界
 
 未签名或 ad-hoc 构建适合本机的核心功能与视觉验证。App Group、iCloud KVS、Calendar、系统通知、浏览器自动化和 Widget Gallery 的正式验收，需要 Apple Developer 证书、匹配的 provisioning profile，并由用户在 macOS 中授权。
