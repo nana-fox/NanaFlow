@@ -24,7 +24,12 @@ NanaFlow 是一个原生 macOS 专注计时器。当前产品采用紧凑的单�
 
 ## 本地开发
 
-要求：macOS 15 或更高版本，以及支持 Swift 6 和 macOS 15 SDK 的 Xcode。
+要求：macOS 15 或更高版本，支持 Swift 6 和 macOS 15 SDK 的 Xcode，以及 [XcodeGen](https://github.com/yonaskolb/XcodeGen)。
+
+```sh
+git clone https://github.com/nana-fox/NanaFlow.git
+cd NanaFlow
+```
 
 ```sh
 xcodegen generate
@@ -51,15 +56,37 @@ npm run build
 npm run test:sites
 ```
 
+## 本地验收构建
+
+没有 Apple Developer 证书时，可以构建并 ad-hoc 签名一份仅供本机验收的 App：
+
+```sh
+xcodebuild build \
+  -project NanaFlow.xcodeproj \
+  -scheme NanaFlow \
+  -configuration Release \
+  -destination 'generic/platform=macOS' \
+  -derivedDataPath ./DerivedData \
+  CODE_SIGNING_ALLOWED=NO
+
+APP=./DerivedData/Build/Products/Release/NanaFlow.app
+codesign --force --sign - --timestamp=none "$APP/Contents/PlugIns/NanaFlowWidget.appex"
+codesign --force --sign - --timestamp=none "$APP"
+codesign --verify --deep --strict --verbose=2 "$APP"
+open "$APP"
+```
+
 ## 本地安装包
 
-`dist` 只保留一个版本化 ZIP，避免把松散 App、旧 ZIP 和已安装副本混为一谈。当前包为：
+`dist` 是维护者本机的交付目录，已被 Git 忽略，不会随代码仓库推送。当前本机已验收包为：
 
 ```text
 dist/NanaFlow-7d911b9-macOS-universal.zip
 ```
 
 ZIP 内只有一个 `NanaFlow.app`。退出旧版后，将它拖入“应用程序”并选择替换。
+
+当前 GitHub 仓库只管理源码和验收证据，尚未发布 GitHub Release；克隆仓库后请按上述命令本地构建。
 
 ## 签名边界
 
