@@ -62,7 +62,7 @@ struct TimerSettingsView: View {
                 for: .scrollIndicators
             )
         }
-        .frame(width: 380, height: 272)
+        .frame(width: 380, height: TimerVisualMetrics.windowFrameHeight)
         .background(FlowPalette.window)
         .preferredColorScheme(controller.preferences.appearance.colorScheme)
         .alert("无法更新登录项", isPresented: Binding(

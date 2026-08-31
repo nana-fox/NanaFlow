@@ -70,7 +70,7 @@ struct AboutNanaFlowView: View {
 enum AboutVisualMetrics {
     static let iconImageSize: CGFloat = 62
     static let contentWidth: CGFloat = 380
-    static let contentHeight: CGFloat = 272
+    static let contentHeight = TimerVisualMetrics.windowFrameHeight
     static let contentOffsetY: CGFloat = 0
 }
 

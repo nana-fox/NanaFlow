@@ -58,7 +58,7 @@ struct CustomDurationView: View {
             .scrollIndicators(.visible)
             .contentMargins(.trailing, 2, for: .scrollIndicators)
         }
-        .frame(width: 380, height: 272)
+        .frame(width: 380, height: TimerVisualMetrics.windowFrameHeight)
         .background(FlowPalette.window)
         .preferredColorScheme(controller.preferences.appearance.colorScheme)
     }
@@ -115,14 +115,14 @@ struct CustomDurationView: View {
             Text(LocalizedStringKey(title))
             Spacer()
             HStack(spacing: 0) {
-                stepperButton("minus") {
+                stepperButton("minus", accessibilityLabel: "减少\(title)") {
                     value.wrappedValue = max(range.lowerBound, value.wrappedValue - step)
                 }
                 Text("\(value.wrappedValue)\(unit)")
                     .font(.system(size: 13, weight: .semibold))
                     .monospacedDigit()
                     .frame(width: 62)
-                stepperButton("plus") {
+                stepperButton("plus", accessibilityLabel: "增加\(title)") {
                     value.wrappedValue = min(range.upperBound, value.wrappedValue + step)
                 }
             }
@@ -133,7 +133,11 @@ struct CustomDurationView: View {
         .overlay(alignment: .bottom) { Divider().padding(.leading, 12) }
     }
 
-    private func stepperButton(_ systemName: String, action: @escaping () -> Void) -> some View {
+    private func stepperButton(
+        _ systemName: String,
+        accessibilityLabel: String,
+        action: @escaping () -> Void
+    ) -> some View {
         Button(action: action) {
             Image(systemName: systemName)
                 .font(.system(size: 11, weight: .semibold))
@@ -141,6 +145,7 @@ struct CustomDurationView: View {
                 .background(Color.primary.opacity(0.055), in: RoundedRectangle(cornerRadius: 7))
         }
         .buttonStyle(.plain)
+        .accessibilityLabel(Text(LocalizedStringKey(accessibilityLabel)))
     }
 
     private func planToggleRow(
@@ -153,6 +158,7 @@ struct CustomDurationView: View {
             Spacer()
             Toggle("", isOn: isOn)
                 .labelsHidden()
+                .accessibilityLabel(Text(LocalizedStringKey(title)))
                 .toggleStyle(.switch)
                 .controlSize(.small)
                 .tint(FlowPalette.focus)

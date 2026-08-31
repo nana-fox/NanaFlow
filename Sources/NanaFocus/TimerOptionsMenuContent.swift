@@ -15,7 +15,6 @@ struct TimerOptionsMenuContent: View {
         Divider()
         Button("设置…", action: onSettings)
         Button("关于 NanaFlow", action: onAbout)
-        Button("关闭菜单") {}
     }
 
     private var phaseSwitchTitle: String {
