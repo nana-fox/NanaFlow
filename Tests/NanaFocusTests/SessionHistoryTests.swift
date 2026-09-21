@@ -717,6 +717,39 @@ final class SessionHistoryTests: XCTestCase {
         XCTAssertEqual(history.saved.last, [])
     }
 
+    func testControllerImportsBackupByMergingWithoutDroppingLocalHistory() throws {
+        let local = session(on: start, minutes: 25)
+        let incoming = session(on: start.addingTimeInterval(3_600), minutes: 50)
+        let history = HistorySpy(loaded: [local])
+        let controller = TimerController(
+            persistence: HistoryTimerPersistence(),
+            preferencesPersistence: HistoryPreferencesPersistence(),
+            historyPersistence: history,
+            notifications: HistoryNotifications(),
+            now: start
+        )
+
+        try controller.importSessions([incoming])
+
+        XCTAssertEqual(Set(controller.sessions.map(\.id)), [local.id, incoming.id])
+        XCTAssertEqual(history.saved.last, controller.sessions)
+    }
+
+    func testControllerKeepsCurrentHistoryWhenImportCannotBeSaved() {
+        let local = session(on: start, minutes: 25)
+        let incoming = session(on: start.addingTimeInterval(3_600), minutes: 50)
+        let controller = TimerController(
+            persistence: HistoryTimerPersistence(),
+            preferencesPersistence: HistoryPreferencesPersistence(),
+            historyPersistence: HistorySpy(saveError: HistoryTestError.failed, loaded: [local]),
+            notifications: HistoryNotifications(),
+            now: start
+        )
+
+        XCTAssertThrowsError(try controller.importSessions([incoming]))
+        XCTAssertEqual(controller.sessions, [local])
+    }
+
     func testControllerCanAddAndFullyEditManualSession() {
         let history = HistorySpy()
         let controller = TimerController(

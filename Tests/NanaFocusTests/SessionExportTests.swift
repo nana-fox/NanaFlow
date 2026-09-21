@@ -2,6 +2,32 @@ import XCTest
 @testable import NanaFlow
 
 final class SessionExportTests: XCTestCase {
+    func testBackupRoundTripsEverySessionField() throws {
+        let end = Date(timeIntervalSince1970: 1_700_000_000)
+        let sessions = [
+            FocusSession(
+                id: UUID(),
+                startedAt: end.addingTimeInterval(-1_560),
+                endedAt: end,
+                duration: 1_500,
+                completed: false,
+                title: "深度工作",
+                tag: "产品",
+                type: .focus,
+                interruptions: [
+                    SessionInterruption(
+                        stoppedAt: end.addingTimeInterval(-900),
+                        resumedAt: end.addingTimeInterval(-840)
+                    )
+                ]
+            )
+        ]
+
+        let data = try SessionExporter.backupData(sessions: sessions)
+
+        XCTAssertEqual(try SessionExporter.sessions(fromBackup: data), sessions)
+    }
+
     func testEmptyCSVKeepsFlowsHeaderNewline() {
         XCTAssertEqual(
             SessionExporter.csv(
