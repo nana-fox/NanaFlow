@@ -2060,7 +2060,7 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertTrue(allSessionsSource.contains("panel.nameFieldStringValue = String("))
         XCTAssertTrue(allSessionsSource.contains("String(localized: \"NanaFlow 会话.%@\")"))
         XCTAssertTrue(allSessionsSource.contains("panel.beginSheetModal(for: window)"))
-        XCTAssertTrue(allSessionsSource.contains("contents.write(to: url, atomically: true, encoding: .utf8)"))
+        XCTAssertTrue(allSessionsSource.contains("data.write(to: url, options: .atomic)"))
         XCTAssertFalse(allSessionsSource.contains(".fileExporter("))
         XCTAssertFalse(allSessionsSource.contains("runModal()"))
     }

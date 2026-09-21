@@ -427,7 +427,7 @@ struct AllSessionsView: View {
     let onBack: () -> Void
     let onSelect: (FocusSession) -> Void
 
-    @State private var exportError: String?
+    @State private var dataError: String?
     @AppStorage("showIncompleteSessions") private var showIncomplete = false
     @State private var selectedTag: String?
     @State private var confirmsDeleteAll = false
@@ -534,8 +534,12 @@ struct AllSessionsView: View {
                     Menu {
                         Button(SessionListMenuVisualMetrics.csvTitle) { beginExport(.csv) }
                         Button(SessionListMenuVisualMetrics.textTitle) { beginExport(.text) }
+                        Button("完整备份") { beginExport(.backup) }
                     } label: {
                         Label("导出", systemImage: SessionListMenuVisualMetrics.exportIcon)
+                    }
+                    Button("导入备份…", systemImage: "square.and.arrow.down") {
+                        beginImportBackup()
                     }
                     Divider()
                     Button(role: .destructive) { confirmsDeleteAll = true } label: {
@@ -562,13 +566,13 @@ struct AllSessionsView: View {
         } message: {
             Text("此操作不能撤销。")
         }
-        .alert("无法导出", isPresented: Binding(
-            get: { exportError != nil },
-            set: { if !$0 { exportError = nil } }
+        .alert("无法处理数据", isPresented: Binding(
+            get: { dataError != nil },
+            set: { if !$0 { dataError = nil } }
         )) {
-            Button("好") { exportError = nil }
+            Button("好") { dataError = nil }
         } message: {
-            Text(exportError ?? String(localized: "未知错误"))
+            Text(dataError ?? String(localized: "未知错误"))
         }
     }
 
@@ -592,11 +596,17 @@ struct AllSessionsView: View {
     }
 
     private func beginExport(_ format: SessionExportFormat) {
-        let contents = format.content(for: controller.sessions)
-        exportError = nil
+        let data: Data
+        do {
+            data = try format.data(for: controller.sessions)
+        } catch {
+            dataError = error.localizedDescription
+            return
+        }
+        dataError = nil
         DispatchQueue.main.async {
             guard let window = NSApp.keyWindow ?? NSApp.mainWindow else {
-                exportError = String(localized: "无法打开导出窗口。")
+                dataError = String(localized: "无法打开导出窗口。")
                 return
             }
 
@@ -610,9 +620,32 @@ struct AllSessionsView: View {
             panel.beginSheetModal(for: window) { response in
                 guard response == .OK, let url = panel.url else { return }
                 do {
-                    try contents.write(to: url, atomically: true, encoding: .utf8)
+                    try data.write(to: url, options: .atomic)
                 } catch {
-                    exportError = error.localizedDescription
+                    dataError = error.localizedDescription
+                }
+            }
+        }
+    }
+
+    private func beginImportBackup() {
+        dataError = nil
+        DispatchQueue.main.async {
+            guard let window = NSApp.keyWindow ?? NSApp.mainWindow else {
+                dataError = String(localized: "无法打开导出窗口。")
+                return
+            }
+
+            let panel = NSOpenPanel()
+            panel.allowedContentTypes = [.json]
+            panel.allowsMultipleSelection = false
+            panel.beginSheetModal(for: window) { response in
+                guard response == .OK, let url = panel.url else { return }
+                do {
+                    let sessions = try SessionExporter.sessions(fromBackup: Data(contentsOf: url))
+                    try controller.importSessions(sessions)
+                } catch {
+                    dataError = error.localizedDescription
                 }
             }
         }
@@ -849,14 +882,33 @@ private extension View {
 private enum SessionExportFormat {
     case csv
     case text
+    case backup
 
-    var fileExtension: String { self == .csv ? "csv" : "txt" }
-    var contentType: UTType { self == .csv ? .commaSeparatedText : .plainText }
+    var fileExtension: String {
+        switch self {
+        case .csv: "csv"
+        case .text: "txt"
+        case .backup: "json"
+        }
+    }
 
-    func content(for sessions: [FocusSession]) -> String {
-        self == .csv
-            ? SessionExporter.csv(sessions: sessions)
-            : SessionExporter.plainText(sessions: sessions)
+    var contentType: UTType {
+        switch self {
+        case .csv: .commaSeparatedText
+        case .text: .plainText
+        case .backup: .json
+        }
+    }
+
+    func data(for sessions: [FocusSession]) throws -> Data {
+        switch self {
+        case .csv:
+            Data(SessionExporter.csv(sessions: sessions).utf8)
+        case .text:
+            Data(SessionExporter.plainText(sessions: sessions).utf8)
+        case .backup:
+            try SessionExporter.backupData(sessions: sessions)
+        }
     }
 }
 

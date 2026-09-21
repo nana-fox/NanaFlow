@@ -482,6 +482,14 @@ final class TimerController {
         persistSessions()
     }
 
+    func importSessions(_ incoming: [FocusSession]) throws {
+        let merged = SessionHistoryPersistence.merge(local: sessions, incoming: incoming)
+        guard merged != sessions else { return }
+        try historyPersistence.save(merged)
+        sessions = merged
+        pushHistoryToCloud()
+    }
+
     func addSessionToCalendar(id: UUID) {
         guard let session = sessions.first(where: { $0.id == id }),
               session.type == .focus,

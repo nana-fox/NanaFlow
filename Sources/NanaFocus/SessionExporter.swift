@@ -1,6 +1,16 @@
 import Foundation
 
 enum SessionExporter {
+    static func backupData(sessions: [FocusSession]) throws -> Data {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        return try encoder.encode(sessions)
+    }
+
+    static func sessions(fromBackup data: Data) throws -> [FocusSession] {
+        try JSONDecoder().decode([FocusSession].self, from: data)
+    }
+
     static func csv(
         sessions: [FocusSession],
         timeZone: TimeZone = .current,

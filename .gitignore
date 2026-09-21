@@ -10,5 +10,5 @@ dist/
 *.xcworkspace/xcuserdata/
 
 # Web prototype dependencies and generated output
-Design/flow-ui-prototype/node_modules/
-Design/flow-ui-prototype/dist/
+Design/nanaflow-ui-prototype/node_modules/
+Design/nanaflow-ui-prototype/dist/

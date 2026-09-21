@@ -10,9 +10,9 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 ## Product direction
 
-- Treat the live `/Applications/Flow.app` 4.8 macOS UI as the visual source of truth.
-- Preserve Flow's 380×272 timer proportions, native macOS restraint, typography hierarchy, pale surface, teal accent, rounded corners, and compact controls.
-- Use the user-provided legacy Flow statistics screenshot as the statistics source of truth: D/W/M/Y segmented control, period navigation, pale full-height tracks, teal bars, and one concise total.
+- Treat the approved NanaFlow timer and statistics screenshots in `qa/simplified/` as the visual source of truth.
+- Preserve NanaFlow's 380×272 timer proportions, native macOS restraint, typography hierarchy, pale surface, teal accent, rounded corners, and compact controls.
+- Keep the approved statistics structure: D/W/M/Y segmented control, period navigation, pale full-height tracks, teal bars, and one concise total.
 - Keep timer and statistics inside the same 380×272 main window; the toolbar chart button switches the window content and a back button returns to the timer.
 - Remove blocker, insights, tags, mini timer, separate history, and separate statistics windows.
 - Treat the macOS menu-bar item as a first-class surface: show the countdown text only, with no NanaFlow half-circle mark, and provide timer, statistics, settings, restart/skip, and quit commands in its popover.

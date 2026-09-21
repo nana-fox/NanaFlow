@@ -1,5 +1,15 @@
 # NanaFlow 代码审查记录
 
+## 2026-09-21 Mac App Store 准备复查
+
+- 全量 macOS 回归：228/228 通过，0 失败；新增覆盖最小发布权限、主 App/Widget 版本一致、完整会话备份往返和导入失败不丢数据。
+- Release 静态分析：`CODE_SIGNING_ALLOWED=NO` 条件下通过。
+- Web 视觉原型：production build 通过，Sites 测试 4/4 通过；目录和包名统一为 `nanaflow-ui-prototype`。
+- Release entitlement 只保留 App Sandbox、用户选择文件读写和 App Group；Calendar、Apple Events、网络客户端与 iCloud KVS 已移出 1.0 发布包。
+- 会话列表新增完整 JSON 备份与合并导入。导入先保存、后替换当前状态，存储失败不会缩减当前历史。
+- README 与发布计划已改为 NanaFlow 独立产品定位，Mac App Store 为 1.0 唯一正式发布路线。
+- 仍未证明：Apple 会员激活、正式 Team Archive、App Store Connect 上传、商店安装、真实沙盒数据迁移与 Widget Gallery。
+
 ## 2026-09-21 功能更新验证
 
 - 新增可选菜单栏今日完成数，主动阶段跳转立即开始；保留自然结束与自动化的原有行为。
