@@ -50,10 +50,19 @@ struct SessionHistoryPersistence: SessionHistoryPersisting {
         }
     }
 
+    /// Last writer wins per UUID, so `incoming` overrides `local`. Decoded JSON may repeat a UUID
+    /// within one side, which must not trap, and the ID tie-break keeps the order deterministic so
+    /// callers do not see a "changed" array every launch.
     static func merge(local: [FocusSession], incoming: [FocusSession]) -> [FocusSession] {
-        var sessionsByID = Dictionary(uniqueKeysWithValues: local.map { ($0.id, $0) })
-        incoming.forEach { sessionsByID[$0.id] = $0 }
-        return sessionsByID.values.sorted { $0.endedAt > $1.endedAt }
+        var sessionsByID: [UUID: FocusSession] = [:]
+        for session in local + incoming {
+            sessionsByID[session.id] = session
+        }
+        return sessionsByID.values.sorted {
+            $0.endedAt == $1.endedAt
+                ? $0.id.uuidString < $1.id.uuidString
+                : $0.endedAt > $1.endedAt
+        }
     }
 }
 
