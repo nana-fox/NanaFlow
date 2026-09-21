@@ -10,21 +10,23 @@
 |-----|-----------------|-----|-----|
 | `SessionHistoryPersisting.load` | Sources/NanaFocus/SessionHistory.swift:6 | `func load() -> [FocusSession]` | 应用启动读取历史的协议边界 |
 | `SessionHistoryPersistence.init` | Sources/NanaFocus/SessionHistory.swift:16 | `init(defaults: UserDefaults = .standard, sharedDefaults: UserDefaults? = nil)` | 注入主记录与共享镜像 |
-| `SessionHistoryPersistence.load` | Sources/NanaFocus/SessionHistory.swift:21 | `func load() -> [FocusSession]` | 合并、迁移和自修复入口 |
-| `SessionHistoryPersistence.save` | Sources/NanaFocus/SessionHistory.swift:26 | `func save(_ sessions: [FocusSession]) throws` | 同步写入主记录和 Widget 镜像 |
-| `SessionHistoryPersistence.merge` | Sources/NanaFocus/SessionHistory.swift:35 | `static func merge(local: [FocusSession], incoming: [FocusSession]) -> [FocusSession]` | UUID 去重并按结束时间排序 |
+| `SessionHistoryPersistence.load` | Sources/NanaFocus/SessionHistory.swift:24 | `func load() -> [FocusSession]` | 合并、迁移和自修复入口 |
+| `SessionHistoryPersistence.save` | Sources/NanaFocus/SessionHistory.swift:44 | `func save(_ sessions: [FocusSession]) throws` | 同步写入主记录和 Widget 镜像 |
+| `SessionHistoryPersistence.merge` | Sources/NanaFocus/SessionHistory.swift:56 | `static func merge(local: [FocusSession], incoming: [FocusSession]) -> [FocusSession]` | UUID 去重并稳定排序 |
 | `TimerController.init` | Sources/NanaFocus/TimerController.swift:60 | `init(configuration:persistence:preferencesPersistence:historyPersistence:tagPersistence:notifications:calendarRecorder:tickSound:now:)` | 生产启动调用 `load` 的位置 |
 | `NanaFlowShared.defaults` | Sources/NanaShared/NanaFlowShared.swift:209 | `static var defaults: UserDefaults?` | App Group 镜像来源 |
 | `testHistoryMirrorsSessionsForWidgets` | Tests/NanaFocusTests/SessionHistoryTests.swift:29 | `func testHistoryMirrorsSessionsForWidgets() throws` | 现有双写契约 |
 
 ## L1.2 同类路径对照
 
-参考实现：`SessionHistoryPersistence.save`（Sources/NanaFocus/SessionHistory.swift:26）与云端合并（Sources/NanaFocus/TimerController.swift:657）
+参考实现：`SessionHistoryPersistence.save`（Sources/NanaFocus/SessionHistory.swift:44）与云端合并（Sources/NanaFocus/TimerController.swift:657）
 
 - [x] 主记录存在、共享镜像缺失：返回主记录并修复镜像。
 - [x] 主记录缺失、共享镜像存在：恢复共享记录并回写主记录。
 - [x] 两侧含不同 UUID：并集合并、去重、降序排列并回写两侧。
 - [x] 同 UUID 内容冲突：主记录覆盖共享镜像，避免旧 Widget 镜像回滚用户编辑。
+- [x] 单侧内部重复 UUID：后写记录胜出，不因 Dictionary 重复键崩溃。
+- [x] 相同结束时间：按 UUID 稳定排序，避免无变化时重复回写。
 - [x] 一侧 JSON 损坏：忽略损坏侧，保留并复制有效侧。
 - [x] 两侧均缺失或损坏：返回空数组，不制造记录。
 - [x] `sharedDefaults == nil`：保持单存储行为，不触发 Widget 刷新。
@@ -57,6 +59,8 @@
 | 共享镜像为非法 JSON | 主记录 | 不崩溃、不清空主记录 |
 | 同 UUID 内容冲突 | 主记录版本 | 标题或标签保持主记录值 |
 | 两侧各有唯一记录 | 两条记录 | UUID 集合完整、无重复 |
+| 单侧 JSON 含重复 UUID | 单条后写记录 | 不崩溃且 incoming 语义不变 |
+| 多条记录结束时间相同 | 每次顺序一致 | UUID tie-break 与原始输入顺序无关 |
 
 ## L1.6 回滚
 
