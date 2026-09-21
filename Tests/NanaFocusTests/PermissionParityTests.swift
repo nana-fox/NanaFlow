@@ -4,7 +4,7 @@ import XCTest
 
 @MainActor
 final class PermissionParityTests: XCTestCase {
-    func testReleaseEntitlementsCoverSandboxedSystemIntegrations() throws {
+    func testReleaseEntitlementsUseTheMinimalStoreAllowlist() throws {
         let repositoryURL = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()
             .deletingLastPathComponent()
@@ -15,32 +15,38 @@ final class PermissionParityTests: XCTestCase {
             PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any]
         )
 
-        XCTAssertEqual(entitlements["com.apple.security.app-sandbox"] as? Bool, true)
-        XCTAssertEqual(entitlements["com.apple.security.automation.apple-events"] as? Bool, true)
-        XCTAssertEqual(entitlements["com.apple.security.personal-information.calendars"] as? Bool, true)
-        XCTAssertEqual(entitlements["com.apple.security.files.user-selected.read-write"] as? Bool, true)
-        XCTAssertEqual(entitlements["com.apple.security.network.client"] as? Bool, true)
         XCTAssertEqual(
-            entitlements["com.apple.security.temporary-exception.apple-events"] as? [String],
+            Set(entitlements.keys),
             [
-                "com.apple.Safari",
-                "com.google.Chrome",
-                "com.microsoft.edgemac",
-                "com.brave.Browser",
-                "com.vivaldi.Vivaldi",
-                "com.operasoftware.Opera",
-                "com.pushplaylabs.sidekick",
-                "company.thebrowser.Browser"
+                "com.apple.security.app-sandbox",
+                "com.apple.security.files.user-selected.read-write",
+                "com.apple.security.application-groups"
             ]
         )
+        XCTAssertEqual(entitlements["com.apple.security.app-sandbox"] as? Bool, true)
+        XCTAssertEqual(entitlements["com.apple.security.files.user-selected.read-write"] as? Bool, true)
         XCTAssertEqual(
             entitlements["com.apple.security.application-groups"] as? [String],
             ["group.com.nanafox.NanaFlow"]
         )
-        XCTAssertEqual(
-            entitlements["com.apple.developer.ubiquity-kvstore-identifier"] as? String,
-            "$(TeamIdentifierPrefix)com.nanafox.NanaFlow"
+    }
+
+    func testReleaseInfoPlistUsesBuildVersionsAndNoDeferredPermissionCopy() throws {
+        let repositoryURL = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let infoURL = repositoryURL.appendingPathComponent("Sources/NanaFocus/Info.plist")
+        let data = try Data(contentsOf: infoURL)
+        let info = try XCTUnwrap(
+            PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any]
         )
+
+        XCTAssertEqual(info["CFBundleShortVersionString"] as? String, "$(MARKETING_VERSION)")
+        XCTAssertEqual(info["CFBundleVersion"] as? String, "$(CURRENT_PROJECT_VERSION)")
+        XCTAssertEqual(info["ITSAppUsesNonExemptEncryption"] as? Bool, false)
+        XCTAssertNil(info["NSAppleEventsUsageDescription"])
+        XCTAssertNil(info["NSCalendarsFullAccessUsageDescription"])
     }
 
     func testPermissionWindowsMatchFlowVisibleContract() {
