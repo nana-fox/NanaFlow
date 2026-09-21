@@ -607,8 +607,12 @@ final class ViewRenderingTests: XCTestCase {
         )
 
         XCTAssertTrue(source.contains("CommandGroup(replacing: .singleWindowList)"))
-        for title in ["Welcome", "Notification Alert", "Calendar Alert", "Calendar Chooser"] {
+        for title in ["Welcome", "Notification Alert"] {
             XCTAssertTrue(source.contains("\"\(title)\""), "Missing Flow window item: \(title)")
+        }
+        for removedTitle in ["Calendar Alert", "Calendar Chooser"] {
+            XCTAssertFalse(source.contains("\"\(removedTitle)\""))
+            XCTAssertFalse(appSource.contains("\"\(removedTitle)\""))
         }
         for removedTitle in ["About", "Pro Upgrade", "How It Works"] {
             XCTAssertFalse(source.contains("\"\(removedTitle)\""))
@@ -616,7 +620,7 @@ final class ViewRenderingTests: XCTestCase {
         for NanaFlowOnlyScene in ["应用与网页阻断器", "标签", "自定义时长"] {
             XCTAssertFalse(source.contains("Button(\"\(NanaFlowOnlyScene)\")"))
         }
-        XCTAssertEqual(appSource.components(separatedBy: ".commandsRemoved()").count - 1, 4)
+        XCTAssertEqual(appSource.components(separatedBy: ".commandsRemoved()").count - 1, 2)
         XCTAssertFalse(appSource.contains("Window(\"自定义时长\""))
         XCTAssertTrue(source.contains("CommandGroup(after: .windowList)"))
         XCTAssertTrue(source.contains("windowButton(\"NanaFlow\", id: \"timer\""))
@@ -2018,7 +2022,7 @@ final class ViewRenderingTests: XCTestCase {
         )
     }
 
-    func testAllSessionsFilterMenuMatchesFlowsSelectionContract() throws {
+    func testAllSessionsDoesNotExposeTagFilteringInVersionOne() throws {
         let repositoryURL = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()
             .deletingLastPathComponent()
@@ -2032,13 +2036,9 @@ final class ViewRenderingTests: XCTestCase {
                 .split(separator: "struct SessionDetailView", maxSplits: 1).first
         )
 
-        XCTAssertTrue(allSessionsSource.contains("Section(SessionListMenuVisualMetrics.filterTitle)"))
-        XCTAssertTrue(allSessionsSource.contains("Toggle(tag, isOn: filterSelectionBinding(for: tag))"))
-        XCTAssertTrue(allSessionsSource.contains(
-            "Button(SessionListMenuVisualMetrics.clearFilterTitle, systemImage: SessionListMenuVisualMetrics.clearFilterIcon)"
-        ))
-        XCTAssertFalse(allSessionsSource.contains("Button(\"所有标签\")"))
-        XCTAssertFalse(allSessionsSource.contains("Button(\"清除筛选\")"))
+        XCTAssertFalse(allSessionsSource.contains("SessionListMenuVisualMetrics.filterTitle"))
+        XCTAssertFalse(allSessionsSource.contains("filterSelectionBinding"))
+        XCTAssertFalse(allSessionsSource.contains("controller.tagSettings"))
     }
 
     func testAllSessionsExportUsesNonblockingSavePanelAfterMenuDismissal() throws {

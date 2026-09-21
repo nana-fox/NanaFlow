@@ -100,6 +100,7 @@
 		A6E658F32E8315BC1C13AFF0 /* NanaFlow-alarmClock-v3.aiff in Resources */ = {isa = PBXBuildFile; fileRef = A7DFCFE82D0FC89D1FA311B6 /* NanaFlow-alarmClock-v3.aiff */; };
 		A75AEF7ABF7B98F5B7671B04 /* NanaFlowIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E80B3DDBCB82A6D66926E3 /* NanaFlowIcon.png */; };
 		A7D1DBB9E119DCDA071F8BD1 /* TimerTickSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39232441BB21ABEB7DB1A33C /* TimerTickSound.swift */; };
+		A8E3AE083949327D9556FB84 /* ProductScopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525A21D28C65C4C14BA321E6 /* ProductScopeTests.swift */; };
 		A981EE43562152865D6ECAFA /* PermissionViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712A37FF3CDCD6DDBECF091 /* PermissionViews.swift */; };
 		AED70435D6C01E6C03B78954 /* NanaFlow-whistle-v2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = EB7032748070B3679ACB5D51 /* NanaFlow-whistle-v2.aiff */; };
 		AF5E76145996FEB1183CDDAE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B1AD995E6059BF18A9D873F0 /* InfoPlist.strings */; };
@@ -238,6 +239,7 @@
 		50BCFB2480224C11640998CB /* NanaFlow-harp-v3.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-harp-v3.aiff"; sourceTree = "<group>"; };
 		5144A1ED7DEEA3F5DC9D3A15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		52177FC851BA1B0B15204D4F /* NanaFlowCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NanaFlowCommands.swift; sourceTree = "<group>"; };
+		525A21D28C65C4C14BA321E6 /* ProductScopeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductScopeTests.swift; sourceTree = "<group>"; };
 		52EFD3908C6D0BED5A456DED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		532A3B30B9CCFE038BA6483E /* NanaFlowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NanaFlowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		55DF3FE8D1E2EB0AD4698F3C /* NanaFlow-bell-v1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-bell-v1.aiff"; sourceTree = "<group>"; };
@@ -511,6 +513,7 @@
 				F79B2A3145FB4F2057056AA8 /* MenuBarAndJumpTests.swift */,
 				1E32D3EEC01BB0592261A56F /* NotificationCopyTests.swift */,
 				D4D32A52B4B14ABFBFD66E88 /* PermissionParityTests.swift */,
+				525A21D28C65C4C14BA321E6 /* ProductScopeTests.swift */,
 				4DCE016C37AD408B9C805941 /* ProUnlockedParityTests.swift */,
 				21ABE7BF71C756EF65DE9D88 /* SessionExportTests.swift */,
 				2025B0B869051A21F2F47D07 /* SessionHistoryTests.swift */,
@@ -762,6 +765,7 @@
 				2DA1B817F7745226178C38E0 /* NotificationCopyTests.swift in Sources */,
 				DFAC6A8A9274416D60D903BD /* PermissionParityTests.swift in Sources */,
 				C0617B19C7C70664E78948E0 /* ProUnlockedParityTests.swift in Sources */,
+				A8E3AE083949327D9556FB84 /* ProductScopeTests.swift in Sources */,
 				8453CA824EE08C4BD2B3AA9D /* SessionExportTests.swift in Sources */,
 				FE86D5C01B6B049ABA25A26D /* SessionHistoryTests.swift in Sources */,
 				EF26A72A5C136CD3E1957804 /* SessionTagTests.swift in Sources */,

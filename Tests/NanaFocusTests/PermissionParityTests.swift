@@ -64,27 +64,18 @@ final class PermissionParityTests: XCTestCase {
         XCTAssertEqual(info["CFBundleVersion"] as? String, "$(CURRENT_PROJECT_VERSION)")
     }
 
-    func testPermissionWindowsMatchFlowVisibleContract() {
+    func testNotificationPermissionWindowMatchesVisibleContract() {
         XCTAssertEqual(PermissionWindowMetrics.alertWidth, 300)
         XCTAssertEqual(PermissionWindowMetrics.alertHeight, 272)
-        XCTAssertEqual(PermissionWindowMetrics.chooserWidth, 300)
-        XCTAssertEqual(PermissionWindowMetrics.chooserHeight, 332)
         XCTAssertEqual(PermissionWindowMetrics.contentWidth, 268)
         XCTAssertEqual(PermissionWindowMetrics.notificationMessageFontSize, 12.5)
-        XCTAssertEqual(PermissionWindowMetrics.calendarMessageFontSize, 11.5)
         XCTAssertEqual(PermissionWindowMetrics.primaryButtonHeight, 36)
         XCTAssertEqual(PermissionWindowMetrics.iconSize, 68)
-        XCTAssertEqual(PermissionWindowMetrics.calendarIconSize, 82)
 
         XCTAssertEqual(PermissionAlertKind.notification.title, "允许通知")
         XCTAssertEqual(
             PermissionAlertKind.notification.message,
             "在系统设置中禁用通知。 转到系统设置以允许通知，然后重试。"
-        )
-        XCTAssertEqual(PermissionAlertKind.calendar.title, "允许日历访问")
-        XCTAssertEqual(
-            PermissionAlertKind.calendar.message,
-            "系统偏好设置中已禁用日历访问权限。请转到系统偏好设置以允许完整的日历访问权限，然后重试。"
         )
     }
 
@@ -101,51 +92,17 @@ final class PermissionParityTests: XCTestCase {
             PermissionRouting.notification(enabled: true, status: .authorized),
             .enable
         )
-        XCTAssertEqual(
-            PermissionRouting.calendar(enabled: true, status: .authorized),
-            .showCalendarChooser
-        )
-        XCTAssertEqual(
-            PermissionRouting.calendar(enabled: false, status: .authorized),
-            .disable
-        )
     }
 
-    func testPermissionAlertsAndEmptyCalendarChooserRender() {
+    func testNotificationPermissionAlertRenders() {
         let notification = ImageRenderer(content: PermissionAlertView(kind: .notification, onDismiss: {}))
         notification.proposedSize = ProposedViewSize(
             width: PermissionWindowMetrics.alertWidth,
             height: PermissionWindowMetrics.alertHeight
         )
-        let calendar = ImageRenderer(content: PermissionAlertView(kind: .calendar, onDismiss: {}))
-        calendar.proposedSize = ProposedViewSize(
-            width: PermissionWindowMetrics.alertWidth,
-            height: PermissionWindowMetrics.alertHeight
-        )
-        let chooser = ImageRenderer(content: CalendarChooserView(
-            choices: [],
-            selectedIdentifier: .constant(nil),
-            onCancel: {},
-            onDone: {}
-        ))
-        chooser.proposedSize = ProposedViewSize(
-            width: PermissionWindowMetrics.chooserWidth,
-            height: PermissionWindowMetrics.chooserHeight
-        )
-
         let notificationImage = notification.nsImage
-        let calendarImage = calendar.nsImage
-        let chooserImage = chooser.nsImage
         XCTAssertNotNil(notificationImage)
-        XCTAssertNotNil(calendarImage)
-        XCTAssertNotNil(chooserImage)
         if let notificationImage { attach(notificationImage, name: "nanaflow-notification-alert") }
-        if let calendarImage { attach(calendarImage, name: "nanaflow-calendar-alert") }
-        if let chooserImage { attach(chooserImage, name: "nanaflow-calendar-chooser") }
-    }
-
-    func testCalendarPermissionIconIsBundled() {
-        XCTAssertNotNil(NSImage(named: "NanaFlowCalendarAccess"))
     }
 
     private func attach(_ image: NSImage, name: String) {
