@@ -169,6 +169,55 @@ final class SessionHistoryTests: XCTestCase {
         XCTAssertEqual(merged.last?.title, "新标题")
     }
 
+    func testMergeSurvivesDuplicateIDsOnEitherSide() {
+        let duplicated = UUID()
+        var localFirst = session(on: start, minutes: 25, id: duplicated)
+        localFirst.title = "镜像旧值"
+        var localSecond = localFirst
+        localSecond.title = "镜像新值"
+        var incomingFirst = session(on: start, minutes: 25, id: duplicated)
+        incomingFirst.title = "主记录旧值"
+        var incomingSecond = incomingFirst
+        incomingSecond.title = "主记录新值"
+
+        let merged = SessionHistoryPersistence.merge(
+            local: [localFirst, localSecond],
+            incoming: [incomingFirst, incomingSecond]
+        )
+
+        XCTAssertEqual(merged.map(\.id), [duplicated])
+        XCTAssertEqual(merged.first?.title, "主记录新值")
+    }
+
+    func testMergeOrdersSessionsWithEqualEndDatesByID() {
+        let sameEnd = (0 ..< 5).map { index in
+            session(on: start, minutes: 25, id: UUID(uuidString: "0000000\(index)-0000-0000-0000-000000000000")!)
+        }
+        let expected = sameEnd.sorted { $0.id.uuidString < $1.id.uuidString }
+
+        XCTAssertEqual(SessionHistoryPersistence.merge(local: [], incoming: sameEnd.shuffled()), expected)
+        XCTAssertEqual(SessionHistoryPersistence.merge(local: sameEnd.shuffled(), incoming: []), expected)
+    }
+
+    func testLoadLeavesBothStoresUntouchedWhenTheyAlreadyAgree() throws {
+        let stores = try HistoryStores()
+        defer { stores.clear() }
+        let tied = (0 ..< 5)
+            .map { index in
+                session(on: start, minutes: 25, id: UUID(uuidString: "0000000\(index)-0000-0000-0000-000000000000")!)
+            }
+            .sorted { $0.id.uuidString < $1.id.uuidString }
+        try stores.write(tied, to: stores.primary)
+        try stores.write(tied, to: stores.shared)
+        let primaryBefore = stores.primary.data(forKey: SessionHistoryPersistence.storageKey)
+        let sharedBefore = stores.shared.data(forKey: SessionHistoryPersistence.storageKey)
+
+        XCTAssertEqual(stores.persistence.load(), tied)
+
+        XCTAssertEqual(stores.primary.data(forKey: SessionHistoryPersistence.storageKey), primaryBefore)
+        XCTAssertEqual(stores.shared.data(forKey: SessionHistoryPersistence.storageKey), sharedBefore)
+    }
+
     func testWeeklyStatisticsCountOnlySessionsInSelectedWeek() {
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = TimeZone(secondsFromGMT: 0)!
