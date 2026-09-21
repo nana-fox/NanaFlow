@@ -49,6 +49,21 @@ final class PermissionParityTests: XCTestCase {
         XCTAssertNil(info["NSCalendarsFullAccessUsageDescription"])
     }
 
+    func testWidgetInfoPlistUsesTheSameBuildVersions() throws {
+        let repositoryURL = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let infoURL = repositoryURL.appendingPathComponent("Sources/NanaFlowWidget/Info.plist")
+        let data = try Data(contentsOf: infoURL)
+        let info = try XCTUnwrap(
+            PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any]
+        )
+
+        XCTAssertEqual(info["CFBundleShortVersionString"] as? String, "$(MARKETING_VERSION)")
+        XCTAssertEqual(info["CFBundleVersion"] as? String, "$(CURRENT_PROJECT_VERSION)")
+    }
+
     func testPermissionWindowsMatchFlowVisibleContract() {
         XCTAssertEqual(PermissionWindowMetrics.alertWidth, 300)
         XCTAssertEqual(PermissionWindowMetrics.alertHeight, 272)
