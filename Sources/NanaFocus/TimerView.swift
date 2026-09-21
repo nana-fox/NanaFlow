@@ -172,7 +172,7 @@ struct TimerView: View {
                 .position(x: TimerVisualMetrics.closeControlX, y: TimerVisualMetrics.toolbarCenterY)
 
                 if TimerVisualMetrics.showsSkipButton(for: controller.engine.state.phase) {
-                    Button { controller.skip() } label: {
+                    Button { controller.skipAndStart() } label: {
                         Image(systemName: "chevron.right")
                             .font(.system(size: TimerVisualMetrics.skipSymbolSize, weight: .light))
                             .symbolRenderingMode(.monochrome)

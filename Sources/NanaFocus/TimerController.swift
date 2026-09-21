@@ -187,13 +187,26 @@ final class TimerController {
         }
     }
 
+    /// A deliberate user jump starts immediately; automation retains its existing policy.
+    func skipAndStart(at date: Date = Date()) {
+        skip(at: date, startsImmediately: true)
+    }
+
     func skip(at date: Date = Date()) {
+        skip(at: date, startsImmediately: false)
+    }
+
+    private func skip(at date: Date, startsImmediately: Bool) {
         now = date
         guard !isCommittedFocus else { return }
         let interruptedEngine = engine
         engine.skip(at: date)
         notifications.cancelCompletion()
-        autoStartIfEnabled(at: date)
+        if startsImmediately {
+            startEngine(at: date)
+        } else {
+            autoStartIfEnabled(at: date)
+        }
         persist()
         recordSession(from: interruptedEngine, endedAt: date, completed: false)
     }

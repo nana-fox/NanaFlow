@@ -3,11 +3,14 @@ import SwiftUI
 
 @MainActor
 private func menuBarAccessibilityLabel(_ controller: TimerController) -> String {
-    String(
+    let timer = String(
         format: String(localized: "menu_bar_accessibility_format"),
         controller.phaseTitle,
         controller.formattedTime
     )
+    guard controller.preferences.showTodayCompletedCount else { return timer }
+    let count = completedFocusCount(on: Date(), sessions: controller.sessions)
+    return timer + " · " + String(format: String(localized: "today_completed_focus_format"), count)
 }
 
 @main
@@ -78,11 +81,22 @@ struct MenuBarStatusContent: View {
     let controller: TimerController
 
     var body: some View {
-        Text(controller.formattedTime)
-                .monospacedDigit()
-                .foregroundStyle(Color(nsColor: .labelColor))
+        TimelineView(.periodic(from: .now, by: 1)) { context in
+            HStack(spacing: 7) {
+                Text(controller.formattedTime)
+                if controller.preferences.showTodayCompletedCount {
+                    Rectangle()
+                        .fill(Color(nsColor: .labelColor).opacity(0.4))
+                        .frame(width: 1, height: 12)
+                        .accessibilityHidden(true)
+                    Text("\(completedFocusCount(on: context.date, sessions: controller.sessions))")
+                }
+            }
+            .monospacedDigit()
+            .foregroundStyle(Color(nsColor: .labelColor))
+        }
             .accessibilityLabel(menuBarAccessibilityLabel(controller))
-            .help("\(controller.phaseTitle) · \(controller.formattedTime)")
+            .help(menuBarAccessibilityLabel(controller))
             .fixedSize()
             .frame(height: 22)
             .allowsHitTesting(false)
@@ -165,11 +179,16 @@ final class AppStatusItemService: NSObject {
         ))
         menu.addItem(item("显示统计", systemImage: "chart.bar", action: #selector(showStatistics)))
         menu.addItem(.separator())
-        menu.addItem(item(
+        let skipItem = item(
             controller.engine.state.phase == .focus ? "跳到休息" : "跳到专注",
             systemImage: "chevron.right",
             action: #selector(skip)
-        ))
+        )
+        // NSMenu otherwise re-enables items whose target implements the selector.
+        skipItem.target = controller.isCommittedFocus ? nil : self
+        skipItem.action = controller.isCommittedFocus ? nil : #selector(skip)
+        skipItem.isEnabled = !controller.isCommittedFocus
+        menu.addItem(skipItem)
         menu.addItem(item("重新开始", systemImage: "arrow.counterclockwise", action: #selector(resetCycle)))
         menu.addItem(.separator())
         menu.addItem(item("计时设置…", systemImage: "timer", action: #selector(showTimerSettings)))
@@ -204,7 +223,7 @@ final class AppStatusItemService: NSObject {
     }
 
     @objc private func skip() {
-        controller.skip()
+        controller.skipAndStart()
         refresh()
     }
 
@@ -249,7 +268,7 @@ final class AppStatusItemService: NSObject {
         }
         refreshHotkeysIfNeeded()
         hostingView?.appearance = statusItem.button?.effectiveAppearance
-        statusItem.button?.toolTip = "\(controller.phaseTitle) · \(controller.formattedTime)"
+        statusItem.button?.toolTip = menuBarAccessibilityLabel(controller)
         statusItem.button?.setAccessibilityLabel(menuBarAccessibilityLabel(controller))
         statusItem.length = max(22, ceil(hostingView?.fittingSize.width ?? 22))
     }

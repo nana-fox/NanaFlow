@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BC5484D43D824E12BA8B4221 /* MenuBarAndJumpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5484D43D824E12BA8B4222 /* MenuBarAndJumpTests.swift */; };
 		0095E12A477C16694BE11840 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 58C854D974B18F22C8857F85 /* InfoPlist.strings */; };
 		01040F0C4F7AD3DDADC3E4AA /* AppWindowActivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF45926A3280FE738C6D7B5 /* AppWindowActivation.swift */; };
 		020EF4AA91B1CAC50844070B /* FullscreenBreakView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84360186BBEE189AC86972A /* FullscreenBreakView.swift */; };
@@ -171,6 +172,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BC5484D43D824E12BA8B4222 /* MenuBarAndJumpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarAndJumpTests.swift; sourceTree = "<group>"; };
 		027FA86D7D1DB2338073C419 /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		02BCA7F75D68AFCD5A4F2A28 /* NanaFlow-chime.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-chime.aiff"; sourceTree = "<group>"; };
 		04CAC045EC70A1E01E602E93 /* ViewRenderingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRenderingTests.swift; sourceTree = "<group>"; };
@@ -513,6 +515,7 @@
 				2025B0B869051A21F2F47D07 /* SessionHistoryTests.swift */,
 				E7654F4DA858EAAB53B4667C /* SessionTagTests.swift */,
 				43B2BCE0A33AC6329EE8963D /* TimerControllerTests.swift */,
+				BC5484D43D824E12BA8B4222 /* MenuBarAndJumpTests.swift */,
 				A7C9563D7632F722F926353E /* TimerEngineTests.swift */,
 				E84597998666511FBDB19AB2 /* TimerPersistenceTests.swift */,
 				E720062209550B26D92A50C0 /* TimerPreferencesTests.swift */,
@@ -762,6 +765,7 @@
 				FE86D5C01B6B049ABA25A26D /* SessionHistoryTests.swift in Sources */,
 				EF26A72A5C136CD3E1957804 /* SessionTagTests.swift in Sources */,
 				04F34D0476CDC6125890BE88 /* TimerControllerTests.swift in Sources */,
+				BC5484D43D824E12BA8B4221 /* MenuBarAndJumpTests.swift in Sources */,
 				2F0582F5DCCDBC274E9DE4EF /* TimerEngineTests.swift in Sources */,
 				5CF5684428B3C98CB5949EA5 /* TimerPersistenceTests.swift in Sources */,
 				D637BB407D664446C015102D /* TimerPreferencesTests.swift in Sources */,

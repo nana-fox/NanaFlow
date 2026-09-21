@@ -356,3 +356,11 @@
 "完成" = "Done";
 "全部关闭" = "Close All";
 "文件" = "File";
+
+"菜单栏" = "Menu Bar";
+
+"显示今日完成数" = "Show today’s completed count";
+
+"只统计今天已完成的专注" = "Only counts focus sessions completed today";
+
+"today_completed_focus_format" = "%lld focus sessions completed today";

@@ -5,7 +5,7 @@ import XCTest
 
 @MainActor
 final class ViewRenderingTests: XCTestCase {
-    func testMenuBarShowsTimeOnly() throws {
+    func testMenuBarShowsTimeOnlyByDefault() throws {
         let repositoryURL = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()
             .deletingLastPathComponent()
@@ -15,7 +15,9 @@ final class ViewRenderingTests: XCTestCase {
             encoding: .utf8
         )
 
-        XCTAssertTrue(source.contains("Text(controller.formattedTime)\n                .monospacedDigit()"))
+        XCTAssertTrue(source.contains("Text(controller.formattedTime)"))
+        XCTAssertTrue(source.contains(".monospacedDigit()"))
+        XCTAssertFalse(TimerPreferences.standard.showTodayCompletedCount)
         XCTAssertFalse(source.contains("circle.righthalf.filled"))
         XCTAssertFalse(source.contains("private var menuBarStatus"))
         XCTAssertFalse(source.contains("private var menuBarColor"))
@@ -1162,7 +1164,7 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertFalse(source.contains("✓ "))
         XCTAssertFalse(source.contains("Toggle("))
         XCTAssertFalse(source.contains("Menu("))
-        XCTAssertTrue(source.contains("controller.skip()"))
+        XCTAssertTrue(source.contains("controller.skipAndStart()"))
     }
 
     func testMainToolbarMatchesFlowsRestartAndSkipActions() throws {

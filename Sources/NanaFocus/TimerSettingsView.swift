@@ -37,6 +37,20 @@ struct TimerSettingsView: View {
                         )
                     }
 
+                    settingsSection("菜单栏") {
+                        SettingsToggleRow(
+                            "显示今日完成数",
+                            isOn: preferenceBinding(\.showTodayCompletedCount),
+                            showsDivider: false
+                        )
+                        Text("只统计今天已完成的专注")
+                            .font(.system(size: 11))
+                            .foregroundStyle(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, 14)
+                            .padding(.bottom, 8)
+                    }
+
                     settingsSection("提醒") {
                         SettingsToggleRow("允许通知", isOn: notificationPermissionBinding)
                         SettingsMenuRow("完成声音", value: controller.preferences.focusCompletionSound.title) {

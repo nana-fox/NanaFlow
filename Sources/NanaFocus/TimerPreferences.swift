@@ -99,6 +99,7 @@ struct TimerPreferences: Codable, Equatable, Sendable {
     var motivationalQuotesEnabled: Bool
     var appearance: AppAppearance
     var menuBarIconStyle: MenuBarIconStyle
+    var showTodayCompletedCount: Bool
     var showMenuBarTitle: Bool
     var coloredMenuBarIconDuringBreak: Bool
     var globalHotkeysEnabled: Bool
@@ -127,6 +128,7 @@ struct TimerPreferences: Codable, Equatable, Sendable {
         case motivationalQuotesEnabled
         case appearance
         case menuBarIconStyle
+        case showTodayCompletedCount
         case showMenuBarTitle
         case coloredMenuBarIconDuringBreak
         case globalHotkeysEnabled
@@ -156,6 +158,7 @@ struct TimerPreferences: Codable, Equatable, Sendable {
         motivationalQuotesEnabled: Bool = true,
         appearance: AppAppearance = .system,
         menuBarIconStyle: MenuBarIconStyle = .default,
+        showTodayCompletedCount: Bool = false,
         showMenuBarTitle: Bool = false,
         coloredMenuBarIconDuringBreak: Bool = true,
         globalHotkeysEnabled: Bool = false,
@@ -183,6 +186,7 @@ struct TimerPreferences: Codable, Equatable, Sendable {
         self.motivationalQuotesEnabled = motivationalQuotesEnabled
         self.appearance = appearance
         self.menuBarIconStyle = menuBarIconStyle
+        self.showTodayCompletedCount = showTodayCompletedCount
         self.showMenuBarTitle = showMenuBarTitle
         self.coloredMenuBarIconDuringBreak = coloredMenuBarIconDuringBreak
         self.globalHotkeysEnabled = globalHotkeysEnabled
@@ -214,6 +218,7 @@ struct TimerPreferences: Codable, Equatable, Sendable {
         motivationalQuotesEnabled = try container.decodeIfPresent(Bool.self, forKey: .motivationalQuotesEnabled) ?? true
         appearance = try container.decodeIfPresent(AppAppearance.self, forKey: .appearance) ?? .system
         menuBarIconStyle = try container.decodeIfPresent(MenuBarIconStyle.self, forKey: .menuBarIconStyle) ?? .default
+        showTodayCompletedCount = try container.decodeIfPresent(Bool.self, forKey: .showTodayCompletedCount) ?? false
         showMenuBarTitle = try container.decodeIfPresent(Bool.self, forKey: .showMenuBarTitle) ?? false
         coloredMenuBarIconDuringBreak = try container.decodeIfPresent(Bool.self, forKey: .coloredMenuBarIconDuringBreak) ?? true
         globalHotkeysEnabled = try container.decodeIfPresent(Bool.self, forKey: .globalHotkeysEnabled) ?? false

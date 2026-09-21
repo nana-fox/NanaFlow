@@ -9,7 +9,7 @@ struct TimerOptionsMenuContent: View {
 
     var body: some View {
         Button("计时设置", action: onTimerSettings)
-        Button(phaseSwitchTitle) { controller.skip() }
+        Button(phaseSwitchTitle) { controller.skipAndStart() }
             .disabled(controller.isCommittedFocus)
         Button("统计", action: onStatistics)
         Divider()

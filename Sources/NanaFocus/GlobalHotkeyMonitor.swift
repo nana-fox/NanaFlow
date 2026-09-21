@@ -158,7 +158,7 @@ final class GlobalHotkeyMonitor {
     private static func perform(_ action: GlobalHotkeyAction, controller: TimerController) {
         switch action {
         case .toggle: controller.toggle()
-        case .skip: controller.skip()
+        case .skip: controller.skipAndStart()
         case .resetCycle: controller.resetCycle()
         case .showOrHideWindow: showOrHideTimerWindow()
         }

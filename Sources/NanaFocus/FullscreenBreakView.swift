@@ -48,7 +48,7 @@ struct FullscreenBreakView: View {
                                 systemName: "chevron.right",
                                 label: String(localized: "跳过休息时间"),
                                 diameter: min(max(shortEdge * 0.09, 50), 86),
-                                action: { controller.skip() }
+                                action: { controller.skipAndStart() }
                             )
                         }
                         actionButton(

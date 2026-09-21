@@ -163,13 +163,13 @@ struct SessionStatistics: Equatable, Sendable {
         let matching = sessions.filter {
             $0.type == .focus
                 && $0.completed
-                && interval.contains($0.endedAt)
+                && $0.endedAt >= interval.start && $0.endedAt < interval.end
                 && (tag == nil || $0.tag == tag)
         }
         totalCount = matching.count
         totalDuration = matching.reduce(0) { $0 + $1.duration }
         buckets = Self.bucketIntervals(for: period, in: interval, calendar: calendar).map { bucket in
-            let sessionsInBucket = matching.filter { bucket.contains($0.endedAt) }
+            let sessionsInBucket = matching.filter { $0.endedAt >= bucket.start && $0.endedAt < bucket.end }
             let segments = Dictionary(grouping: sessionsInBucket, by: \.tag).map { tag, sessions in
                 StatisticsTagSegment(
                     tag: tag,
@@ -238,4 +238,12 @@ struct SessionStatistics: Equatable, Sendable {
         }
         return result
     }
+}
+
+/// Counts completed focus sessions by their local completion day, like daily statistics.
+func completedFocusCount(on date: Date, sessions: [FocusSession], calendar: Calendar = .current) -> Int {
+    guard let interval = calendar.dateInterval(of: .day, for: date) else { return 0 }
+    return sessions.lazy.filter {
+        $0.type == .focus && $0.completed && $0.endedAt >= interval.start && $0.endedAt < interval.end
+    }.count
 }
