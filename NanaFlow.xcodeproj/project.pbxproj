@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BC5484D43D824E12BA8B4221 /* MenuBarAndJumpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5484D43D824E12BA8B4222 /* MenuBarAndJumpTests.swift */; };
 		0095E12A477C16694BE11840 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 58C854D974B18F22C8857F85 /* InfoPlist.strings */; };
 		01040F0C4F7AD3DDADC3E4AA /* AppWindowActivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF45926A3280FE738C6D7B5 /* AppWindowActivation.swift */; };
 		020EF4AA91B1CAC50844070B /* FullscreenBreakView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84360186BBEE189AC86972A /* FullscreenBreakView.swift */; };
@@ -27,6 +26,7 @@
 		2588BA9F883395FCA39997AD /* NanaFlow-bell-v1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 55DF3FE8D1E2EB0AD4698F3C /* NanaFlow-bell-v1.aiff */; };
 		285D278120085AEE356A688F /* NanaFlow-chime-v1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 4019778D2A3DEA6C855A0CA2 /* NanaFlow-chime-v1.aiff */; };
 		28668DDD6B337D82D33CE78C /* GlobalHotkeyMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7703C7DE827A3873AAACB2F9 /* GlobalHotkeyMonitor.swift */; };
+		296BDE0ABC44F61AC7C4F6AC /* MenuBarAndJumpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79B2A3145FB4F2057056AA8 /* MenuBarAndJumpTests.swift */; };
 		2D22A700E1B095BFC550F36F /* FocusSessionCalendarRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645E33216E0F12768F24027B /* FocusSessionCalendarRecorder.swift */; };
 		2DA1B817F7745226178C38E0 /* NotificationCopyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E32D3EEC01BB0592261A56F /* NotificationCopyTests.swift */; };
 		2F0582F5DCCDBC274E9DE4EF /* TimerEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C9563D7632F722F926353E /* TimerEngineTests.swift */; };
@@ -172,7 +172,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		BC5484D43D824E12BA8B4222 /* MenuBarAndJumpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarAndJumpTests.swift; sourceTree = "<group>"; };
 		027FA86D7D1DB2338073C419 /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		02BCA7F75D68AFCD5A4F2A28 /* NanaFlow-chime.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-chime.aiff"; sourceTree = "<group>"; };
 		04CAC045EC70A1E01E602E93 /* ViewRenderingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRenderingTests.swift; sourceTree = "<group>"; };
@@ -340,6 +339,7 @@
 		F283F36212FD5B759DAC815F /* NanaFlow-pulse-v3.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-pulse-v3.aiff"; sourceTree = "<group>"; };
 		F390D8C8E2281E722EF733F4 /* NanaFlow-bells-v3.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-bells-v3.aiff"; sourceTree = "<group>"; };
 		F6CF4112978F0F253BA440A4 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		F79B2A3145FB4F2057056AA8 /* MenuBarAndJumpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarAndJumpTests.swift; sourceTree = "<group>"; };
 		F79F0243FD78852E3D49C8BD /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F9606A1A25229529DE887257 /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FA6E41CB03539DAC3EEE5F94 /* PhosphorIcons-LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "PhosphorIcons-LICENSE.txt"; sourceTree = "<group>"; };
@@ -508,6 +508,7 @@
 				13E3B82B6B7445DE574F4DF3 /* AutomationParityTests.swift */,
 				E9B65FC677BEB9CC95E2207C /* BlockerConfigurationTests.swift */,
 				7E9017CF768696A56F50CBC5 /* GlobalHotkeyTests.swift */,
+				F79B2A3145FB4F2057056AA8 /* MenuBarAndJumpTests.swift */,
 				1E32D3EEC01BB0592261A56F /* NotificationCopyTests.swift */,
 				D4D32A52B4B14ABFBFD66E88 /* PermissionParityTests.swift */,
 				4DCE016C37AD408B9C805941 /* ProUnlockedParityTests.swift */,
@@ -515,7 +516,6 @@
 				2025B0B869051A21F2F47D07 /* SessionHistoryTests.swift */,
 				E7654F4DA858EAAB53B4667C /* SessionTagTests.swift */,
 				43B2BCE0A33AC6329EE8963D /* TimerControllerTests.swift */,
-				BC5484D43D824E12BA8B4222 /* MenuBarAndJumpTests.swift */,
 				A7C9563D7632F722F926353E /* TimerEngineTests.swift */,
 				E84597998666511FBDB19AB2 /* TimerPersistenceTests.swift */,
 				E720062209550B26D92A50C0 /* TimerPreferencesTests.swift */,
@@ -758,6 +758,7 @@
 				9734A1620F62BAE3183E83C2 /* AutomationParityTests.swift in Sources */,
 				DA7E64BAEA6138222806CE4F /* BlockerConfigurationTests.swift in Sources */,
 				500F7F332710D18ABA69D101 /* GlobalHotkeyTests.swift in Sources */,
+				296BDE0ABC44F61AC7C4F6AC /* MenuBarAndJumpTests.swift in Sources */,
 				2DA1B817F7745226178C38E0 /* NotificationCopyTests.swift in Sources */,
 				DFAC6A8A9274416D60D903BD /* PermissionParityTests.swift in Sources */,
 				C0617B19C7C70664E78948E0 /* ProUnlockedParityTests.swift in Sources */,
@@ -765,7 +766,6 @@
 				FE86D5C01B6B049ABA25A26D /* SessionHistoryTests.swift in Sources */,
 				EF26A72A5C136CD3E1957804 /* SessionTagTests.swift in Sources */,
 				04F34D0476CDC6125890BE88 /* TimerControllerTests.swift in Sources */,
-				BC5484D43D824E12BA8B4221 /* MenuBarAndJumpTests.swift in Sources */,
 				2F0582F5DCCDBC274E9DE4EF /* TimerEngineTests.swift in Sources */,
 				5CF5684428B3C98CB5949EA5 /* TimerPersistenceTests.swift in Sources */,
 				D637BB407D664446C015102D /* TimerPreferencesTests.swift in Sources */,
@@ -1025,6 +1025,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1037,6 +1038,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1081,6 +1083,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1099,6 +1102,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
