@@ -44,6 +44,76 @@ final class SessionHistoryTests: XCTestCase {
         XCTAssertEqual(try JSONDecoder().decode([FocusSession].self, from: data), sessions)
     }
 
+    func testLoadMergesPrimaryAndSharedHistoriesAndRepairsBothStores() throws {
+        let stores = try HistoryStores()
+        defer { stores.clear() }
+        let onlyInPrimary = session(on: start, minutes: 25)
+        let onlyInShared = session(on: start.addingTimeInterval(3_600), minutes: 10)
+        let conflictID = UUID()
+        var primaryEdit = session(on: start.addingTimeInterval(7_200), minutes: 50, id: conflictID)
+        primaryEdit.title = "主记录标题"
+        var staleMirror = primaryEdit
+        staleMirror.title = "旧镜像标题"
+        try stores.write([onlyInPrimary, primaryEdit], to: stores.primary)
+        try stores.write([onlyInShared, staleMirror], to: stores.shared)
+
+        let loaded = stores.persistence.load()
+
+        XCTAssertEqual(Set(loaded.map(\.id)), [onlyInPrimary.id, onlyInShared.id, conflictID])
+        XCTAssertEqual(loaded.count, 3)
+        XCTAssertEqual(loaded.first { $0.id == conflictID }?.title, "主记录标题")
+        XCTAssertEqual(loaded, loaded.sorted { $0.endedAt > $1.endedAt })
+        XCTAssertEqual(try stores.read(stores.primary), loaded)
+        XCTAssertEqual(try stores.read(stores.shared), loaded)
+    }
+
+    func testLoadRecoversFromSharedHistoryWhenPrimaryIsMissing() throws {
+        let stores = try HistoryStores()
+        defer { stores.clear() }
+        let mirrored = [session(on: start, minutes: 25)]
+        try stores.write(mirrored, to: stores.shared)
+
+        let loaded = stores.persistence.load()
+
+        XCTAssertEqual(loaded, mirrored)
+        XCTAssertEqual(try stores.read(stores.primary), mirrored)
+    }
+
+    func testLoadKeepsPrimaryHistoryWhenSharedDataIsCorrupt() throws {
+        let stores = try HistoryStores()
+        defer { stores.clear() }
+        let primarySessions = [session(on: start, minutes: 25)]
+        try stores.write(primarySessions, to: stores.primary)
+        stores.shared.set(Data("not json".utf8), forKey: SessionHistoryPersistence.storageKey)
+
+        let loaded = stores.persistence.load()
+
+        XCTAssertEqual(loaded, primarySessions)
+        XCTAssertEqual(try stores.read(stores.primary), primarySessions)
+        XCTAssertEqual(try stores.read(stores.shared), primarySessions)
+    }
+
+    func testLoadReturnsEmptyWhenBothHistoriesAreInvalid() throws {
+        let stores = try HistoryStores()
+        defer { stores.clear() }
+        stores.primary.set(Data("not json".utf8), forKey: SessionHistoryPersistence.storageKey)
+        stores.shared.set(Data([0x00, 0x01]), forKey: SessionHistoryPersistence.storageKey)
+
+        XCTAssertTrue(stores.persistence.load().isEmpty)
+        XCTAssertNotNil(stores.primary.data(forKey: SessionHistoryPersistence.storageKey))
+        XCTAssertNotNil(stores.shared.data(forKey: SessionHistoryPersistence.storageKey))
+    }
+
+    func testLoadWithoutSharedDefaultsKeepsSingleStoreBehaviour() throws {
+        let suiteName = "SessionHistoryPrimary-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+        let sessions = [session(on: start, minutes: 25)]
+        defaults.set(try JSONEncoder().encode(sessions), forKey: SessionHistoryPersistence.storageKey)
+
+        XCTAssertEqual(SessionHistoryPersistence(defaults: defaults).load(), sessions)
+    }
+
     func testLegacySessionJSONDecodesWithNewDefaults() throws {
         struct LegacySession: Encodable {
             let id: UUID
@@ -650,15 +720,45 @@ final class SessionHistoryTests: XCTestCase {
         XCTAssertEqual(history.saved.last, [])
     }
 
-    private func session(on date: Date, minutes: Int) -> FocusSession {
+    private func session(on date: Date, minutes: Int, id: UUID = UUID()) -> FocusSession {
         FocusSession(
-            id: UUID(),
+            id: id,
             startedAt: date,
             endedAt: date.addingTimeInterval(Double(minutes * 60)),
             duration: Double(minutes * 60),
             completed: true,
             title: "NanaFlow"
         )
+    }
+}
+
+/// Two throwaway suites so history tests never touch the user's real preferences.
+@MainActor
+private struct HistoryStores {
+    let primaryName = "SessionHistoryPrimary-\(UUID().uuidString)"
+    let sharedName = "SessionHistoryShared-\(UUID().uuidString)"
+    let primary: UserDefaults
+    let shared: UserDefaults
+    let persistence: SessionHistoryPersistence
+
+    init() throws {
+        primary = try XCTUnwrap(UserDefaults(suiteName: primaryName))
+        shared = try XCTUnwrap(UserDefaults(suiteName: sharedName))
+        persistence = SessionHistoryPersistence(defaults: primary, sharedDefaults: shared)
+    }
+
+    func write(_ sessions: [FocusSession], to defaults: UserDefaults) throws {
+        defaults.set(try JSONEncoder().encode(sessions), forKey: SessionHistoryPersistence.storageKey)
+    }
+
+    func read(_ defaults: UserDefaults) throws -> [FocusSession] {
+        let data = try XCTUnwrap(defaults.data(forKey: SessionHistoryPersistence.storageKey))
+        return try JSONDecoder().decode([FocusSession].self, from: data)
+    }
+
+    func clear() {
+        primary.removePersistentDomain(forName: primaryName)
+        shared.removePersistentDomain(forName: sharedName)
     }
 }
 
