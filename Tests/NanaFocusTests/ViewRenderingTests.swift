@@ -2018,7 +2018,7 @@ final class ViewRenderingTests: XCTestCase {
 
         XCTAssertEqual(
             allSessionsSource.components(separatedBy: ".menuIndicator(.hidden)").count - 1,
-            2
+            1
         )
     }
 

@@ -52,28 +52,6 @@ struct NanaFlowApp: App {
         .windowStyle(.plain)
         .commandsRemoved()
 
-        Window("Calendar Alert", id: PermissionAlertKind.calendar.windowID) {
-            PermissionAlertWindow(kind: .calendar)
-        }
-        .defaultSize(
-            width: PermissionWindowMetrics.alertWidth,
-            height: PermissionWindowMetrics.alertHeight
-        )
-        .windowResizability(.contentSize)
-        .windowStyle(.plain)
-        .commandsRemoved()
-
-        Window("Calendar Chooser", id: "calendar-chooser") {
-            CalendarChooserWindow(controller: controller)
-        }
-        .defaultSize(
-            width: PermissionWindowMetrics.chooserWidth,
-            height: PermissionWindowMetrics.chooserHeight
-        )
-        .windowResizability(.contentSize)
-        .windowStyle(.plain)
-        .commandsRemoved()
-
     }
 }
 
@@ -128,7 +106,6 @@ final class AppStatusItemService: NSObject {
         button.sendAction(on: [.leftMouseUp, .rightMouseUp])
         self.hostingView = hostingView
 
-        controller.startCloudSync()
         refresh()
 
         let ticker = Timer(timeInterval: 1, target: self, selector: #selector(refresh), userInfo: nil, repeats: true)

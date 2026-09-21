@@ -187,24 +187,6 @@ struct TimerSettingsView: View {
         )
     }
 
-    private var calendarPermissionBinding: Binding<Bool> {
-        Binding(
-            get: { controller.preferences.calendarSyncEnabled },
-            set: { enabled in
-                guard enabled else {
-                    updatePermissionPreference(\.calendarSyncEnabled, enabled: false)
-                    return
-                }
-                Task { @MainActor in
-                    await handleCalendarRoute(PermissionRouting.calendar(
-                        enabled: true,
-                        status: permissionClient.calendarStatus()
-                    ))
-                }
-            }
-        )
-    }
-
     private func handleNotificationRoute(_ route: PermissionRoutingAction) async {
         switch route {
         case .enable:
@@ -221,29 +203,6 @@ struct TimerSettingsView: View {
             openWindow(id: PermissionAlertKind.notification.windowID)
         case .disable:
             updatePermissionPreference(\.notificationsEnabled, enabled: false)
-        case .showCalendarAlert, .showCalendarChooser:
-            break
-        }
-    }
-
-    private func handleCalendarRoute(_ route: PermissionRoutingAction) async {
-        switch route {
-        case .showCalendarChooser:
-            openWindow(id: "calendar-chooser")
-        case .requestAuthorization:
-            if await permissionClient.requestCalendarAuthorization() {
-                openWindow(id: "calendar-chooser")
-            } else {
-                updatePermissionPreference(\.calendarSyncEnabled, enabled: false)
-                openWindow(id: PermissionAlertKind.calendar.windowID)
-            }
-        case .showCalendarAlert:
-            updatePermissionPreference(\.calendarSyncEnabled, enabled: false)
-            openWindow(id: PermissionAlertKind.calendar.windowID)
-        case .disable:
-            updatePermissionPreference(\.calendarSyncEnabled, enabled: false)
-        case .enable, .showNotificationAlert:
-            break
         }
     }
 

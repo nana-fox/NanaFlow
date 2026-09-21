@@ -14,7 +14,7 @@ final class ProductScopeTests: XCTestCase {
         XCTAssertFalse(sessions.contains("filterSelectionBinding"))
         XCTAssertFalse(sessions.contains("Picker(\"标签\""))
         XCTAssertFalse(sessions.contains("if let tag = session.tag"))
-        XCTAssertTrue(sessions.contains("tag: session?.tag"), "Editing legacy sessions must preserve stored tags")
+        XCTAssertTrue(sessions.contains("tag: session.tag"), "Editing legacy sessions must preserve stored tags")
     }
 
     func testVersionOneHasNoCalendarOrCloudEntryPoints() throws {

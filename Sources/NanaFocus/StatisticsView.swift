@@ -61,9 +61,6 @@ enum StatisticsVisualMetrics {
 }
 
 enum SessionListMenuVisualMetrics {
-    static var filterTitle: String { String(localized: "按标签过滤") }
-    static var clearFilterTitle: String { String(localized: "清除过滤") }
-    static let clearFilterIcon = "minus.circle"
     static let addIcon = "plus"
     static let incompleteIcon = "eye"
     static let exportIcon = "square.and.arrow.up"
@@ -429,7 +426,6 @@ struct AllSessionsView: View {
 
     @State private var dataError: String?
     @AppStorage("showIncompleteSessions") private var showIncomplete = false
-    @State private var selectedTag: String?
     @State private var confirmsDeleteAll = false
     @State private var showsAddSession = false
     @State private var visibleSessionCount = SessionListPagination.batchSize
@@ -456,7 +452,6 @@ struct AllSessionsView: View {
                 } actions: {
                     if !controller.sessions.isEmpty {
                         Button("清除过滤") {
-                            selectedTag = nil
                             showIncomplete = true
                         }
                     }
@@ -507,24 +502,6 @@ struct AllSessionsView: View {
             }
             ToolbarItemGroup(placement: .primaryAction) {
                 Menu {
-                    Section(SessionListMenuVisualMetrics.filterTitle) {
-                        ForEach(controller.tagSettings.tags, id: \.self) { tag in
-                            Toggle(tag, isOn: filterSelectionBinding(for: tag))
-                        }
-                    }
-                    if selectedTag != nil {
-                        Divider()
-                        Button(SessionListMenuVisualMetrics.clearFilterTitle, systemImage: SessionListMenuVisualMetrics.clearFilterIcon) {
-                            selectedTag = nil
-                        }
-                    }
-                } label: {
-                    Image(systemName: "line.3.horizontal.decrease")
-                }
-                .menuIndicator(.hidden)
-                .help("筛选")
-
-                Menu {
                     Button { showsAddSession = true } label: {
                         Label("添加", systemImage: SessionListMenuVisualMetrics.addIcon)
                     }
@@ -559,7 +536,6 @@ struct AllSessionsView: View {
             SessionEditSheet(controller: controller)
         }
         .onChange(of: showIncomplete) { _, _ in resetPagination() }
-        .onChange(of: selectedTag) { _, _ in resetPagination() }
         .alert("您确定要重置您的统计数据吗？", isPresented: $confirmsDeleteAll) {
             Button("取消", role: .cancel) {}
             Button("重置", role: .destructive) { controller.deleteAllSessions() }
@@ -577,7 +553,7 @@ struct AllSessionsView: View {
     }
 
     private var filteredSessions: [FocusSession] {
-        filteredSessionHistory(controller.sessions, showIncomplete: showIncomplete, tag: selectedTag)
+        filteredSessionHistory(controller.sessions, showIncomplete: showIncomplete, tag: nil)
     }
 
     private var visibleSessions: ArraySlice<FocusSession> {
@@ -586,13 +562,6 @@ struct AllSessionsView: View {
 
     private func resetPagination() {
         visibleSessionCount = SessionListPagination.batchSize
-    }
-
-    private func filterSelectionBinding(for tag: String) -> Binding<Bool> {
-        Binding(
-            get: { selectedTag == tag },
-            set: { if $0 { selectedTag = tag } }
-        )
     }
 
     private func beginExport(_ format: SessionExportFormat) {
@@ -759,7 +728,6 @@ private struct SessionEditSheet: View {
 
     @State private var type: RecordedSessionType
     @State private var title: String
-    @State private var tag: String
     @State private var startedAt: Date
     @State private var endedAt: Date
     @State private var confirmsDelete = false
@@ -775,7 +743,6 @@ private struct SessionEditSheet: View {
         let end = session?.endedAt ?? Date()
         _type = State(initialValue: session?.type ?? .focus)
         _title = State(initialValue: session?.title ?? "NanaFlow")
-        _tag = State(initialValue: session?.tag ?? "")
         _startedAt = State(initialValue: session?.startedAt ?? end.addingTimeInterval(-25 * 60))
         _endedAt = State(initialValue: end)
     }
@@ -789,12 +756,6 @@ private struct SessionEditSheet: View {
                     }
                 }
                 TextField("标题", text: $title)
-                Picker("标签", selection: $tag) {
-                    Text("无标签").tag("")
-                    ForEach(controller.tagSettings.tags, id: \.self) { Text($0).tag($0) }
-                }
-                .disabled(type != .focus)
-
                 Section {
                     DatePicker("已启动", selection: $startedAt, displayedComponents: [.date, .hourAndMinute])
                     DatePicker("已完成", selection: $endedAt, displayedComponents: [.date, .hourAndMinute])
@@ -856,7 +817,7 @@ private struct SessionEditSheet: View {
                 id: session.id,
                 type: type,
                 title: title,
-                tag: tag,
+                tag: session.tag,
                 startedAt: startedAt,
                 endedAt: endedAt
             )
@@ -864,7 +825,7 @@ private struct SessionEditSheet: View {
             controller.addSession(
                 type: type,
                 title: title,
-                tag: tag,
+                tag: nil,
                 startedAt: startedAt,
                 endedAt: endedAt
             )
@@ -936,11 +897,6 @@ struct SessionRow: View {
                     Text("未完成")
                         .font(.caption2.weight(.medium))
                         .foregroundStyle(.secondary)
-                }
-                if let tag = session.tag {
-                    Text(tag)
-                        .font(.caption2.weight(.medium))
-                        .foregroundStyle(FlowPalette.focus)
                 }
             }
         }

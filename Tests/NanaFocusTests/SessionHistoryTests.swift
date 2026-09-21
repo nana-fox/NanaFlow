@@ -583,7 +583,6 @@ final class SessionHistoryTests: XCTestCase {
     }
 
     func testCompletedSessionsDoNotWriteToLegacyCalendarIntegration() {
-        let calendar = HistoryCalendarSpy()
         let preferences = TimerPreferences(
             autoStartFocus: false,
             autoStartBreaks: false,
@@ -602,7 +601,6 @@ final class SessionHistoryTests: XCTestCase {
             preferencesPersistence: HistoryPreferencesPersistence(loaded: preferences),
             historyPersistence: HistorySpy(),
             notifications: HistoryNotifications(),
-            calendarRecorder: calendar,
             now: start
         )
         controller.start(at: start)
@@ -613,7 +611,6 @@ final class SessionHistoryTests: XCTestCase {
 
         XCTAssertEqual(controller.sessions.map(\.type), [.shortBreak, .focus])
         XCTAssertTrue(controller.sessions.allSatisfy(\.completed))
-        XCTAssertTrue(calendar.sessions.isEmpty)
     }
 
     func testSkippedBreakAfterOneMinuteIsStoredIncomplete() {
@@ -657,7 +654,6 @@ final class SessionHistoryTests: XCTestCase {
     }
 
     func testLegacyCalendarPreferenceDoesNotWriteInVersionOne() {
-        let calendar = HistoryCalendarSpy()
         let preferences = TimerPreferences(
             autoStartFocus: false,
             autoStartBreaks: false,
@@ -677,26 +673,22 @@ final class SessionHistoryTests: XCTestCase {
             preferencesPersistence: HistoryPreferencesPersistence(loaded: preferences),
             historyPersistence: HistorySpy(),
             notifications: HistoryNotifications(),
-            calendarRecorder: calendar,
             now: start
         )
 
         controller.toggle(at: start)
         controller.tick(at: start.addingTimeInterval(61))
 
-        XCTAssertTrue(calendar.sessions.isEmpty)
     }
 
     func testControllerCanEditAndDeleteStoredSessions() {
         let original = session(on: start, minutes: 25)
         let history = HistorySpy(loaded: [original])
-        let calendar = HistoryCalendarSpy()
         let controller = TimerController(
             persistence: HistoryTimerPersistence(),
             preferencesPersistence: HistoryPreferencesPersistence(),
             historyPersistence: history,
             notifications: HistoryNotifications(),
-            calendarRecorder: calendar,
             now: start
         )
 

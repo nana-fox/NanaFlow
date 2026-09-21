@@ -43,7 +43,6 @@ final class TimerController {
     @ObservationIgnored private let historyPersistence: any SessionHistoryPersisting
     @ObservationIgnored private let tagPersistence: any SessionTagPersisting
     @ObservationIgnored private let notifications: any SessionNotificationScheduling
-    @ObservationIgnored private let calendarRecorder: any FocusSessionCalendarRecording
     @ObservationIgnored private let tickSound: any TimerTickSoundPlaying
     @ObservationIgnored private var lastTickSecond: Int?
     @ObservationIgnored private var cloudStore: NSUbiquitousKeyValueStore?
@@ -64,7 +63,6 @@ final class TimerController {
         historyPersistence: any SessionHistoryPersisting = SessionHistoryPersistence(sharedDefaults: NanaFlowShared.defaults),
         tagPersistence: any SessionTagPersisting = SessionTagPersistence(),
         notifications: any SessionNotificationScheduling = SessionNotificationScheduler(),
-        calendarRecorder: any FocusSessionCalendarRecording = FocusSessionCalendarRecorder(),
         tickSound: any TimerTickSoundPlaying = TimerTickSoundPlayer(),
         now: Date = Date()
     ) {
@@ -73,7 +71,6 @@ final class TimerController {
         self.historyPersistence = historyPersistence
         self.tagPersistence = tagPersistence
         self.notifications = notifications
-        self.calendarRecorder = calendarRecorder
         self.tickSound = tickSound
         self.now = now
         self.engine = persistence.load() ?? TimerEngine(configuration: configuration)
@@ -490,16 +487,6 @@ final class TimerController {
         pushHistoryToCloud()
     }
 
-    func addSessionToCalendar(id: UUID) {
-        guard let session = sessions.first(where: { $0.id == id }),
-              session.type == .focus,
-              session.completed else { return }
-        calendarRecorder.record(
-            session,
-            calendarIdentifier: preferences.calendarIdentifier
-        )
-    }
-
     func dismissError() {
         errorMessage = nil
     }
@@ -576,7 +563,7 @@ final class TimerController {
         case .focus:
             type = .focus
             title = preferences.sessionTitle
-            tag = tagSettings.selectedTag
+            tag = nil
         case .shortBreak:
             type = .shortBreak
             title = String(localized: "休息")
@@ -600,12 +587,6 @@ final class TimerController {
         )
         sessions.insert(session, at: 0)
         persistSessions()
-        if completed, type == .focus, preferences.calendarSyncEnabled {
-            calendarRecorder.record(
-                session,
-                calendarIdentifier: preferences.calendarIdentifier
-            )
-        }
     }
 
     private func persistSessions() {
