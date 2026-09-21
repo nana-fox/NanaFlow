@@ -1372,7 +1372,7 @@ final class ViewRenderingTests: XCTestCase {
         )
 
         XCTAssertTrue(source.contains("func settingsRow(showsDivider: Bool = true)"))
-        XCTAssertEqual(source.components(separatedBy: "showsDivider: false").count - 1, 2)
+        XCTAssertEqual(source.components(separatedBy: "showsDivider: false").count - 1, 3)
         XCTAssertTrue(source.contains(".padding(.top, SettingsVisualMetrics.contentOffsetY)"))
         XCTAssertFalse(source.contains(".offset(y: SettingsVisualMetrics.contentOffsetY)"))
     }

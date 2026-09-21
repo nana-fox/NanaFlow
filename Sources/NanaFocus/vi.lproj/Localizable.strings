@@ -338,3 +338,11 @@
 "终身使用" = "Quyền truy cập trọn đời";
 "跳过会话" = "Bỏ Qua Phiên";
 "breakCompletedBody3" = "Hãy quay lại làm việc.";
+
+"菜单栏" = "Thanh Menu";
+
+"显示今日完成数" = "Hiển thị số phiên hoàn thành hôm nay";
+
+"只统计今天已完成的专注" = "Chỉ tính các phiên tập trung đã hoàn thành hôm nay";
+
+"today_completed_focus_format" = "Đã hoàn thành %lld phiên tập trung hôm nay";

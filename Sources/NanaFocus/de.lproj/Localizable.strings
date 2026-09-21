@@ -338,3 +338,11 @@
 "终身使用" = "Lebenslanger Zugriff";
 "跳过会话" = "Session überspringen";
 "breakCompletedBody3" = "Komm schon. Das schaffst du!";
+
+"菜单栏" = "Menüleiste";
+
+"显示今日完成数" = "Heutige Anzahl abgeschlossener Sessions anzeigen";
+
+"只统计今天已完成的专注" = "Zählt nur die heute abgeschlossenen Fokus-Sessions";
+
+"today_completed_focus_format" = "%lld heute abgeschlossene Fokus-Sessions";

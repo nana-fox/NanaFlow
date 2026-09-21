@@ -338,3 +338,11 @@
 "终身使用" = "Pagament únic";
 "跳过会话" = "Salta la Sessió";
 "breakCompletedBody3" = "Tornem a la feina!";
+
+"菜单栏" = "Barra de menú";
+
+"显示今日完成数" = "Mostra el recompte completat d’avui";
+
+"只统计今天已完成的专注" = "Només compta les sessions de concentració completades avui";
+
+"today_completed_focus_format" = "%lld sessions de concentració completades avui";

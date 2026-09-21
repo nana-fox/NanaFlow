@@ -338,3 +338,11 @@
 "终身使用" = "Livstidsåtkomst";
 "跳过会话" = "Hoppa över session";
 "breakCompletedBody3" = "Låt oss komma tillbaka till jobbet!";
+
+"菜单栏" = "Menyrad";
+
+"显示今日完成数" = "Visa dagens slutförda antal";
+
+"只统计今天已完成的专注" = "Räknar endast fokuspass som slutförts i dag";
+
+"today_completed_focus_format" = "%lld fokuspass slutförda i dag";

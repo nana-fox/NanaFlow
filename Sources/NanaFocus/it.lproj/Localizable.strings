@@ -338,3 +338,11 @@
 "终身使用" = "Pagamento una tantum";
 "跳过会话" = "Salta la sessione";
 "breakCompletedBody3" = "Torniamo al lavoro!";
+
+"菜单栏" = "Barra dei menu";
+
+"显示今日完成数" = "Mostra il conteggio completato di oggi";
+
+"只统计今天已完成的专注" = "Conta solo le sessioni di concentrazione completate oggi";
+
+"today_completed_focus_format" = "%lld sessioni di concentrazione completate oggi";

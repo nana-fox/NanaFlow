@@ -338,3 +338,11 @@
 "终身使用" = "Tek seferlik";
 "跳过会话" = "Seansı Atla";
 "breakCompletedBody3" = "Hadi işe geri dönelim.";
+
+"菜单栏" = "Menü Çubuğu";
+
+"显示今日完成数" = "Bugün tamamlanan sayısını göster";
+
+"只统计今天已完成的专注" = "Yalnızca bugün tamamlanan odak seanslarını sayar";
+
+"today_completed_focus_format" = "Bugün %lld odak seansı tamamlandı";

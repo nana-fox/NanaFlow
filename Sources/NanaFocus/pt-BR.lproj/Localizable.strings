@@ -338,3 +338,11 @@
 "终身使用" = "Acesso vitalício";
 "跳过会话" = "Pular sessão";
 "breakCompletedBody3" = "Vamos voltar ao trabalho!";
+
+"菜单栏" = "Barra de menu";
+
+"显示今日完成数" = "Mostrar a contagem concluída de hoje";
+
+"只统计今天已完成的专注" = "Conta apenas as sessões de foco concluídas hoje";
+
+"today_completed_focus_format" = "%lld sessões de foco concluídas hoje";

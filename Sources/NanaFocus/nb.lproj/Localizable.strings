@@ -338,3 +338,11 @@
 "终身使用" = "Engangsbetaling";
 "跳过会话" = "Hopp over økten";
 "breakCompletedBody3" = "La oss komme oss tilbake til jobb.";
+
+"菜单栏" = "Menylinje";
+
+"显示今日完成数" = "Vis dagens fullførte antall";
+
+"只统计今天已完成的专注" = "Teller bare fokusøkter som er fullført i dag";
+
+"today_completed_focus_format" = "%lld fokusøkter fullført i dag";

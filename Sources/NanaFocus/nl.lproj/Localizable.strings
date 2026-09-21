@@ -338,3 +338,11 @@
 "终身使用" = "Eenmalig";
 "跳过会话" = "Sla sessie over";
 "breakCompletedBody3" = "Tijd om weer aan de slag te gaan!";
+
+"菜单栏" = "Menubalk";
+
+"显示今日完成数" = "Toon het aantal van vandaag";
+
+"只统计今天已完成的专注" = "Telt alleen de focussessies die vandaag zijn voltooid";
+
+"today_completed_focus_format" = "%lld focussessies vandaag voltooid";

@@ -18,9 +18,27 @@ struct SessionHistoryPersistence: SessionHistoryPersisting {
         self.sharedDefaults = sharedDefaults
     }
 
+    /// `defaults` is the record of truth; `sharedDefaults` is the Widget mirror and a recovery
+    /// source. Both sides are decoded independently so a corrupt or missing copy never wipes the
+    /// other, and any side that ended up out of date is repaired with the merged result.
     func load() -> [FocusSession] {
-        guard let data = defaults.data(forKey: Self.storageKey) else { return [] }
-        return (try? JSONDecoder().decode([FocusSession].self, from: data)) ?? []
+        let primary = decode(defaults)
+        guard let sharedDefaults else { return primary ?? [] }
+
+        let mirror = decode(sharedDefaults)
+        guard primary != nil || mirror != nil else { return [] }
+
+        // Primary is `incoming` so it wins when both stores hold the same session ID.
+        let merged = Self.merge(local: mirror ?? [], incoming: primary ?? [])
+        if primary != merged || mirror != merged {
+            try? save(merged)
+        }
+        return merged
+    }
+
+    private func decode(_ defaults: UserDefaults) -> [FocusSession]? {
+        guard let data = defaults.data(forKey: Self.storageKey) else { return nil }
+        return try? JSONDecoder().decode([FocusSession].self, from: data)
     }
 
     func save(_ sessions: [FocusSession]) throws {

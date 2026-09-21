@@ -338,3 +338,11 @@
 "终身使用" = "Accès à vie";
 "跳过会话" = "Passer la session";
 "breakCompletedBody3" = "On se remet au travail !";
+
+"菜单栏" = "Barre de menu";
+
+"显示今日完成数" = "Afficher le nombre de sessions terminées aujourd’hui";
+
+"只统计今天已完成的专注" = "Ne compte que les sessions de concentration terminées aujourd’hui";
+
+"today_completed_focus_format" = "%lld sessions de concentration terminées aujourd’hui";
