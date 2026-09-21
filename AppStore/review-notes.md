@@ -21,7 +21,7 @@ Core review path:
 4. From the session history More menu, “Full Backup” exports JSON and “Import Backup…” merges a selected JSON backup with local history.
 5. Open Settings to configure the menu-bar completed count, completion sounds, and notifications.
 
-Notifications are used only to announce timer stage completion and offer the next timer action. Permission is requested from the Settings notification control. If the switch is already on in a fresh review environment but macOS has not shown a prompt, switch it off and on once before testing. NanaFlow remains usable if notification permission is denied.
+Notifications are used only to announce timer stage completion and offer the next timer action. Notifications are off by default; enabling them in Settings requests system permission. NanaFlow remains usable if notification permission is denied.
 
 No web/app blocker, insights, tag workflow, mini timer, paywall, Calendar integration, or iCloud sync is included in version 1.0.
 
@@ -47,7 +47,7 @@ NanaFlow 是一款 macOS 菜单栏专注计时器，无需账号或登录。
 4. 在会话历史的“更多”菜单中，“完整备份”导出 JSON，“导入备份…”将所选 JSON 备份与本机历史合并。
 5. 打开设置，配置菜单栏完成数、完成声音和通知。
 
-通知只用于提示计时阶段结束并提供下一步计时操作。通知权限由设置中的通知开关触发；如果全新审核环境中开关已经打开但 macOS 未弹出授权，请先关闭再打开一次。拒绝通知权限不影响计时器使用。
+通知只用于提示计时阶段结束并提供下一步计时操作。通知默认关闭；在设置中开启时会请求系统权限。拒绝通知权限不影响计时器使用。
 
 1.0 不包含网页或应用阻断、洞察、标签工作流、迷你计时器、付费墙、日历集成或 iCloud 同步。
 ```
