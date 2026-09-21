@@ -2,7 +2,7 @@
 
 ## 设计目标
 
-以 `Design/flow-ui-prototype` 的 380×272 主窗和用户确认的截图为视觉真值。视觉稿采用 Phosphor Icons，因此生产应用复用同一套官方矢量图标，不再用相似但轮廓不同的 SF Symbols 代替。
+以 `Design/nanaflow-ui-prototype` 的 380×272 主窗和用户确认的 NanaFlow 截图为视觉真值。视觉稿采用 Phosphor Icons，因此生产应用复用同一套官方矢量图标，不再用相似但轮廓不同的 SF Symbols 代替。
 
 ## 版式
 

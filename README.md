@@ -1,15 +1,16 @@
 # NanaFlow
 
-NanaFlow 是一个原生 macOS 专注计时器。当前产品采用紧凑的单主窗：计时器与 D/W/M/Y 统计在同一窗口内切换，状态栏默认显示倒计时，可选显示当天已完成的专注次数。设计参考 Flow 的克制与易用性，但代码、品牌和资源均为独立实现。
+NanaFlow 是一个原生 macOS 专注计时器，目标是用尽可能少的界面帮助用户开始专注、完成休息，并看清自己的节奏。计时器与 D/W/M/Y 统计在同一紧凑主窗口内切换，菜单栏提供随手可用的倒计时和控制。
 
 ## 当前范围
 
 - 25/5/30 默认周期、暂停、继续、跳过、重置与自动开始。
 - 主窗口内统计：日 24 小时、周 7 天、月按实际天数、年 12 个月；柱形支持悬浮查看数量。
-- 会话记录、设置、通知、日历、快捷键、自动化与 Widget 代码。
+- 会话记录、完整 JSON 备份与安全合并导入。
+- 设置、通知、快捷键、自动化与 Widget。
 - 状态栏倒计时及快速命令；可显示 `25:00 | 3`，不显示品牌半圆标记。
 - 手动「跳到专注 / 跳到休息」立即开始下一阶段；自然结束仍遵循自动开始设置。
-- 旧版阻断器、标签与迷你计时器模块仅保留兼容代码，不在当前产品入口中展示或启动。
+- 1.0 不包含网页阻断器、洞察、标签、迷你计时器和付费墙。
 
 ## 菜单栏与阶段跳转
 
@@ -29,8 +30,7 @@ NanaFlow 是一个原生 macOS 专注计时器。当前产品采用紧凑的单�
 | `Sources/NanaShared` | 主应用与 Widget 共用模型 |
 | `Sources/NanaFlowWidget` | Widget extension |
 | `Tests/NanaFocusTests` | 单元、契约与视图回归测试 |
-| `Design/flow-ui-prototype` | 可运行的视觉交互原型 |
-| `References` | 设计 QA 的截图证据 |
+| `Design/nanaflow-ui-prototype` | 可运行的视觉交互原型 |
 | `project.yml` | XcodeGen 工程定义 |
 
 ## 本地开发
@@ -61,7 +61,7 @@ xcodebuild analyze \
 视觉原型：
 
 ```sh
-cd Design/flow-ui-prototype
+cd Design/nanaflow-ui-prototype
 npm ci
 npm run build
 npm run test:sites
@@ -87,20 +87,8 @@ codesign --verify --deep --strict --verbose=2 "$APP"
 open "$APP"
 ```
 
-## 本地安装包
+## 发布状态
 
-`dist` 是维护者本机的交付目录，已被 Git 忽略，不会随代码仓库推送。历史本机验收包（不包含 2026-09-21 的功能更新）为：
+NanaFlow 1.0 以 Mac App Store 为主发布渠道。当前仍处于发布准备阶段：源码可构建测试，但正式签名、App Store Connect 构建和商店安装尚未完成，因此仓库暂不提供“正式版”下载声明。
 
-```text
-dist/NanaFlow-7d911b9-macOS-universal.zip
-```
-
-ZIP 内只有一个 `NanaFlow.app`。退出旧版后，将它拖入“应用程序”并选择替换。
-
-当前 GitHub 仓库只管理源码和验收证据，尚未发布 GitHub Release；克隆仓库后请按上述命令本地构建。
-
-## 签名边界
-
-未签名或 ad-hoc 构建适合本机的核心功能与视觉验证。App Group、iCloud KVS、Calendar、系统通知、浏览器自动化和 Widget Gallery 的正式验收，需要 Apple Developer 证书、匹配的 provisioning profile，并由用户在 macOS 中授权。
-
-当前审查证据见 [`CODE_AUDIT.md`](CODE_AUDIT.md)。功能与视觉审查见 [`PARITY_PLAN.md`](PARITY_PLAN.md) 和 [`design-qa.md`](design-qa.md)；第三方资源说明见 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)。
+发布范围、数据迁移和门禁见 [`Plans/mac-app-store-release.md`](Plans/mac-app-store-release.md)。代码审查见 [`CODE_AUDIT.md`](CODE_AUDIT.md)，第三方资源说明见 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)。
