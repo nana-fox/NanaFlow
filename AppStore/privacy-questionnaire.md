@@ -7,7 +7,7 @@
 - **Data linked to the user?** No.
 - **Privacy nutrition label candidate:** Data Not Collected.
 
-This is a draft based on the current local-only architecture, not a submitted or signed-build-verified answer. “Collected” here means transmitted off the device by NanaFlow or its third-party partners for access beyond what is required to service a user request.
+This answer is supported by source review and signed-build entitlement/dependency inspection, but publication in App Store Connect remains a developer legal attestation. “Collected” here means transmitted off the device by NanaFlow or its third-party partners for access beyond what is required to service a user request.
 
 ## Local data inventory
 
@@ -31,12 +31,12 @@ No account, advertising identifier, analytics SDK, crash-reporting SDK, server A
 
 ## Mandatory checks before answering “No” in App Store Connect
 
-- [ ] Inspect the **effective entitlements from the signed Release archive**, not only source plist files; confirm no unexpected network, Calendar, iCloud, contacts, location, microphone, camera, or tracking capability.
-- [ ] Inspect the final dependency and linked-framework list; confirm no analytics, advertising, telemetry, crash-upload, attribution, or remote-configuration SDK was added.
+- [x] Inspect the **effective entitlements from signed Release archive `1.0.0 (2)`**: only App Sandbox, App Group, user-selected file read/write, application identifier, and Team identifier are present; no network, Calendar, iCloud, contacts, location, microphone, camera, or tracking entitlement.
+- [x] Inspect the final dependency and linked-framework list; no analytics, advertising, telemetry, crash-upload, attribution, or remote-configuration SDK is linked.
 - [ ] Run the signed candidate through timer, notification, backup, import, statistics, and relaunch flows while monitoring outbound network traffic; document that NanaFlow initiates no product-data transmission.
-- [ ] Verify support and privacy pages make the same local-only claims as the submitted build.
+- [x] Verify the published support and privacy pages make the same local-only claims as the submitted build.
 - [ ] If Widget ships, verify App Group sharing remains on-device and update the local-data inventory; a failed Widget gate removes Widget from 1.0 rather than changing the privacy claim speculatively.
-- [ ] Confirm no optional diagnostic upload, support attachment upload, or external feedback SDK was introduced after this draft.
+- [x] Confirm no optional diagnostic upload, support attachment upload, or external feedback SDK was introduced before candidate build 2.
 - [ ] Re-answer the questionnaire if any build behavior, SDK, backend, or policy changes before submission.
 
 ## Privacy policy facts to carry into the public page

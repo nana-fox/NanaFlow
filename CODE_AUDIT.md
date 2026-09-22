@@ -1,5 +1,14 @@
 # NanaFlow 代码审查记录
 
+## 2026-09-22 App Store 候选版本复查
+
+- `1.0.0 (2)` 已通过 200/200 测试、Release Analyze、`arm64 + x86_64` 正式签名 Archive 与深度签名校验。
+- 主 App 和 Widget 均使用 Team `LTLULSL8A2`；有效权限仅包含 App Sandbox、App Group、签名标识以及主 App 的用户选择文件读写。
+- 最终二进制依赖与符号检查未发现 EventKit、iCloud、网络客户端、分析、广告、归因或崩溃上传 SDK。
+- 4 条带第三方姓名的展示引语已移除；521 条 Widget 引语全部由 NanaFlow 组合生成并署名 NanaFlow。
+- App Store Connect 上传验证成功，构建 2 已于 2026-09-22 15:43 CST 接受处理。
+- 尚未证明：App Store 处理完成与商店安装、真实沙盒数据迁移、Widget Gallery/App Group 运行时共享。截图、定价/地区、隐私声明发布和最终提审也仍是发布门禁。
+
 ## 2026-09-21 Mac App Store 准备复查
 
 - 全量 macOS 回归：228/228 通过，0 失败；新增覆盖最小发布权限、主 App/Widget 版本一致、完整会话备份往返和导入失败不丢数据。
@@ -8,7 +17,7 @@
 - Release entitlement 只保留 App Sandbox、用户选择文件读写和 App Group；Calendar、Apple Events、网络客户端与 iCloud KVS 已移出 1.0 发布包。
 - 会话列表新增完整 JSON 备份与合并导入。导入先保存、后替换当前状态，存储失败不会缩减当前历史。
 - README 与发布计划已改为 NanaFlow 独立产品定位，Mac App Store 为 1.0 唯一正式发布路线。
-- 仍未证明：Apple 会员激活、正式 Team Archive、App Store Connect 上传、商店安装、真实沙盒数据迁移与 Widget Gallery。
+- 当时未证明的 Apple 会员激活、正式 Team Archive 和上传已在 2026-09-22 完成；商店安装、真实沙盒数据迁移与 Widget Gallery 仍待验证。
 
 ## 2026-09-21 功能更新验证
 
@@ -24,7 +33,7 @@
 
 ## 结论
 
-未发现阻断首次版本基线提交的 P0/P1 代码问题。核心代码、测试、工程配置与原型构建均通过；正式分发仍受 Apple Developer 签名和用户系统授权约束，不能由本地 ad-hoc 验证替代。
+未发现阻断首次版本基线提交的 P0/P1 代码问题。核心代码、测试、工程配置与原型构建均通过；正式签名与上传已完成，但商店处理、安装及运行时发布门禁仍不能由本地验证替代。
 
 ## 已验证
 
@@ -47,7 +56,7 @@
 
 ## 已知边界
 
-- Release entitlement 需要真实 Team、证书和 provisioning profile；当前只能证明声明和降级路径正确。
+- Release entitlement 已使用真实 Team、证书和 provisioning profile 在构建 2 上验证。
 - Widget Gallery、App Group 数据共享和真实沙盒数据迁移需要正式签名包后单独验收。
 - Calendar、Apple Events 与 iCloud 同步不在 1.0 发布范围内。
 

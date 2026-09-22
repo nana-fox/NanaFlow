@@ -103,7 +103,7 @@ open "$APP"
 
 ## 发布状态
 
-NanaFlow 1.0 以 Mac App Store 为主发布渠道。当前状态为 **发布准备中**：源码可构建并已通过本地测试，但正式签名、App Store Connect 构建、审核与商店安装尚未完成，因此仓库暂不提供“正式版”下载声明。
+NanaFlow 1.0 以 Mac App Store 为主发布渠道。当前状态为 **候选版本已上传、等待完成发布门禁**：`1.0.0 (2)` 已通过 200 项测试、Release 静态分析、正式签名归档与 App Store Connect 上传验证。商店构建处理、截图、定价与地区、隐私声明发布、安装/迁移/Widget 验证及最终审核尚未全部完成，因此仓库暂不提供“正式版”下载声明。
 
 发布范围、数据迁移和门禁见 [`Plans/mac-app-store-release.md`](Plans/mac-app-store-release.md)。代码审查见 [`CODE_AUDIT.md`](CODE_AUDIT.md)，第三方资源说明见 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)。
 

@@ -25,7 +25,7 @@ Notifications are used only to announce timer stage completion and offer the nex
 
 No web/app blocker, insights, tag workflow, mini timer, paywall, Calendar integration, or iCloud sync is included in version 1.0.
 
-Contact for review questions: [REVIEW_CONTACT_NAME], [REVIEW_CONTACT_EMAIL], [REVIEW_CONTACT_PHONE]
+Review contact details are configured directly in App Store Connect and intentionally omitted from the public repository.
 ```
 
 ## Base note — 简体中文内部对照

@@ -6,28 +6,28 @@ An unchecked gate is not evidence of completion. Record links or build identifie
 
 - [x] Apple Developer Program status is Active; Team ID recorded: `LTLULSL8A2`.
 - [ ] Agreements, tax, and banking requirements applicable to the selected price are complete.
-- [ ] App Store Connect app record exists for bundle ID `com.nanafox.NanaFlow`.
+- [x] App Store Connect app record exists for bundle ID `com.nanafox.NanaFlow`; Apple ID `6814738160`, SKU `nanaflow-macos-1`.
 - [ ] SKU, primary language, availability, and price are explicitly selected.
-- [ ] Primary category is Productivity; secondary category is Utilities.
-- [ ] Age rating questionnaire is completed against the final build.
-- [ ] Copyright is resolved to `© [YEAR] [LEGAL_NAME]`.
+- [x] Primary category is Productivity; secondary category is Utilities.
+- [x] Age rating questionnaire is completed; current result is 4+.
+- [x] Copyright is set to `2026 Nio D`.
 
 ## 2. Product scope
 
-- [ ] Release UI and menus contain no web/app blocker, insights, tag workflow, mini timer, paywall, Calendar, or iCloud entry point.
-- [ ] Store copy and screenshots contain none of those excluded capabilities.
-- [ ] Only Simplified Chinese and English are treated as 1.0 listing locales.
-- [ ] Widget decision is recorded: `REMOVED FROM 1.0 / INCLUDED AFTER SIGNED PASS`.
+- [x] Release UI and menus contain no web/app blocker, insights, tag workflow, mini timer, paywall, Calendar, or iCloud entry point.
+- [x] Store copy contains none of those excluded capabilities; screenshot verification remains open until final assets are uploaded.
+- [x] Only Simplified Chinese and English are treated as 1.0 listing locales.
+- [x] Widget decision is recorded: included in build 2; Gallery and App Group runtime verification remain mandatory before submission.
 
 ## 3. Signing and build
 
-- [ ] Main App, any included Widget, and nested executables use the same Team.
-- [ ] Version is `1.0.0`; build number is unique in App Store Connect: `[BUILD]`.
-- [ ] Release archive effective entitlements match the approved allowlist.
-- [ ] `ITSAppUsesNonExemptEncryption` answer matches the final executable and export-compliance selection.
-- [ ] Release tests and Analyze pass at the exact submitted commit: `[COMMIT]`.
-- [ ] Archive succeeds. Archive path/identifier: `[ARCHIVE_EVIDENCE]`.
-- [ ] Validate App succeeds. Validation timestamp/log: `[VALIDATE_EVIDENCE]`.
+- [x] Main App and included Widget use Team `LTLULSL8A2`.
+- [x] Version is `1.0.0`; build number `2` was accepted for App Store Connect processing.
+- [x] Release archive effective entitlements match the approved allowlist.
+- [x] `ITSAppUsesNonExemptEncryption` is `false`, matching the final executable.
+- [x] 200 tests and Release Analyze pass on the build 2 candidate working tree.
+- [x] Archive succeeds: `/tmp/NanaFlow-AppStore-build2.xcarchive`.
+- [x] App Store upload validation succeeds; upload accepted at 2026-09-22 15:43 CST.
 
 ## 4. Data safety and candidate verification
 
@@ -44,7 +44,7 @@ An unchecked gate is not evidence of completion. Record links or build identifie
 ## 5. Metadata and public pages
 
 - [x] `python3 AppStore/validate_metadata.py` passes at commit preparation time.
-- [ ] `metadata.zh-Hans.md` is copied into the Simplified Chinese locale.
+- [x] `metadata.zh-Hans.md` is copied into the Simplified Chinese locale.
 - [ ] `metadata.en-US.md` is copied into the English locale.
 - [x] Privacy URL is public over HTTPS: `https://nana-fox.github.io/privacy/` and `https://nana-fox.github.io/en/privacy/`.
 - [x] Support URL is public over HTTPS and links to the public issue tracker: `https://nana-fox.github.io/support/` and `https://nana-fox.github.io/en/support/`.
@@ -52,14 +52,14 @@ An unchecked gate is not evidence of completion. Record links or build identifie
 - [ ] App icon and every required screenshot slot are accepted by App Store Connect.
 - [ ] Screenshot asset register records the exact candidate version/build.
 - [ ] App Privacy answers are rechecked after signed-build and traffic verification.
-- [ ] Version notes, copyright, support contact, and review contact placeholders are resolved.
+- [ ] English localization, version notes, screenshots, and remaining review-note fields are resolved; copyright and review contact are already configured.
 
 ## 6. Review notes and upload
 
 - [ ] Base review note is updated with real contact details.
 - [ ] Exactly one Widget review-note variant matches the uploaded binary.
 - [ ] Reviewer can reach the main window from the menu bar using the documented steps.
-- [ ] Build is uploaded and App Store Connect finishes processing it.
+- [ ] Build 2 is uploaded; App Store Connect processing completion still needs confirmation.
 - [ ] Processed build is attached to version 1.0.
 - [ ] Export compliance, content rights, advertising identifier, and review-information questions are answered against the final binary.
 - [ ] Submission is configured for manual release after approval.
@@ -67,4 +67,6 @@ An unchecked gate is not evidence of completion. Record links or build identifie
 
 ## Current status
 
-As of 2026-09-22, the excluded-feature scope reduction landed on top of the prior 230-test baseline: Calendar/EventKit, App/Web Blocker, Pro-unlock UI, tag catalog CRUD/UI, and iCloud timer sync were physically removed from `Sources/NanaFocus` (not just hidden from menus), including `TimerPreferences.calendarSyncEnabled`/`calendarIdentifier` and the Blocker/Calendar-only resources `Blocked.html`, `NanaFlowBlockedIcon.png`, `NanaFlowCalendarAccess.png` (all confirmed to have zero live references before deletion). All but the `en`/`zh-Hans` localizations were deleted. `FocusSession.tag` and its backup/export/import/edit pass-through remain intact and covered by tests, including a controller-level edit test that starts from a non-nil legacy tag and asserts it survives an edit unchanged; `TimerPreferences` safely ignores legacy `timerSyncEnabled` and `calendarSyncEnabled`/`calendarIdentifier` JSON keys on decode (regression tests for both). 200 tests, Release Analyze, and a fresh unsigned Release Archive are recorded as passed at this state (net -30 from the 230 baseline, independently verified via the test-file diff: 39 test methods removed, 9 added). `otool -L`/`nm`/`strings` on the unsigned Release Archive binary confirm no EventKit, no Security.framework, and no iCloud/cloud-sync linkage or symbols; only `en.lproj`/`zh-Hans.lproj` ship in both the main app and Widget bundles, and the three removed Blocker/Calendar resources are absent from the archived bundle. `script/build_and_run.sh` now force-cleans its repo-scoped DerivedData directory before every build (incremental builds were previously leaving stale removed-locale resources in the Debug bundle) and its `--verify` mode runs a bundle-resource verifier that fails unless exactly `en`/`zh-Hans` ship and none of the three removed resources are present; this was confirmed against both the fresh Debug build and the Release Archive. Non-mutating XcodeGen drift check and `git diff --check` are clean. `python3 AppStore/validate_metadata.py` passes. Runtime logs (captured via `log show` with an explicit timestamp range spanning a full build+launch, to avoid missing early-startup entries) show two known, non-fatal categories and no crash or genuine fault: (1) the known unsigned-build App Intents `linkd` connection-rejection pattern (`requiresValidatedBundle`, `Error Domain=NSCocoaErrorDomain Code=4097`); and (2) an intermittent AppKit `WarnOnce` layout-recursion message (`-layoutSubtreeIfNeeded on a view which is already being laid out`) that occurs during standard `NSStatusItem` Control Center scene registration on this macOS 26.1 environment. This was investigated in depth: an A/B/elimination study across 30+ timed cold launches localized it specifically to `NSStatusBar.system.statusItem(withLength:)` itself (0/6 launches warned with no status item constructed; 5/6 warned with the status item constructed and nothing else touched), with every occurrence's log context showing `com.apple.controlcenter` `NSStatusItemView` scene-fence activity, not application code. A one-run-loop-turn defer of status item construction measurably reduced the rate (12/12 clean in one batch) but did not deterministically eliminate it in further testing (occasional recurrence, log context unchanged), so no code change for it is retained in this branch — a partial, unproven timing mitigation was judged worse than an honest known-issue record. Do not report this warning as fixed or eliminated. It requires retesting on a signed distribution build and/or a different OS build to determine whether it reproduces outside this sandboxed, rapidly-relaunched development environment; it does not block functionality (the app always launches and stays running, `build_and_run.sh --verify` always passes) but should be retested before or alongside the signed-build gate. The signed Archive remains blocked while Apple's provisioning service reports no eligible device for the team — this scope-reduction work does not change that blocker and does not claim it resolved. Validate App, upload, store installation, Widget sharing, and existing-data migration are **not recorded as passed**. Do not check those items using local unit-test, unsigned-archive, or ad-hoc-build evidence.
+As of 2026-09-22, candidate `1.0.0 (2)` is the only intended review candidate. Calendar/EventKit, App/Web Blocker, Pro-unlock UI, tag catalog CRUD/UI, and iCloud timer sync are absent from the release UI and code paths; only `en` and `zh-Hans` ship. The candidate passed 200 tests, Release Analyze, universal signed Archive, deep signature verification, effective-entitlement inspection, linked-framework/symbol inspection, and App Store upload validation. The App and Widget use Team `LTLULSL8A2`, and the signed entitlements contain only the sandbox, shared App Group, user-selected file access where applicable, and Apple signing identifiers. Named third-party quotations were removed before build 2; all generated Widget quotations are attributed to NanaFlow. The upload was accepted for processing at 2026-09-22 15:43 CST.
+
+Still open: App Store processing confirmation, attachment of build 2 to version 1.0, pricing and territory selection, EU trader-status decision if Europe is included, mainland-China compliance decision, screenshots, English localization entry, privacy publication attestation, signed distribution installation, Widget Gallery/App Group runtime verification, migration verification, and final App Review submission. Final submission requires explicit developer confirmation.

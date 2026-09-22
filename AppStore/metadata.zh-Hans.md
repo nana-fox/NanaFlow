@@ -69,10 +69,8 @@ NanaFlow 追求简单：打开、开始、专注，然后回到工作。
 ## 版权
 
 ```text
-© [YEAR] [LEGAL_NAME]
+© 2026 Nio D
 ```
-
-`[LEGAL_NAME]` 必须与 App Store Connect 中的卖方/权利主体一致，提交前替换占位符。
 
 ## 1.0 版本说明
 

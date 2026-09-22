@@ -27,7 +27,9 @@ Do not mention or show the web/app blocker, insights, tags, mini timer, paywall,
 
 ## Current evidence boundary
 
-The text is based on the implementation and release scope through commit `4b68958`. It does **not** claim that signed Archive, Validate App, upload, App Store installation, Widget sharing, or data migration have passed. The Apple Developer Program is active and Team ID `LTLULSL8A2` is configured. URLs are published; legal entity, copyright year, support email, pricing, age rating answers, and signed-build privacy checks remain placeholders or gates.
+Release candidate `1.0.0 (2)` has passed 200 tests, Release Analyze, a signed universal Archive, signature verification, effective-entitlement inspection, and App Store Connect upload validation. The upload was accepted for processing on 2026-09-22. The App Store Connect record, Simplified Chinese metadata, categories, age rating, copyright, review contact, and manual-release mode are configured.
+
+This evidence does **not** yet claim App Store processing completion, store installation, Widget Gallery/App Group runtime verification, migration verification, screenshot acceptance, privacy-answer publication, pricing/territory completion, or App Review approval. Those remain explicit release gates. Named third-party quotations were removed from build 2 so the shipped Widget text is NanaFlow-authored.
 
 Run before copying metadata into App Store Connect:
 

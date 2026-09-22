@@ -69,10 +69,8 @@ focus timer,pomodoro,productivity,time management,menu bar,statistics,break remi
 ## Copyright
 
 ```text
-© [YEAR] [LEGAL_NAME]
+© 2026 Nio D
 ```
-
-Replace `[LEGAL_NAME]` with the seller or rights holder shown in App Store Connect before submission.
 
 ## Version 1.0 notes
 

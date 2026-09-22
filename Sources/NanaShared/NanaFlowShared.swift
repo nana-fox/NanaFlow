@@ -25,25 +25,6 @@ enum WidgetVisualMetrics {
     static let mediumSize = CGSize(width: 338, height: 158)
     static let largeSize = CGSize(width: 338, height: 338)
     static let extraLargeSize = CGSize(width: 720, height: 338)
-    private static let showcaseQuotes = [
-        WidgetQuote(
-            text: "It's not what you look at that matters, it's what you see.",
-            author: "Henry David Thoreau"
-        ),
-        WidgetQuote(
-            text: "The price of greatness is responsibility.",
-            author: "Winston Churchill"
-        ),
-        WidgetQuote(
-            text: "Success without fulfillment is the ultimate failure.",
-            author: "Tony Robbins"
-        ),
-        WidgetQuote(
-            text: "Compassion and happiness are not a sign of weakness but a sign of strength.",
-            author: "Dalai Lama"
-        )
-    ]
-
     private static let quoteSubjects = [
         "A clear intention", "Steady attention", "Quiet persistence", "A patient rhythm",
         "Focused effort", "A thoughtful pause", "One honest step", "A calm beginning",
@@ -85,7 +66,7 @@ enum WidgetVisualMetrics {
                 WidgetQuote(text: "\(subject) \(ending)", author: "NanaFlow")
             }
         }
-        return showcaseQuotes + generated.prefix(521 - showcaseQuotes.count)
+        return Array(generated.prefix(521))
     }()
 
     static let backgroundColor = Color(

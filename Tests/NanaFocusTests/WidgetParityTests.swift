@@ -88,7 +88,7 @@ final class WidgetParityTests: XCTestCase {
         XCTAssertEqual(WidgetVisualMetrics.quotes.count, 521)
         XCTAssertEqual(Set(WidgetVisualMetrics.quotes.map(\.text)).count, 521)
         XCTAssertEqual(MotivationalQuotes.values.count, 521)
-        XCTAssertEqual(WidgetVisualMetrics.quotes.first?.author, "Henry David Thoreau")
+        XCTAssertEqual(WidgetVisualMetrics.quotes.first?.author, "NanaFlow")
 
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = TimeZone(secondsFromGMT: 0)!
