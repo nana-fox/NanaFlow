@@ -44,7 +44,7 @@ final class SessionTagTests: XCTestCase {
         XCTAssertEqual(statistics.totalDuration, 1_200)
     }
 
-    func testControllerRecordsSelectedTagAndRemovesItSafely() {
+    func testLegacySelectedTagDoesNotTagNewVersionOneSessions() {
         let tags = TagMemoryPersistence()
         let history = TagHistoryPersistence()
         let controller = TimerController(
@@ -71,7 +71,7 @@ final class SessionTagTests: XCTestCase {
 
         XCTAssertEqual(controller.tagSettings.tags, ["工作", "个人", "学习", "阅读"])
         XCTAssertEqual(controller.tagSettings.colorHex(for: "阅读"), "#FF5B8CC0")
-        XCTAssertEqual(history.sessions.first?.tag, "阅读")
+        XCTAssertNil(history.sessions.first?.tag)
 
         controller.removeTag("阅读")
         XCTAssertNil(controller.tagSettings.selectedTag)

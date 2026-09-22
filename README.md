@@ -1,6 +1,12 @@
 # NanaFlow
 
-NanaFlow 是一个原生 macOS 专注计时器，目标是用尽可能少的界面帮助用户开始专注、完成休息，并看清自己的节奏。计时器与 D/W/M/Y 统计在同一紧凑主窗口内切换，菜单栏提供随手可用的倒计时和控制。
+NanaFlow 是一个本地优先的原生 macOS 专注计时器。它用紧凑的单窗口体验帮助你开始专注、完成休息，并通过 D/W/M/Y 统计看清自己的节奏。倒计时与统计在同一个主窗口内切换，菜单栏随时提供状态和控制；会话记录保存在本机，也可以完整备份和导入。
+
+## 界面
+
+| 专注计时 | 周统计 |
+| --- | --- |
+| ![NanaFlow 专注计时器](docs/images/nanaflow-timer.jpeg) | ![NanaFlow 周统计](docs/images/nanaflow-statistics.jpeg) |
 
 ## 当前范围
 
@@ -89,6 +95,10 @@ open "$APP"
 
 ## 发布状态
 
-NanaFlow 1.0 以 Mac App Store 为主发布渠道。当前仍处于发布准备阶段：源码可构建测试，但正式签名、App Store Connect 构建和商店安装尚未完成，因此仓库暂不提供“正式版”下载声明。
+NanaFlow 1.0 以 Mac App Store 为主发布渠道。当前状态为 **发布准备中**：源码可构建并已通过本地测试，但正式签名、App Store Connect 构建、审核与商店安装尚未完成，因此仓库暂不提供“正式版”下载声明。
 
 发布范围、数据迁移和门禁见 [`Plans/mac-app-store-release.md`](Plans/mac-app-store-release.md)。代码审查见 [`CODE_AUDIT.md`](CODE_AUDIT.md)，第三方资源说明见 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)。
+
+## 许可
+
+本仓库尚未选择开源许可证。在许可证明确前，代码的复制、修改和分发权限不作额外授权。

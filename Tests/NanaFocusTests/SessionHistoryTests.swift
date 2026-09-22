@@ -582,8 +582,7 @@ final class SessionHistoryTests: XCTestCase {
         )
     }
 
-    func testCompletedBreakIsStoredAsBreakButNotAddedToCalendar() {
-        let calendar = HistoryCalendarSpy()
+    func testCompletedSessionsDoNotWriteToLegacyCalendarIntegration() {
         let preferences = TimerPreferences(
             autoStartFocus: false,
             autoStartBreaks: false,
@@ -602,7 +601,6 @@ final class SessionHistoryTests: XCTestCase {
             preferencesPersistence: HistoryPreferencesPersistence(loaded: preferences),
             historyPersistence: HistorySpy(),
             notifications: HistoryNotifications(),
-            calendarRecorder: calendar,
             now: start
         )
         controller.start(at: start)
@@ -613,7 +611,6 @@ final class SessionHistoryTests: XCTestCase {
 
         XCTAssertEqual(controller.sessions.map(\.type), [.shortBreak, .focus])
         XCTAssertTrue(controller.sessions.allSatisfy(\.completed))
-        XCTAssertEqual(calendar.sessions.map(\.type), [.focus])
     }
 
     func testSkippedBreakAfterOneMinuteIsStoredIncomplete() {
@@ -656,8 +653,7 @@ final class SessionHistoryTests: XCTestCase {
         XCTAssertNotNil(controller.errorMessage)
     }
 
-    func testCalendarSyncRecordsOnlyCompletedFocusSessions() {
-        let calendar = HistoryCalendarSpy()
+    func testLegacyCalendarPreferenceDoesNotWriteInVersionOne() {
         let preferences = TimerPreferences(
             autoStartFocus: false,
             autoStartBreaks: false,
@@ -677,28 +673,22 @@ final class SessionHistoryTests: XCTestCase {
             preferencesPersistence: HistoryPreferencesPersistence(loaded: preferences),
             historyPersistence: HistorySpy(),
             notifications: HistoryNotifications(),
-            calendarRecorder: calendar,
             now: start
         )
 
         controller.toggle(at: start)
         controller.tick(at: start.addingTimeInterval(61))
 
-        XCTAssertEqual(calendar.sessions.count, 1)
-        XCTAssertTrue(calendar.sessions[0].completed)
-        XCTAssertEqual(calendar.identifiers, ["calendar.work"])
     }
 
     func testControllerCanEditAndDeleteStoredSessions() {
         let original = session(on: start, minutes: 25)
         let history = HistorySpy(loaded: [original])
-        let calendar = HistoryCalendarSpy()
         let controller = TimerController(
             persistence: HistoryTimerPersistence(),
             preferencesPersistence: HistoryPreferencesPersistence(),
             historyPersistence: history,
             notifications: HistoryNotifications(),
-            calendarRecorder: calendar,
             now: start
         )
 
@@ -707,9 +697,6 @@ final class SessionHistoryTests: XCTestCase {
         XCTAssertEqual(controller.sessions.first?.title, "深度工作")
         XCTAssertEqual(controller.sessions.first?.tag, "工作")
         XCTAssertEqual(history.saved.last, controller.sessions)
-
-        controller.addSessionToCalendar(id: original.id)
-        XCTAssertEqual(calendar.sessions.map(\.id), [original.id])
 
         controller.deleteSession(id: original.id)
 

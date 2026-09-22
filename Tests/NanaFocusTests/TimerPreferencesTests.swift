@@ -74,7 +74,7 @@ final class TimerPreferencesTests: XCTestCase {
         XCTAssertFalse(preferences.calendarSyncEnabled)
         XCTAssertNil(preferences.calendarIdentifier)
         XCTAssertFalse(preferences.timerSyncEnabled)
-        XCTAssertTrue(preferences.notificationsEnabled)
+        XCTAssertFalse(preferences.notificationsEnabled)
         XCTAssertTrue(preferences.motivationalQuotesEnabled)
         XCTAssertEqual(preferences.appearance, .system)
         XCTAssertEqual(preferences.menuBarIconStyle, .default)
@@ -86,6 +86,10 @@ final class TimerPreferencesTests: XCTestCase {
         XCTAssertEqual(preferences.breakCompletionSound, .bell)
         XCTAssertEqual(preferences.notificationVolume, 1)
         XCTAssertEqual(preferences.sessionTitle, "NanaFlow")
+    }
+
+    func testNotificationsRequireExplicitOptInByDefault() {
+        XCTAssertFalse(TimerPreferences.standard.notificationsEnabled)
     }
 
     func testLegacyDisabledSoundDefaultsBothCompletionSoundsToNone() throws {

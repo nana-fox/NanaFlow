@@ -67,7 +67,7 @@ struct TimerPreferences: Codable, Equatable, Sendable {
         tickingVolume: 1,
         calendarSyncEnabled: false,
         timerSyncEnabled: false,
-        notificationsEnabled: true,
+        notificationsEnabled: false,
         motivationalQuotesEnabled: true,
         appearance: .system,
         menuBarIconStyle: .default,
@@ -154,7 +154,7 @@ struct TimerPreferences: Codable, Equatable, Sendable {
         calendarSyncEnabled: Bool = false,
         calendarIdentifier: String? = nil,
         timerSyncEnabled: Bool = false,
-        notificationsEnabled: Bool = true,
+        notificationsEnabled: Bool = false,
         motivationalQuotesEnabled: Bool = true,
         appearance: AppAppearance = .system,
         menuBarIconStyle: MenuBarIconStyle = .default,
@@ -214,7 +214,7 @@ struct TimerPreferences: Codable, Equatable, Sendable {
         calendarSyncEnabled = try container.decodeIfPresent(Bool.self, forKey: .calendarSyncEnabled) ?? false
         calendarIdentifier = try container.decodeIfPresent(String.self, forKey: .calendarIdentifier)
         timerSyncEnabled = try container.decodeIfPresent(Bool.self, forKey: .timerSyncEnabled) ?? false
-        notificationsEnabled = try container.decodeIfPresent(Bool.self, forKey: .notificationsEnabled) ?? true
+        notificationsEnabled = try container.decodeIfPresent(Bool.self, forKey: .notificationsEnabled) ?? false
         motivationalQuotesEnabled = try container.decodeIfPresent(Bool.self, forKey: .motivationalQuotesEnabled) ?? true
         appearance = try container.decodeIfPresent(AppAppearance.self, forKey: .appearance) ?? .system
         menuBarIconStyle = try container.decodeIfPresent(MenuBarIconStyle.self, forKey: .menuBarIconStyle) ?? .default

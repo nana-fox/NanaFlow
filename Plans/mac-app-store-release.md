@@ -58,7 +58,7 @@
 | 主 App Bundle ID | `project.yml:41` | `com.nanafox.NanaFlow` |
 | Widget Bundle ID | `project.yml:68` | `com.nanafox.NanaFlow.Widget` |
 | Release entitlement | `project.yml:47` | 正式权限文件入口 |
-| 最小权限契约测试 | `Tests/NanaFocusTests/PermissionParityTests.swift:7` | 防止未发布权限重新混入 |
+| 最小权限契约测试 | `Tests/NanaFocusTests` | 防止未发布权限重新混入 |
 | 备份回归测试 | `Tests/NanaFocusTests/SessionExportTests.swift:5` | 保证全部会话字段可往返 |
 | 导入安全测试 | `Tests/NanaFocusTests/SessionHistoryTests.swift:704` | 防止导入丢失本机历史 |
 
