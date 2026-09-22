@@ -7,7 +7,7 @@ An unchecked gate is not evidence of completion. Record links or build identifie
 - [x] Apple Developer Program status is Active; Team ID recorded: `LTLULSL8A2`.
 - [ ] Agreements, tax, and banking requirements applicable to the selected price are complete.
 - [x] App Store Connect app record exists for bundle ID `com.nanafox.NanaFlow`; Apple ID `6814738160`, SKU `nanaflow-macos-1`.
-- [ ] SKU, primary language, availability, and price are explicitly selected.
+- [ ] SKU `nanaflow-macos-1`, Simplified Chinese primary language, and free price are selected; all 175 storefronts were submitted for availability and await final readback verification.
 - [x] Primary category is Productivity; secondary category is Utilities.
 - [x] Age rating questionnaire is completed; current result is 4+.
 - [x] Copyright is set to `2026 Nio D`.
@@ -59,7 +59,7 @@ An unchecked gate is not evidence of completion. Record links or build identifie
 - [ ] Base review note is updated with real contact details.
 - [ ] Exactly one Widget review-note variant matches the uploaded binary.
 - [ ] Reviewer can reach the main window from the menu bar using the documented steps.
-- [ ] Build 2 is uploaded; App Store Connect processing completion still needs confirmation.
+- [x] Build 2 is uploaded, processing is complete, and App Store Connect reports “Ready to Submit.”
 - [ ] Processed build is attached to version 1.0.
 - [ ] Export compliance, content rights, advertising identifier, and review-information questions are answered against the final binary.
 - [ ] Submission is configured for manual release after approval.
@@ -69,4 +69,4 @@ An unchecked gate is not evidence of completion. Record links or build identifie
 
 As of 2026-09-22, candidate `1.0.0 (2)` is the only intended review candidate. Calendar/EventKit, App/Web Blocker, Pro-unlock UI, tag catalog CRUD/UI, and iCloud timer sync are absent from the release UI and code paths; only `en` and `zh-Hans` ship. The candidate passed 200 tests, Release Analyze, universal signed Archive, deep signature verification, effective-entitlement inspection, linked-framework/symbol inspection, and App Store upload validation. The App and Widget use Team `LTLULSL8A2`, and the signed entitlements contain only the sandbox, shared App Group, user-selected file access where applicable, and Apple signing identifiers. Named third-party quotations were removed before build 2; all generated Widget quotations are attributed to NanaFlow. The upload was accepted for processing at 2026-09-22 15:43 CST.
 
-Still open: App Store processing confirmation, attachment of build 2 to version 1.0, pricing and territory selection, EU trader-status decision if Europe is included, mainland-China compliance decision, screenshots, English localization entry, privacy publication attestation, signed distribution installation, Widget Gallery/App Group runtime verification, migration verification, and final App Review submission. Final submission requires explicit developer confirmation.
+Still open: attachment of build 2 to version 1.0, final readback of the submitted 175-storefront availability, EU trader-status completion, mainland-China compliance follow-up, screenshots, English localization entry, privacy publication attestation, signed distribution installation, Widget Gallery/App Group runtime verification, migration verification, and final App Review submission. The price is free. Final submission requires explicit developer confirmation.

@@ -6,7 +6,7 @@
 - 主 App 和 Widget 均使用 Team `LTLULSL8A2`；有效权限仅包含 App Sandbox、App Group、签名标识以及主 App 的用户选择文件读写。
 - 最终二进制依赖与符号检查未发现 EventKit、iCloud、网络客户端、分析、广告、归因或崩溃上传 SDK。
 - 4 条带第三方姓名的展示引语已移除；521 条 Widget 引语全部由 NanaFlow 组合生成并署名 NanaFlow。
-- App Store Connect 上传验证成功，构建 2 已于 2026-09-22 15:43 CST 接受处理。
+- App Store Connect 上传验证成功，构建 2 已于 2026-09-22 15:43 CST 接受处理，随后处理完成并显示“准备提交”。
 - 尚未证明：App Store 处理完成与商店安装、真实沙盒数据迁移、Widget Gallery/App Group 运行时共享。截图、定价/地区、隐私声明发布和最终提审也仍是发布门禁。
 
 ## 2026-09-21 Mac App Store 准备复查
