@@ -41,6 +41,7 @@ targets:
         PRODUCT_NAME: NanaFlow
         GENERATE_INFOPLIST_FILE: false
         CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: LTLULSL8A2
         ENABLE_APP_SANDBOX: YES
       configs:
         Release:
@@ -68,6 +69,7 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.nanafox.NanaFlow.Widget
         PRODUCT_NAME: NanaFlowWidget
         CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: LTLULSL8A2
         ENABLE_APP_SANDBOX: YES
         SKIP_INSTALL: YES
       configs:

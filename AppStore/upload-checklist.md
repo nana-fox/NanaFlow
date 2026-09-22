@@ -4,7 +4,7 @@ An unchecked gate is not evidence of completion. Record links or build identifie
 
 ## 1. Account and app record
 
-- [ ] Apple Developer Program status is Active; Team ID recorded: `[TEAM_ID]`.
+- [x] Apple Developer Program status is Active; Team ID recorded: `LTLULSL8A2`.
 - [ ] Agreements, tax, and banking requirements applicable to the selected price are complete.
 - [ ] App Store Connect app record exists for bundle ID `com.nanafox.NanaFlow`.
 - [ ] SKU, primary language, availability, and price are explicitly selected.
@@ -67,4 +67,4 @@ An unchecked gate is not evidence of completion. Record links or build identifie
 
 ## Current status
 
-As of the material-pack commit, Archive, Validate App, upload, store installation, Widget sharing, and existing-data migration are **not recorded as passed**. Do not check those items using local unit-test or ad-hoc-build evidence.
+As of 2026-09-22, 230 tests, Release Analyze, and an unsigned Release Archive are recorded as passed. The signed Archive remains blocked while Apple's provisioning service reports no eligible device for the team. Validate App, upload, store installation, Widget sharing, and existing-data migration are **not recorded as passed**. Do not check those items using local unit-test, unsigned-archive, or ad-hoc-build evidence.

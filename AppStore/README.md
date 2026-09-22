@@ -27,7 +27,7 @@ Do not mention or show the web/app blocker, insights, tags, mini timer, paywall,
 
 ## Current evidence boundary
 
-The text is based on the implementation and release scope at commit `e47a916`. It does **not** claim that Archive, Validate App, upload, App Store installation, Widget sharing, or data migration have passed. URLs, legal entity, copyright year, support email, pricing, age rating answers, and signed-build privacy checks remain placeholders or gates.
+The text is based on the implementation and release scope through commit `4b68958`. It does **not** claim that signed Archive, Validate App, upload, App Store installation, Widget sharing, or data migration have passed. The Apple Developer Program is active and Team ID `LTLULSL8A2` is configured. URLs are published; legal entity, copyright year, support email, pricing, age rating answers, and signed-build privacy checks remain placeholders or gates.
 
 Run before copying metadata into App Store Connect:
 

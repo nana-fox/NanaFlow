@@ -2,7 +2,7 @@
 
 目标：把 NanaFlow 1.0 作为独立产品提交 Mac App Store，并保证从现有本机版本升级时历史记录可备份、可恢复、不可静默丢失。
 
-当前结论（2026-09-21）：**代码准备进行中，尚未达到提交条件**。Apple Developer Program 已付款但会员仍待激活；因此 Team ID、正式证书、profile、Archive 验证和 App Store Connect 上传都不能宣称完成。
+当前结论（2026-09-22）：**代码门禁已通过，签名链路仍在等待 Apple 后台同步**。Apple Developer Program 已激活，Team ID `LTLULSL8A2` 已配置到主 App 与 Widget；230 项测试、Release Analyze 和无签名 Archive 已通过。已注册的 Mac 尚未被 Xcode 的 provisioning 服务识别，因此正式签名 Archive、Validate App 和 App Store Connect 上传仍不能宣称完成。
 
 ## 已锁定的产品与发布决策
 
@@ -17,6 +17,8 @@
 
 ## 当前已完成
 
+- Apple Developer Program 已激活；主 App 与 Widget 已统一配置 Team ID `LTLULSL8A2`。
+- 230 项测试通过，Release Analyze 通过，无签名 Release Archive 通过。
 - Release entitlement 已收敛为 App Sandbox、用户选择文件读写和 App Group。
 - 主 App 与 Widget 共用 `MARKETING_VERSION` / `CURRENT_PROJECT_VERSION`。
 - 已声明不使用受限加密，移除 1.0 未提供功能的权限说明。
@@ -115,11 +117,11 @@
 
 | 风险 | 当前状态 | 处理 |
 |---|---|---|
-| Apple 会员尚未激活 | 外部阻塞 | 不重复付款；激活后继续 R1 |
+| Apple 已注册设备尚未同步到 provisioning 服务 | 外部阻塞 | 自动重试签名 Archive；同步完成后继续 R1 |
 | 旧 ad-hoc 数据进入商店沙盒尚未实包证明 | 未完成 | 使用真实数据副本和外部备份验收 |
 | Widget 正式共享尚未证明 | 未完成 | 不通过则从 1.0 移除 |
 | Intel 与 macOS 15 真机覆盖不足 | 未完成 | Beta 阶段补设备矩阵 |
-| 隐私/支持网页尚未发布 | 未完成 | 提审前建立并验证公开访问 |
+| 隐私/支持网页 | 已发布 | 提审前再次验证公开访问与内容一致性 |
 
 ## 后续但不阻塞 1.0
 

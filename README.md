@@ -53,6 +53,14 @@ xcodegen generate
 xcodebuild test -project NanaFlow.xcodeproj -scheme NanaFlow -destination 'platform=macOS'
 ```
 
+日常构建并启动当前源码版本：
+
+```sh
+./script/build_and_run.sh
+```
+
+使用 `--verify` 可在启动后确认进程存活；`--debug`、`--logs` 和 `--telemetry` 分别用于 LLDB、进程日志与应用子系统日志。Codex 项目的 Run 动作已连接到同一脚本。
+
 无需开发者证书的静态分析：
 
 ```sh
