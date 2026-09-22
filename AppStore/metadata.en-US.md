@@ -86,8 +86,8 @@ The first Mac App Store release of NanaFlow includes:
 • Notifications, completion sounds, and keyboard shortcuts
 ```
 
-## Required URL placeholders
+## Store URLs
 
-- Privacy Policy URL: `[PUBLIC_PRIVACY_URL]`
-- Support URL: `[PUBLIC_SUPPORT_URL]`
-- Marketing URL (optional): `[PUBLIC_PRODUCT_URL]`
+- Privacy Policy URL: `https://nana-fox.github.io/en/privacy/`
+- Support URL: `https://nana-fox.github.io/en/support/`
+- Marketing URL: `https://nana-fox.github.io/en/`

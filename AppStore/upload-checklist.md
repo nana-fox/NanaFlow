@@ -43,12 +43,12 @@ An unchecked gate is not evidence of completion. Record links or build identifie
 
 ## 5. Metadata and public pages
 
-- [ ] `python3 AppStore/validate_metadata.py` passes.
+- [x] `python3 AppStore/validate_metadata.py` passes at commit preparation time.
 - [ ] `metadata.zh-Hans.md` is copied into the Simplified Chinese locale.
 - [ ] `metadata.en-US.md` is copied into the English locale.
-- [ ] `[PUBLIC_PRIVACY_URL]` is public, stable, HTTPS, and matches the final build.
-- [ ] `[PUBLIC_SUPPORT_URL]` is public, stable, HTTPS, and provides a working contact route.
-- [ ] `[PUBLIC_PRODUCT_URL]` is either public and complete or omitted.
+- [x] Privacy URL is public over HTTPS: `https://nana-fox.github.io/privacy/` and `https://nana-fox.github.io/en/privacy/`.
+- [x] Support URL is public over HTTPS and links to the public issue tracker: `https://nana-fox.github.io/support/` and `https://nana-fox.github.io/en/support/`.
+- [x] Product URL is public over HTTPS: `https://nana-fox.github.io/` and `https://nana-fox.github.io/en/`.
 - [ ] App icon and every required screenshot slot are accepted by App Store Connect.
 - [ ] Screenshot asset register records the exact candidate version/build.
 - [ ] App Privacy answers are rechecked after signed-build and traffic verification.

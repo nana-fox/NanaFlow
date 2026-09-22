@@ -86,8 +86,8 @@ NanaFlow 首个 Mac App Store 版本：
 • 通知、完成声音和键盘快捷键
 ```
 
-## 必填链接占位符
+## 商店链接
 
-- 隐私政策 URL：`[PUBLIC_PRIVACY_URL]`
-- 支持 URL：`[PUBLIC_SUPPORT_URL]`
-- 营销 URL（可选）：`[PUBLIC_PRODUCT_URL]`
+- 隐私政策 URL：`https://nana-fox.github.io/privacy/`
+- 支持 URL：`https://nana-fox.github.io/support/`
+- 营销 URL：`https://nana-fox.github.io/`
