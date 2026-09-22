@@ -65,8 +65,6 @@ struct TimerPreferences: Codable, Equatable, Sendable {
         fullscreenBreaks: false,
         tickingSoundEnabled: false,
         tickingVolume: 1,
-        calendarSyncEnabled: false,
-        timerSyncEnabled: false,
         notificationsEnabled: false,
         motivationalQuotesEnabled: true,
         appearance: .system,
@@ -92,9 +90,6 @@ struct TimerPreferences: Codable, Equatable, Sendable {
     var fullscreenBreaks: Bool
     var tickingSoundEnabled: Bool
     var tickingVolume: Double
-    var calendarSyncEnabled: Bool
-    var calendarIdentifier: String?
-    var timerSyncEnabled: Bool
     var notificationsEnabled: Bool
     var motivationalQuotesEnabled: Bool
     var appearance: AppAppearance
@@ -121,9 +116,6 @@ struct TimerPreferences: Codable, Equatable, Sendable {
         case fullscreenBreaks
         case tickingSoundEnabled
         case tickingVolume
-        case calendarSyncEnabled
-        case calendarIdentifier
-        case timerSyncEnabled
         case notificationsEnabled
         case motivationalQuotesEnabled
         case appearance
@@ -151,9 +143,6 @@ struct TimerPreferences: Codable, Equatable, Sendable {
         fullscreenBreaks: Bool = false,
         tickingSoundEnabled: Bool = false,
         tickingVolume: Double = 1,
-        calendarSyncEnabled: Bool = false,
-        calendarIdentifier: String? = nil,
-        timerSyncEnabled: Bool = false,
         notificationsEnabled: Bool = false,
         motivationalQuotesEnabled: Bool = true,
         appearance: AppAppearance = .system,
@@ -179,9 +168,6 @@ struct TimerPreferences: Codable, Equatable, Sendable {
         self.fullscreenBreaks = fullscreenBreaks
         self.tickingSoundEnabled = tickingSoundEnabled
         self.tickingVolume = min(max(tickingVolume, 0), 2)
-        self.calendarSyncEnabled = calendarSyncEnabled
-        self.calendarIdentifier = calendarIdentifier
-        self.timerSyncEnabled = timerSyncEnabled
         self.notificationsEnabled = notificationsEnabled
         self.motivationalQuotesEnabled = motivationalQuotesEnabled
         self.appearance = appearance
@@ -211,9 +197,6 @@ struct TimerPreferences: Codable, Equatable, Sendable {
         fullscreenBreaks = try container.decodeIfPresent(Bool.self, forKey: .fullscreenBreaks) ?? false
         tickingSoundEnabled = try container.decodeIfPresent(Bool.self, forKey: .tickingSoundEnabled) ?? false
         tickingVolume = min(max(try container.decodeIfPresent(Double.self, forKey: .tickingVolume) ?? 1, 0), 2)
-        calendarSyncEnabled = try container.decodeIfPresent(Bool.self, forKey: .calendarSyncEnabled) ?? false
-        calendarIdentifier = try container.decodeIfPresent(String.self, forKey: .calendarIdentifier)
-        timerSyncEnabled = try container.decodeIfPresent(Bool.self, forKey: .timerSyncEnabled) ?? false
         notificationsEnabled = try container.decodeIfPresent(Bool.self, forKey: .notificationsEnabled) ?? false
         motivationalQuotesEnabled = try container.decodeIfPresent(Bool.self, forKey: .motivationalQuotesEnabled) ?? true
         appearance = try container.decodeIfPresent(AppAppearance.self, forKey: .appearance) ?? .system

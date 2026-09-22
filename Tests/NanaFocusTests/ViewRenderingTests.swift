@@ -134,13 +134,8 @@ final class ViewRenderingTests: XCTestCase {
             contentsOf: repositoryURL.appendingPathComponent("Sources/NanaFocus/TimerView.swift"),
             encoding: .utf8
         )
-        let tagsSource = try String(
-            contentsOf: repositoryURL.appendingPathComponent("Sources/NanaFocus/SessionTags.swift"),
-            encoding: .utf8
-        )
         XCTAssertFalse(timerViewSource.contains("RecommendationMenu"))
         XCTAssertTrue(timerViewSource.contains("controller.cycleAccessibilityLabel"))
-        XCTAssertTrue(tagsSource.contains("String(localized: \"工作\")"))
     }
 
     func testEnglishSecondarySurfaceStringsShipInTheAppBundle() throws {
@@ -233,20 +228,12 @@ final class ViewRenderingTests: XCTestCase {
             contentsOf: repositoryURL.appendingPathComponent("Sources/NanaFocus/TimerSettingsView.swift"),
             encoding: .utf8
         )
-        let sync = try String(
-            contentsOf: repositoryURL.appendingPathComponent("Sources/NanaFocus/TimerSyncView.swift"),
-            encoding: .utf8
-        )
         let statistics = try String(
             contentsOf: repositoryURL.appendingPathComponent("Sources/NanaFocus/StatisticsView.swift"),
             encoding: .utf8
         )
         let app = try String(
             contentsOf: repositoryURL.appendingPathComponent("Sources/NanaFocus/NanaFocusApp.swift"),
-            encoding: .utf8
-        )
-        let tags = try String(
-            contentsOf: repositoryURL.appendingPathComponent("Sources/NanaFocus/TagManagementView.swift"),
             encoding: .utf8
         )
         let commands = try String(
@@ -256,14 +243,10 @@ final class ViewRenderingTests: XCTestCase {
 
         XCTAssertTrue(settings.contains("String(localized: \"系统\")"))
         XCTAssertTrue(settings.contains("Text(LocalizedStringKey(title))"))
-        XCTAssertTrue(sync.contains("String(localized: \"定时器同步\")"))
-        XCTAssertTrue(sync.contains("String(localized: \"可用\")"))
         XCTAssertTrue(statistics.contains("Locale.autoupdatingCurrent"))
         XCTAssertTrue(statistics.contains("localizedMinutes("))
         XCTAssertTrue(app.contains("String(localized: \"menu_bar_accessibility_format\")"))
         XCTAssertFalse(app.contains("，剩余"))
-        XCTAssertTrue(tags.contains("String(localized: \"edit_tag_accessibility_format\")"))
-        XCTAssertTrue(tags.contains("String(localized: \"tag_color_accessibility_format\")"))
         XCTAssertTrue(commands.contains("Button(LocalizedStringKey(title))"))
     }
 
@@ -320,29 +303,14 @@ final class ViewRenderingTests: XCTestCase {
             .deletingLastPathComponent()
             .deletingLastPathComponent()
             .deletingLastPathComponent()
-        let tags = try String(
-            contentsOf: repositoryURL.appendingPathComponent("Sources/NanaFocus/TagManagementView.swift"),
-            encoding: .utf8
-        )
         let durations = try String(
             contentsOf: repositoryURL.appendingPathComponent("Sources/NanaFocus/CustomDurationView.swift"),
             encoding: .utf8
         )
-        let pro = try String(
-            contentsOf: repositoryURL.appendingPathComponent("Sources/NanaFocus/ProUnlockedView.swift"),
-            encoding: .utf8
-        )
 
-        XCTAssertTrue(tags.contains("String(localized: \"删除标签 \\\"%@\\\"？\")"))
-        XCTAssertTrue(tags.contains("String(localized: \"此标签在 %lld 个会话中使用。这些会话将失去此标签。\")"))
-        XCTAssertTrue(tags.contains("Text(LocalizedStringKey(title))"))
-        XCTAssertFalse(tags.contains("return \"删除标签"))
         XCTAssertTrue(durations.contains("String(localized: \"自定义持续时间\")"))
         XCTAssertTrue(durations.contains("Text(LocalizedStringKey(title))"))
         XCTAssertTrue(durations.contains("Text(\"\\(value.wrappedValue)\\(unit)\")"))
-        XCTAssertTrue(pro.contains("String(localized: \"NanaFlow Pro 已解锁\")"))
-        XCTAssertTrue(pro.contains("String(localized: \"跨设备同步\")"))
-        XCTAssertTrue(pro.contains("Text(\"已启用\")"))
     }
 
     func testEnglishBackgroundAndSystemStringsShipInTheAppBundle() throws {
@@ -439,24 +407,17 @@ final class ViewRenderingTests: XCTestCase {
             contentsOf: repositoryURL.appendingPathComponent("Sources/NanaFocus/TimerOptionsMenuContent.swift"),
             encoding: .utf8
         )
-        let calendar = try String(
-            contentsOf: repositoryURL.appendingPathComponent("Sources/NanaFocus/FocusSessionCalendarRecorder.swift"),
-            encoding: .utf8
-        )
         let recorder = try String(
             contentsOf: repositoryURL.appendingPathComponent("Sources/NanaFocus/KeyboardShortcutRecorder.swift"),
             encoding: .utf8
         )
 
         XCTAssertTrue(notification.contains("String(localized: \"开始\")"))
-        XCTAssertTrue(notification.contains("String(localized: \"%@ 在你的黑名单上\")"))
         XCTAssertTrue(notification.contains("localized(\"flowCompletedTitle\\(index)\")"))
         XCTAssertTrue(notification.contains("localized(\"breakCompletedTitle\\(index)\")"))
         XCTAssertTrue(notification.contains("NSLocalizedString(key, bundle: Bundle(for: TimerController.self)"))
         XCTAssertTrue(timer.contains("String(localized: \"无法保存设置：%@\")"))
-        XCTAssertTrue(timer.contains("String(localized: \"无法同步计时器：%@\")"))
         XCTAssertTrue(menu.contains("Button(phaseSwitchTitle)"))
-        XCTAssertTrue(calendar.contains("String(localized: \"已完成的专注会话\")"))
         XCTAssertTrue(recorder.contains("String(localized: \"录制快捷键\")"))
         XCTAssertTrue(recorder.contains("String(localized: \"输入快捷键…\")"))
     }
@@ -806,9 +767,6 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertEqual(SettingsVisualMetrics.scrollIndicatorTrailingInset, 12)
         XCTAssertEqual(SettingsVisualMetrics.contentOffsetY, 3)
         XCTAssertEqual(SettingsVisualMetrics.bottomPadding, 5.5)
-        XCTAssertEqual(BlockerVisualMetrics.segmentWidth, 260)
-        XCTAssertEqual(BlockerVisualMetrics.segmentHeight, 28)
-        XCTAssertEqual(BlockerVisualMetrics.headerOffsetY, -5)
         XCTAssertEqual(WelcomeVisualMetrics.iconImageSize, 155)
         XCTAssertEqual(WelcomeVisualMetrics.iconTopPadding, 48)
         XCTAssertEqual(WelcomeVisualMetrics.backgroundOffsetY, -80)
@@ -1206,50 +1164,20 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertTrue(timerSource.contains(#".accessibilityLabel(controller.engine.state.isRunning ? "停止" : "开始")"#))
     }
 
-    func testTagAndSessionDeletionUseFlowsConfirmationCopy() throws {
+    func testSessionDeletionUsesFlowsConfirmationCopy() throws {
         let repositoryURL = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()
             .deletingLastPathComponent()
             .deletingLastPathComponent()
-        let tagSource = try String(
-            contentsOf: repositoryURL.appendingPathComponent("Sources/NanaFocus/TagManagementView.swift"),
-            encoding: .utf8
-        )
         let statisticsSource = try String(
             contentsOf: repositoryURL.appendingPathComponent("Sources/NanaFocus/StatisticsView.swift"),
             encoding: .utf8
         )
 
-        XCTAssertTrue(tagSource.contains("@State private var confirmsDeleteTag = false"))
-        XCTAssertTrue(tagSource.contains("selectedTag = tag"))
-        XCTAssertTrue(tagSource.contains(#"删除标签 \""#))
-        XCTAssertTrue(tagSource.contains("此标签在 1 个会话中使用。该会话将失去此标签。"))
-        XCTAssertTrue(tagSource.contains("此标签在 %lld 个会话中使用。这些会话将失去此标签。"))
-        XCTAssertTrue(tagSource.contains("此操作不能撤销。"))
         XCTAssertTrue(statisticsSource.contains("您确定要重置您的统计数据吗？"))
         XCTAssertTrue(statisticsSource.contains("你确定要删除此会话吗？"))
         XCTAssertTrue(statisticsSource.contains("完成你的第一次会话，在这里查看详细概览。"))
         XCTAssertFalse(statisticsSource.contains("使用标签对您的统计数据进行分类。"))
-    }
-
-    func testTagManagementUsesFlowsOverviewAddAndEditRoutes() throws {
-        let repositoryURL = URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent()
-            .deletingLastPathComponent()
-            .deletingLastPathComponent()
-        let source = try String(
-            contentsOf: repositoryURL.appendingPathComponent("Sources/NanaFocus/TagManagementView.swift"),
-            encoding: .utf8
-        )
-
-        XCTAssertTrue(source.contains("private struct TagsOverview"))
-        XCTAssertTrue(source.contains("private struct TagEditView"))
-        XCTAssertTrue(source.contains("case addTag"))
-        XCTAssertTrue(source.contains("case editTag(String)"))
-        XCTAssertTrue(source.contains("Text(\"使用标签对会话进行分类和整理。\")"))
-        XCTAssertTrue(source.contains("TextField(\"标题\", text: $title)"))
-        XCTAssertTrue(source.contains("SessionTagSettings.palette.enumerated()"))
-        XCTAssertTrue(source.contains("controller.updateTag(originalName, name: title, colorHex: colorHex)"))
     }
 
     func testVisibleSessionNounsUseNanaFlowBrand() throws {
@@ -1273,7 +1201,6 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertFalse(statisticsSource.contains(#".accessibilityLabel("显示所有会话")"#))
         XCTAssertFalse(statisticsSource.contains(#"String(localized: "tag_summary_format")"#))
         XCTAssertTrue(widgetSource.contains(#"entry.statisticsUnit == .count ? "NanaFlows" : String(localized: "分钟")"#))
-        XCTAssertFalse(ProUnlockedContract.message.hasPrefix("Flow "))
     }
 
     func testStatisticsBarsExposeConciseHoverDetailsWithoutOpeningAnotherWindow() throws {
@@ -1687,39 +1614,53 @@ final class ViewRenderingTests: XCTestCase {
         )
     }
 
-    func testAllFlowLanguageRegionsShipCompleteBrandSafeLocalizations() throws {
+    func testFlowShipsOnlyTheLockedVersionOneLocalizations() throws {
         let repositoryURL = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()
             .deletingLastPathComponent()
             .deletingLastPathComponent()
         let localizationRoot = repositoryURL.appendingPathComponent("Sources/NanaFocus")
-        let expectedLocales = [
-            "ca", "de", "en", "es", "fr", "it", "ja", "ko", "nb", "nl",
-            "pl", "pt-BR", "pt-PT", "ru", "sv", "tr", "uk", "vi", "zh-Hans", "zh-Hant",
+        let lockedLocales = ["en", "zh-Hans"]
+        let removedLocales = [
+            "ca", "de", "es", "fr", "it", "ja", "ko", "nb", "nl",
+            "pl", "pt-BR", "pt-PT", "ru", "sv", "tr", "uk", "vi", "zh-Hant",
         ]
-        let englishURL = localizationRoot
-            .appendingPathComponent("en.lproj/Localizable.strings")
-        let english = try XCTUnwrap(
-            try PropertyListSerialization.propertyList(
-                from: Data(contentsOf: englishURL),
-                options: [],
-                format: nil
-            ) as? [String: String]
-        )
         let appBundle = Bundle(for: TimerController.self)
         let widgetURL = try XCTUnwrap(
             appBundle.builtInPlugInsURL?.appendingPathComponent("NanaFlowWidget.appex")
         )
         let widgetBundle = try XCTUnwrap(Bundle(url: widgetURL))
 
-        for locale in expectedLocales {
-            let localizationURL = localizationRoot
-                .appendingPathComponent("\(locale).lproj/Localizable.strings")
+        for locale in removedLocales {
+            let localizationURL = localizationRoot.appendingPathComponent("\(locale).lproj")
+            XCTAssertFalse(
+                FileManager.default.fileExists(atPath: localizationURL.path),
+                "\(locale) localization must not ship in version 1.0"
+            )
+            XCTAssertNil(
+                appBundle.url(forResource: "Localizable", withExtension: "strings", subdirectory: nil, localization: locale),
+                "App bundle must not ship \(locale)"
+            )
+            XCTAssertNil(
+                widgetBundle.url(forResource: "Localizable", withExtension: "strings", subdirectory: nil, localization: locale),
+                "Widget bundle must not ship \(locale)"
+            )
+        }
+
+        for locale in lockedLocales {
+            let localizationURL = localizationRoot.appendingPathComponent("\(locale).lproj/Localizable.strings")
             XCTAssertTrue(
                 FileManager.default.fileExists(atPath: localizationURL.path),
                 "Missing \(locale) localization"
             )
-            guard FileManager.default.fileExists(atPath: localizationURL.path) else { continue }
+            XCTAssertNotNil(
+                appBundle.url(forResource: "Localizable", withExtension: "strings", subdirectory: nil, localization: locale),
+                "App bundle is missing \(locale)"
+            )
+            XCTAssertNotNil(
+                widgetBundle.url(forResource: "Localizable", withExtension: "strings", subdirectory: nil, localization: locale),
+                "Widget bundle is missing \(locale)"
+            )
 
             let localization = try XCTUnwrap(
                 try PropertyListSerialization.propertyList(
@@ -1729,151 +1670,6 @@ final class ViewRenderingTests: XCTestCase {
                 ) as? [String: String],
                 locale
             )
-            if ["ca", "de", "es", "fr", "it", "ja", "ko", "nb", "nl", "pl", "pt-BR", "pt-PT", "ru", "zh-Hant"].contains(locale) {
-                let stringsdictURL = localizationRoot
-                    .appendingPathComponent("\(locale).lproj/Localizable.stringsdict")
-                let stringsdict = try XCTUnwrap(
-                    try PropertyListSerialization.propertyList(
-                        from: Data(contentsOf: stringsdictURL),
-                        options: [],
-                        format: nil
-                    ) as? [String: Any]
-                )
-                let cycle = try XCTUnwrap(stringsdict["cycle_session_count"] as? [String: Any])
-                let sessions = try XCTUnwrap(cycle["sessions"] as? [String: String])
-                let expected: [String: String]
-                switch locale {
-                case "ca":
-                    expected = ["one": "%lld sessió", "other": "%lld sessions"]
-                case "es":
-                    expected = ["one": "%lld sesión", "other": "%lld sesiones"]
-                case "it":
-                    expected = ["one": "%lld sessione", "other": "%lld sessioni"]
-                case "pt-BR", "pt-PT":
-                    expected = ["one": "%lld sessão", "other": "%lld sessões"]
-                case "nl":
-                    expected = ["one": "%lld sessie", "other": "%lld sessies"]
-                case "nb":
-                    expected = ["one": "%lld økt", "other": "%lld økter"]
-                case "pl":
-                    expected = [
-                        "one": "%lld sesja",
-                        "few": "%lld sesje",
-                        "many": "%lld sesji",
-                        "other": "%lld sesji",
-                    ]
-                case "ru":
-                    expected = [
-                        "one": "%lld сеанс",
-                        "few": "%lld сеанса",
-                        "many": "%lld сеансов",
-                        "other": "%lld сеанса",
-                    ]
-                case "ja":
-                    expected = ["one": "%lldセッション", "other": "%lldセッション"]
-                case "de":
-                    expected = ["one": "%lld Session", "other": "%lld Sessions"]
-                case "ko":
-                    expected = ["one": "%lld개 세션", "other": "%lld개 세션"]
-                case "fr":
-                    expected = ["one": "%lld session", "other": "%lld sessions"]
-                default:
-                    expected = ["one": "%lld 個會話", "other": "%lld 個會話"]
-                }
-                for (category, value) in expected {
-                    XCTAssertEqual(sessions[category], value, "\(locale) \(category) plural form")
-                }
-            }
-            if locale != "zh-Hans" {
-                XCTAssertEqual(
-                    Set(localization.keys),
-                    Set(english.keys),
-                    "\(locale) must localize every user-facing key"
-                )
-            }
-            if locale != "en" && locale != "zh-Hans" {
-                let translatedCount = english.reduce(into: 0) { count, entry in
-                    if localization[entry.key] != entry.value { count += 1 }
-                }
-                if locale == "zh-Hant" {
-                    XCTAssertEqual(
-                        translatedCount,
-                        english.count,
-                        "Traditional Chinese must not fall back to English"
-                    )
-                    XCTAssertEqual(
-                        localization["终身使用"],
-                        "終身使用",
-                        "Traditional Chinese Pro copy must not leak simplified characters"
-                    )
-                } else if ["ca", "de", "es", "fr", "it", "ja", "ko", "nb", "nl", "pl", "pt-BR", "pt-PT", "ru"].contains(locale) {
-                    let intentionallySharedValues: Set<String>
-                    switch locale {
-                    case "ca":
-                        intentionallySharedValues = ["网页", "好", "圆形", "本地", "颜色", "duration_hms_format", "全局", "定时器同步", "一般", "个人", "应用"]
-                    case "es":
-                        intentionallySharedValues = ["网页", "好", "圆形", "本地", "颜色", "duration_hms_format", "全局", "定时器同步", "一般", "个人", "应用"]
-                    case "it":
-                        intentionallySharedValues = ["网页", "好", "菜单", "文件", "File", "音量", "duration_hms_format", "定时器同步", "应用", "网站"]
-                    case "pt-BR", "pt-PT":
-                        intentionallySharedValues = ["网页", "好", "菜单", "圆形", "本地", "音量", "duration_hms_format", "定时器同步", "状态", "全局", "应用", "网站"]
-                    case "nl":
-                        intentionallySharedValues = ["网页", "Help", "好", "菜单", "帮助", "本地", "音量", "duration_hms_format", "全局", "自动", "竖琴", "定时器同步", "停止", "重置", "升级", "类型", "状态", "应用", "标签", "周", "网站", "筛选"]
-                    case "nb":
-                        intentionallySharedValues = ["好", "暂停", "本地", "系统", "音量", "duration_hms_format", "全局", "定时器同步", "开始", "类型", "状态", "应用"]
-                    case "pl":
-                        intentionallySharedValues = ["好", "好的", "菜单", "系统", "开始", "状态"]
-                    case "ru":
-                        intentionallySharedValues = []
-                    case "ja":
-                        intentionallySharedValues = ["好"]
-                    case "de":
-                        intentionallySharedValues = ["网页", "好", "系统", "支持", "升级", "状态", "阶段", "应用", "标签", "筛选", "全局"]
-                    case "fr":
-                        intentionallySharedValues = [
-                            "网页", "好", "菜单", "暂停", "本地", "音量", "风格 1", "打断", "全局",
-                            "风格 2", "%lld 分钟", "风格 3", "周期", "风格 4", "通知", "分钟",
-                            "支持", "类型", "阶段", "应用", "标签", "网站",
-                        ]
-                    default:
-                        intentionallySharedValues = []
-                    }
-                    let englishMatches = Set(english.compactMap { entry in
-                        localization[entry.key] == entry.value ? entry.key : nil
-                    })
-                    XCTAssertEqual(
-                        englishMatches,
-                        intentionallySharedValues,
-                        "\(locale) must only retain words that are conventionally identical to English"
-                    )
-                    if locale == "pl" {
-                        XCTAssertEqual(localization["%lld 分钟"], "%lld min")
-                        XCTAssertEqual(localization["休息时间"], "Czas przerwy")
-                        XCTAssertEqual(localization["统计"], "Statystyki")
-                        XCTAssertEqual(localization["建议"], "Poleć aplikację")
-                        XCTAssertEqual(localization["启用承诺模式"], "Tryb zobowiązania")
-                    } else if locale == "ru" {
-                        XCTAssertEqual(localization["%lld 分钟"], "%lld мин")
-                        XCTAssertEqual(localization["自动启动NanaFlow会话"], "Автоматически начинать сеансы NanaFlow")
-                        XCTAssertEqual(localization["编辑会话名称"], "Редактировать название сеанса")
-                        XCTAssertEqual(localization["自定义"], "Настроить…")
-                        XCTAssertEqual(localization["升级"], "Перейти на Pro")
-                    }
-                    if locale == "de" {
-                        XCTAssertEqual(
-                            localization["终身使用"],
-                            "Lebenslanger Zugriff",
-                            "German Pro copy must not retain the English Lifetime label"
-                        )
-                    }
-                } else {
-                    XCTAssertGreaterThanOrEqual(
-                        translatedCount,
-                        250,
-                        "\(locale) must contain real localized copy instead of an English-only shell"
-                    )
-                }
-            }
             for value in localization.values {
                 let withoutNanaFlow = value
                     .replacingOccurrences(of: "NanaFlows", with: "")
@@ -1882,31 +1678,7 @@ final class ViewRenderingTests: XCTestCase {
                     withoutNanaFlow.contains("Flow"),
                     "\(locale) leaks the source product brand: \(value)"
                 )
-                if ["ca", "es", "it", "nb", "nl", "pl", "pt-BR", "pt-PT"].contains(locale) {
-                    XCTAssertFalse(
-                        value.contains(" flow") || value.hasPrefix("flow"),
-                        "\(locale) must use the NanaFlow product name instead of a lowercase English flow: \(value)"
-                    )
-                }
             }
-            XCTAssertNotNil(
-                appBundle.url(
-                    forResource: "Localizable",
-                    withExtension: "strings",
-                    subdirectory: nil,
-                    localization: locale
-                ),
-                "App bundle is missing \(locale)"
-            )
-            XCTAssertNotNil(
-                widgetBundle.url(
-                    forResource: "Localizable",
-                    withExtension: "strings",
-                    subdirectory: nil,
-                    localization: locale
-                ),
-                "Widget bundle is missing \(locale)"
-            )
         }
     }
 
@@ -2085,38 +1857,6 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertFalse(statisticsSource.contains("minWidth: StatisticsVisualMetrics.windowWidth"))
     }
 
-    func testBlockerRenders() {
-        let controller = BlockerController(
-            persistence: RenderingBlockerPersistence(
-                configuration: BlockerConfiguration(
-                    mode: .block,
-                    appBundleIdentifiers: ["com.apple.TextEdit"],
-                    websitePatterns: []
-                )
-            )
-        )
-        let renderer = ImageRenderer(content: BlockerView(controller: controller))
-        renderer.proposedSize = ProposedViewSize(width: 380, height: 272)
-
-        XCTAssertNotNil(renderer.nsImage)
-    }
-
-    func testWebsiteBlockerRenders() {
-        let controller = BlockerController(
-            persistence: RenderingBlockerPersistence(
-                configuration: BlockerConfiguration(
-                    mode: .allow,
-                    appBundleIdentifiers: [],
-                    websitePatterns: ["youtube", "social.example.com"]
-                )
-            )
-        )
-        let renderer = ImageRenderer(content: BlockerView(controller: controller, initialTab: .websites))
-        renderer.proposedSize = ProposedViewSize(width: 380, height: 272)
-
-        XCTAssertNotNil(renderer.nsImage)
-    }
-
     func testTimerOptionsMenuBuilds() {
         let renderer = ImageRenderer(content: TimerOptionsMenuContent(
             controller: makeController(),
@@ -2126,13 +1866,6 @@ final class ViewRenderingTests: XCTestCase {
             onAbout: {}
         ))
         renderer.proposedSize = ProposedViewSize(width: 320, height: 240)
-
-        XCTAssertNotNil(renderer.nsImage)
-    }
-
-    func testTagManagementRenders() {
-        let renderer = ImageRenderer(content: TagManagementView(controller: makeController()))
-        renderer.proposedSize = ProposedViewSize(width: 380, height: 272)
 
         XCTAssertNotNil(renderer.nsImage)
     }
@@ -2169,7 +1902,6 @@ final class ViewRenderingTests: XCTestCase {
             tag: "工作"
         )
         let controller = makeController(sessions: [session])
-        controller.addTag("工作")
         let renderer = ImageRenderer(content: SessionDetailView(
             controller: controller,
             session: session,
@@ -2252,7 +1984,6 @@ final class ViewRenderingTests: XCTestCase {
             persistence: RenderingPersistence(engine: engine),
             preferencesPersistence: RenderingPreferencesPersistence(),
             historyPersistence: RenderingHistoryPersistence(sessions: sessions),
-            tagPersistence: RenderingTagPersistence(),
             notifications: RenderingNotifications(),
             now: Date(timeIntervalSince1970: 10_000)
         )
@@ -2286,12 +2017,6 @@ private struct RenderingPersistence: TimerPersisting {
 }
 
 @MainActor
-private struct RenderingTagPersistence: SessionTagPersisting {
-    func load() -> SessionTagSettings? { .standard }
-    func save(_: SessionTagSettings) throws {}
-}
-
-@MainActor
 private struct RenderingPreferencesPersistence: TimerPreferencesPersisting {
     func load() -> TimerPreferences? { nil }
     func save(_: TimerPreferences) throws {}
@@ -2309,12 +2034,4 @@ private struct RenderingHistoryPersistence: SessionHistoryPersisting {
 private struct RenderingNotifications: SessionNotificationScheduling {
     func scheduleCompletion(at _: Date, nextPhase _: SessionPhase, sound _: CompletionSound, volume _: Double, quote _: String?) {}
     func cancelCompletion() {}
-}
-
-@MainActor
-private struct RenderingBlockerPersistence: BlockerConfigurationPersisting {
-    let configuration: BlockerConfiguration
-
-    func load() -> BlockerConfiguration? { configuration }
-    func save(_: BlockerConfiguration) throws {}
 }

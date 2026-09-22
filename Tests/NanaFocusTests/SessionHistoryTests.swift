@@ -141,6 +141,7 @@ final class SessionHistoryTests: XCTestCase {
         XCTAssertEqual(decoded.type, .focus)
         XCTAssertEqual(decoded.interruptions, [])
         XCTAssertNil(decoded.completedAt)
+        XCTAssertEqual(decoded.tag, legacy.tag)
     }
 
     func testCloudHistoryMergeKeepsUniqueNewestSessions() {
@@ -403,6 +404,19 @@ final class SessionHistoryTests: XCTestCase {
         XCTAssertEqual(sessionDurationText(3_661), "1小时1分钟1秒")
     }
 
+    func testStatisticsCanFilterByTag() {
+        let now = Date(timeIntervalSince1970: 10_000)
+        let sessions = [
+            FocusSession(id: UUID(), startedAt: now.addingTimeInterval(-1_200), endedAt: now, duration: 1_200, completed: true, title: "NanaFlow", tag: "工作"),
+            FocusSession(id: UUID(), startedAt: now.addingTimeInterval(-600), endedAt: now, duration: 600, completed: true, title: "NanaFlow", tag: "学习")
+        ]
+
+        let statistics = SessionStatistics(sessions: sessions, period: .day, anchor: now, tag: "工作")
+
+        XCTAssertEqual(statistics.totalCount, 1)
+        XCTAssertEqual(statistics.totalDuration, 1_200)
+    }
+
     func testStatisticsBuildsTagBreakdownForCompletedSessions() {
         var work = session(on: start, minutes: 25)
         work.tag = "工作"
@@ -582,37 +596,6 @@ final class SessionHistoryTests: XCTestCase {
         )
     }
 
-    func testCompletedSessionsDoNotWriteToLegacyCalendarIntegration() {
-        let preferences = TimerPreferences(
-            autoStartFocus: false,
-            autoStartBreaks: false,
-            notificationSoundEnabled: false,
-            calendarSyncEnabled: true,
-            notificationsEnabled: false
-        )
-        let controller = TimerController(
-            configuration: TimerConfiguration(
-                focusDuration: 60,
-                shortBreakDuration: 30,
-                longBreakDuration: 60,
-                sessionsPerCycle: 4
-            ),
-            persistence: HistoryTimerPersistence(),
-            preferencesPersistence: HistoryPreferencesPersistence(loaded: preferences),
-            historyPersistence: HistorySpy(),
-            notifications: HistoryNotifications(),
-            now: start
-        )
-        controller.start(at: start)
-        controller.tick(at: start.addingTimeInterval(61))
-        controller.start(at: start.addingTimeInterval(70))
-
-        controller.tick(at: start.addingTimeInterval(101))
-
-        XCTAssertEqual(controller.sessions.map(\.type), [.shortBreak, .focus])
-        XCTAssertTrue(controller.sessions.allSatisfy(\.completed))
-    }
-
     func testSkippedBreakAfterOneMinuteIsStoredIncomplete() {
         let controller = TimerController(
             configuration: TimerConfiguration(
@@ -653,36 +636,16 @@ final class SessionHistoryTests: XCTestCase {
         XCTAssertNotNil(controller.errorMessage)
     }
 
-    func testLegacyCalendarPreferenceDoesNotWriteInVersionOne() {
-        let preferences = TimerPreferences(
-            autoStartFocus: false,
-            autoStartBreaks: false,
-            notificationSoundEnabled: false,
-            calendarSyncEnabled: true,
-            calendarIdentifier: "calendar.work",
-            notificationsEnabled: false
-        )
-        let controller = TimerController(
-            configuration: TimerConfiguration(
-                focusDuration: 60,
-                shortBreakDuration: 30,
-                longBreakDuration: 60,
-                sessionsPerCycle: 4
-            ),
-            persistence: HistoryTimerPersistence(),
-            preferencesPersistence: HistoryPreferencesPersistence(loaded: preferences),
-            historyPersistence: HistorySpy(),
-            notifications: HistoryNotifications(),
-            now: start
-        )
-
-        controller.toggle(at: start)
-        controller.tick(at: start.addingTimeInterval(61))
-
-    }
-
     func testControllerCanEditAndDeleteStoredSessions() {
-        let original = session(on: start, minutes: 25)
+        let original = FocusSession(
+            id: UUID(),
+            startedAt: start,
+            endedAt: start.addingTimeInterval(25 * 60),
+            duration: 25 * 60,
+            completed: true,
+            title: "NanaFlow",
+            tag: "工作"
+        )
         let history = HistorySpy(loaded: [original])
         let controller = TimerController(
             persistence: HistoryTimerPersistence(),
@@ -692,10 +655,21 @@ final class SessionHistoryTests: XCTestCase {
             now: start
         )
 
-        controller.updateSession(id: original.id, title: "深度工作", tag: "工作")
+        controller.updateSession(
+            id: original.id,
+            type: .focus,
+            title: "深度工作",
+            tag: original.tag,
+            startedAt: original.startedAt,
+            endedAt: original.endedAt
+        )
 
         XCTAssertEqual(controller.sessions.first?.title, "深度工作")
-        XCTAssertEqual(controller.sessions.first?.tag, "工作")
+        XCTAssertEqual(
+            controller.sessions.first?.tag,
+            "工作",
+            "Editing must preserve the existing legacy tag rather than introducing or dropping one"
+        )
         XCTAssertEqual(history.saved.last, controller.sessions)
 
         controller.deleteSession(id: original.id)
@@ -875,15 +849,4 @@ private struct HistoryPreferencesPersistence: TimerPreferencesPersisting {
 private struct HistoryNotifications: SessionNotificationScheduling {
     func scheduleCompletion(at _: Date, nextPhase _: SessionPhase, sound _: CompletionSound, volume _: Double, quote _: String?) {}
     func cancelCompletion() {}
-}
-
-@MainActor
-private final class HistoryCalendarSpy: FocusSessionCalendarRecording {
-    private(set) var sessions: [FocusSession] = []
-    private(set) var identifiers: [String?] = []
-
-    func record(_ session: FocusSession, calendarIdentifier: String?) {
-        sessions.append(session)
-        identifiers.append(calendarIdentifier)
-    }
 }

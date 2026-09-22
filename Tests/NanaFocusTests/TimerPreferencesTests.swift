@@ -20,9 +20,6 @@ final class TimerPreferencesTests: XCTestCase {
             fullscreenBreaks: true,
             tickingSoundEnabled: true,
             tickingVolume: 1.4,
-            calendarSyncEnabled: true,
-            calendarIdentifier: "calendar.work",
-            timerSyncEnabled: true,
             notificationsEnabled: false,
             motivationalQuotesEnabled: false,
             appearance: .dark,
@@ -71,9 +68,6 @@ final class TimerPreferencesTests: XCTestCase {
         XCTAssertFalse(preferences.fullscreenBreaks)
         XCTAssertFalse(preferences.tickingSoundEnabled)
         XCTAssertEqual(preferences.tickingVolume, 1)
-        XCTAssertFalse(preferences.calendarSyncEnabled)
-        XCTAssertNil(preferences.calendarIdentifier)
-        XCTAssertFalse(preferences.timerSyncEnabled)
         XCTAssertFalse(preferences.notificationsEnabled)
         XCTAssertTrue(preferences.motivationalQuotesEnabled)
         XCTAssertEqual(preferences.appearance, .system)
@@ -86,6 +80,30 @@ final class TimerPreferencesTests: XCTestCase {
         XCTAssertEqual(preferences.breakCompletionSound, .bell)
         XCTAssertEqual(preferences.notificationVolume, 1)
         XCTAssertEqual(preferences.sessionTitle, "NanaFlow")
+    }
+
+    func testLegacyTimerSyncEnabledKeyIsIgnoredOnDecode() throws {
+        let data = try XCTUnwrap("""
+        {"autoStartFocus":false,"autoStartBreaks":false,"notificationSoundEnabled":true,"timerSyncEnabled":true}
+        """.data(using: .utf8))
+
+        let preferences = try JSONDecoder().decode(TimerPreferences.self, from: data)
+
+        XCTAssertFalse(preferences.autoStartFocus)
+        XCTAssertFalse(preferences.autoStartBreaks)
+        XCTAssertTrue(preferences.notificationSoundEnabled)
+    }
+
+    func testLegacyCalendarSyncKeysAreIgnoredOnDecode() throws {
+        let data = try XCTUnwrap("""
+        {"autoStartFocus":false,"autoStartBreaks":false,"notificationSoundEnabled":true,"calendarSyncEnabled":true,"calendarIdentifier":"calendar.work"}
+        """.data(using: .utf8))
+
+        let preferences = try JSONDecoder().decode(TimerPreferences.self, from: data)
+
+        XCTAssertFalse(preferences.autoStartFocus)
+        XCTAssertFalse(preferences.autoStartBreaks)
+        XCTAssertTrue(preferences.notificationSoundEnabled)
     }
 
     func testNotificationsRequireExplicitOptInByDefault() {

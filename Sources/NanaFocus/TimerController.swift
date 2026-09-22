@@ -1,7 +1,6 @@
 import AppKit
 import Foundation
 import Observation
-import Security
 
 enum TimerAutomationCommand: String, Equatable, Sendable {
     case start
@@ -30,38 +29,24 @@ final class TimerController {
 
     private(set) var engine: TimerEngine
     private(set) var preferences: TimerPreferences
-    private(set) var tagSettings: SessionTagSettings
     private(set) var sessions: [FocusSession]
     private(set) var now: Date
     private(set) var errorMessage: String?
-    private(set) var timerSyncDiagnostics = TimerSyncDiagnostics.unavailable
     private(set) var didStartTimerAtLaunch = false
     private(set) var celebrationSequence = 0
 
     @ObservationIgnored private let persistence: any TimerPersisting
     @ObservationIgnored private let preferencesPersistence: any TimerPreferencesPersisting
     @ObservationIgnored private let historyPersistence: any SessionHistoryPersisting
-    @ObservationIgnored private let tagPersistence: any SessionTagPersisting
     @ObservationIgnored private let notifications: any SessionNotificationScheduling
     @ObservationIgnored private let tickSound: any TimerTickSoundPlaying
     @ObservationIgnored private var lastTickSecond: Int?
-    @ObservationIgnored private var cloudStore: NSUbiquitousKeyValueStore?
-    @ObservationIgnored private var cloudObserver: NSObjectProtocol?
-    @ObservationIgnored private var isApplyingCloudState = false
-
-    private static let cloudEngineKey = "NanaFlow.timerEngine.v1"
-    private static let cloudPreferencesKey = "NanaFlow.timerPreferences.v1"
-    private static let cloudSettingsKey = "NanaFlow.timerSyncSettings.v1"
-    private static let cloudSessionsKey = "NanaFlow.focusSessions.v1"
-    private static let cloudSyncKey = "NanaFlow.syncKey.v1"
-    private static let localDeviceKey = "NanaFlow.deviceKey.v1"
 
     init(
         configuration: TimerConfiguration = .standard,
         persistence: any TimerPersisting = TimerPersistence(),
         preferencesPersistence: any TimerPreferencesPersisting = TimerPreferencesPersistence(),
         historyPersistence: any SessionHistoryPersisting = SessionHistoryPersistence(sharedDefaults: NanaFlowShared.defaults),
-        tagPersistence: any SessionTagPersisting = SessionTagPersistence(),
         notifications: any SessionNotificationScheduling = SessionNotificationScheduler(),
         tickSound: any TimerTickSoundPlaying = TimerTickSoundPlayer(),
         now: Date = Date()
@@ -69,13 +54,11 @@ final class TimerController {
         self.persistence = persistence
         self.preferencesPersistence = preferencesPersistence
         self.historyPersistence = historyPersistence
-        self.tagPersistence = tagPersistence
         self.notifications = notifications
         self.tickSound = tickSound
         self.now = now
         self.engine = persistence.load() ?? TimerEngine(configuration: configuration)
         self.preferences = preferencesPersistence.load() ?? .standard
-        self.tagSettings = tagPersistence.load() ?? .standard
         self.sessions = historyPersistence.load().sorted { $0.endedAt > $1.endedAt }
 
         let expiredEngine = engine
@@ -282,7 +265,6 @@ final class TimerController {
         if isCommittedFocus {
             preferences.commitmentModeEnabled = true
         }
-        let wasSyncing = self.preferences.timerSyncEnabled
         self.preferences = preferences
         do {
             try preferencesPersistence.save(preferences)
@@ -294,121 +276,6 @@ final class TimerController {
                 error.localizedDescription
             )
         }
-        if let cloudStore {
-            if !wasSyncing, preferences.timerSyncEnabled {
-                pullTimerState(from: cloudStore)
-            } else if preferences.timerSyncEnabled {
-                pushTimerState(to: cloudStore)
-            }
-        }
-    }
-
-    func startCloudSync() {
-        guard cloudStore == nil else { return }
-        guard let task = SecTaskCreateFromSelf(nil),
-              let identifier = SecTaskCopyValueForEntitlement(
-                task,
-                "com.apple.developer.ubiquity-kvstore-identifier" as CFString,
-                nil
-              ) as? String,
-              !identifier.isEmpty else {
-            timerSyncDiagnostics = .unavailable
-            return
-        }
-        let store = NSUbiquitousKeyValueStore.default
-        let defaults = UserDefaults.standard
-        let deviceKey = defaults.string(forKey: Self.localDeviceKey) ?? Self.makeDiagnosticKey()
-        defaults.set(deviceKey, forKey: Self.localDeviceKey)
-        let syncKey = store.string(forKey: Self.cloudSyncKey) ?? Self.makeDiagnosticKey()
-        store.set(syncKey, forKey: Self.cloudSyncKey)
-        cloudStore = store
-        timerSyncDiagnostics = TimerSyncDiagnostics(
-            status: .available,
-            syncKey: syncKey,
-            deviceKey: deviceKey,
-            lastSyncDate: nil
-        )
-        cloudObserver = NotificationCenter.default.addObserver(
-            forName: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
-            object: store,
-            queue: .main
-        ) { [weak self] _ in
-            Task { @MainActor [weak self] in self?.pullCloudState() }
-        }
-        store.synchronize()
-        pullCloudState()
-    }
-
-    func addTag(_ name: String, colorHex: String? = nil) {
-        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty,
-              !tagSettings.tags.contains(where: { $0.localizedCaseInsensitiveCompare(trimmed) == .orderedSame }) else { return }
-        tagSettings.tags.append(trimmed)
-        tagSettings.colors[trimmed] = colorHex.flatMap { color in
-            SessionTagSettings.palette.contains(color) ? color : nil
-        } ?? SessionTagSettings.palette[(tagSettings.tags.count - 1) % SessionTagSettings.palette.count]
-        persistTags()
-    }
-
-    func updateTag(_ originalName: String, name: String, colorHex: String) {
-        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard let index = tagSettings.tags.firstIndex(of: originalName),
-              !trimmed.isEmpty,
-              SessionTagSettings.palette.contains(colorHex),
-              !tagSettings.tags.enumerated().contains(where: { candidateIndex, candidate in
-                  candidateIndex != index
-                      && candidate.localizedCaseInsensitiveCompare(trimmed) == .orderedSame
-              }) else { return }
-
-        tagSettings.tags[index] = trimmed
-        tagSettings.colors.removeValue(forKey: originalName)
-        tagSettings.colors[trimmed] = colorHex
-        if tagSettings.selectedTag == originalName {
-            tagSettings.selectedTag = trimmed
-        }
-        let referencedSessionIndices = sessions.indices.filter { sessions[$0].tag == originalName }
-        for sessionIndex in referencedSessionIndices {
-            sessions[sessionIndex].tag = trimmed
-        }
-        persistTags()
-        if !referencedSessionIndices.isEmpty {
-            persistSessions()
-        }
-    }
-
-    func selectTag(_ name: String?) {
-        if let name, !tagSettings.tags.contains(name) { return }
-        tagSettings.selectedTag = name
-        persistTags()
-    }
-
-    func tagUsageCount(_ name: String) -> Int {
-        sessions.lazy.filter { $0.tag == name }.count
-    }
-
-    func removeTag(_ name: String) {
-        tagSettings.tags.removeAll { $0 == name }
-        tagSettings.colors.removeValue(forKey: name)
-        if tagSettings.selectedTag == name {
-            tagSettings.selectedTag = nil
-        }
-        let referencedSessionIndices = sessions.indices.filter { sessions[$0].tag == name }
-        for index in referencedSessionIndices {
-            sessions[index].tag = nil
-        }
-        persistTags()
-        if !referencedSessionIndices.isEmpty {
-            persistSessions()
-        }
-    }
-
-    func updateSession(id: UUID, title: String, tag: String?) {
-        guard let index = sessions.firstIndex(where: { $0.id == id }) else { return }
-        let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
-        let trimmedTag = tag?.trimmingCharacters(in: .whitespacesAndNewlines)
-        sessions[index].title = trimmedTitle.isEmpty ? "NanaFlow" : trimmedTitle
-        sessions[index].tag = trimmedTag?.isEmpty == false ? trimmedTag : nil
-        persistSessions()
     }
 
     func addSession(
@@ -484,7 +351,6 @@ final class TimerController {
         guard merged != sessions else { return }
         try historyPersistence.save(merged)
         sessions = merged
-        pushHistoryToCloud()
     }
 
     func dismissError() {
@@ -600,7 +466,6 @@ final class TimerController {
                 error.localizedDescription
             )
         }
-        pushHistoryToCloud()
     }
 
     private func persist() {
@@ -614,118 +479,6 @@ final class TimerController {
                 error.localizedDescription
             )
         }
-        guard !isApplyingCloudState,
-              preferences.timerSyncEnabled,
-              let cloudStore else { return }
-        pushTimerState(to: cloudStore)
-    }
-
-    private func persistTags() {
-        do {
-            try tagPersistence.save(tagSettings)
-            errorMessage = nil
-        } catch {
-            errorMessage = String(
-                format: String(localized: "无法保存标签：%@"),
-                locale: .autoupdatingCurrent,
-                error.localizedDescription
-            )
-        }
-    }
-
-    private func pullCloudState() {
-        guard let cloudStore else { return }
-        if let syncKey = cloudStore.string(forKey: Self.cloudSyncKey) {
-            timerSyncDiagnostics.syncKey = syncKey
-        }
-        pullHistory(from: cloudStore)
-        guard preferences.timerSyncEnabled else { return }
-        pullTimerState(from: cloudStore)
-    }
-
-    private func pullHistory(from store: NSUbiquitousKeyValueStore) {
-        guard let data = store.data(forKey: Self.cloudSessionsKey),
-              let incoming = try? JSONDecoder().decode([FocusSession].self, from: data) else {
-            pushHistoryToCloud()
-            return
-        }
-        let merged = SessionHistoryPersistence.merge(local: sessions, incoming: incoming)
-        guard merged != sessions else { return }
-        sessions = merged
-        do {
-            try historyPersistence.save(merged)
-            store.set(try JSONEncoder().encode(merged), forKey: Self.cloudSessionsKey)
-            store.synchronize()
-        } catch {
-            errorMessage = String(
-                format: String(localized: "无法同步会话记录：%@"),
-                locale: .autoupdatingCurrent,
-                error.localizedDescription
-            )
-        }
-    }
-
-    private func pullTimerState(from store: NSUbiquitousKeyValueStore) {
-        let decoder = JSONDecoder()
-        guard let engineData = store.data(forKey: Self.cloudEngineKey),
-              let remoteEngine = try? decoder.decode(TimerEngine.self, from: engineData) else {
-            pushTimerState(to: store)
-            return
-        }
-
-        isApplyingCloudState = true
-        engine = remoteEngine
-        now = Date()
-        _ = engine.reconcile(at: now)
-        let settings = store.data(forKey: Self.cloudSettingsKey)
-            .flatMap { try? decoder.decode(TimerSyncSettings.self, from: $0) }
-            ?? store.data(forKey: Self.cloudPreferencesKey)
-                .flatMap { try? decoder.decode(TimerPreferences.self, from: $0) }
-                .map { TimerSyncSettings(configuration: remoteEngine.configuration, preferences: $0) }
-        if let settings {
-            engine.updateConfiguration(settings.configuration, at: now)
-            preferences = settings.applying(to: preferences)
-        }
-        notifications.cancelCompletion()
-        if engine.state.isRunning { scheduleCompletionIfNeeded() }
-        do {
-            try persistence.save(engine)
-            try preferencesPersistence.save(preferences)
-            errorMessage = nil
-            timerSyncDiagnostics.lastSyncDate = now
-        } catch {
-            errorMessage = String(
-                format: String(localized: "无法同步计时器：%@"),
-                locale: .autoupdatingCurrent,
-                error.localizedDescription
-            )
-        }
-        isApplyingCloudState = false
-    }
-
-    private func pushTimerState(to store: NSUbiquitousKeyValueStore) {
-        guard preferences.timerSyncEnabled,
-              let engineData = try? JSONEncoder().encode(engine),
-              let settingsData = try? JSONEncoder().encode(TimerSyncSettings(
-                  configuration: engine.configuration,
-                  preferences: preferences
-              )) else { return }
-        store.set(engineData, forKey: Self.cloudEngineKey)
-        store.set(settingsData, forKey: Self.cloudSettingsKey)
-        store.synchronize()
-        timerSyncDiagnostics.lastSyncDate = Date()
-    }
-
-    private func pushHistoryToCloud() {
-        // ponytail: iCloud KVS is capped; migrate this payload to CloudKit if histories approach 1 MB.
-        guard let cloudStore,
-              let data = try? JSONEncoder().encode(sessions) else { return }
-        cloudStore.set(data, forKey: Self.cloudSessionsKey)
-        cloudStore.synchronize()
-    }
-
-    private static func makeDiagnosticKey() -> String {
-        String(UUID().uuidString.replacingOccurrences(of: "-", with: "").prefix(8)).uppercased()
     }
 }
 

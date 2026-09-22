@@ -7,32 +7,12 @@ final class NotificationCopyTests: XCTestCase {
         XCTAssertEqual(
             SessionNotificationContract.categories,
             [
-                .init(identifier: "notification_app_blocked", actions: []),
                 .init(identifier: "notification_pending_flow", actions: [.start]),
                 .init(identifier: "notification_pending_break", actions: [.start, .skip]),
                 .init(identifier: "notification_autostarted_flow", actions: [.open]),
                 .init(identifier: "notification_autostarted_break", actions: [.start, .skip])
             ]
         )
-    }
-
-    @MainActor
-    func testBlockedAppNotificationRequestMatchesFlowContract() throws {
-        let scheduler = BlockedAppNotificationScheduler()
-
-        let first = scheduler.request(applicationName: "聊天")
-        let repeated = scheduler.request(applicationName: "聊天")
-        let other = scheduler.request(applicationName: "视频")
-
-        XCTAssertEqual(first.content.title, "聊天 在你的黑名单上")
-        XCTAssertEqual(first.content.body, "在NanaFlow期间，黑名单上的应用程序被阻止")
-        XCTAssertEqual(first.content.categoryIdentifier, "notification_app_blocked")
-        XCTAssertNil(first.content.sound)
-        let trigger = try XCTUnwrap(first.trigger as? UNTimeIntervalNotificationTrigger)
-        XCTAssertEqual(trigger.timeInterval, 0.5, accuracy: 0.001)
-        XCTAssertFalse(trigger.repeats)
-        XCTAssertEqual(first.identifier, repeated.identifier)
-        XCTAssertNotEqual(first.identifier, other.identifier)
     }
 
     func testCompletionSelectsFlowCategoryFromCompletedPhaseAndAutoStart() {

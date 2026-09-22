@@ -41,7 +41,6 @@ struct SessionNotificationCategory: Equatable, Sendable {
 
 enum SessionNotificationContract {
     static let categories = [
-        SessionNotificationCategory(identifier: "notification_app_blocked", actions: []),
         SessionNotificationCategory(identifier: "notification_pending_flow", actions: [.start]),
         SessionNotificationCategory(identifier: "notification_pending_break", actions: [.start, .skip]),
         SessionNotificationCategory(identifier: "notification_autostarted_flow", actions: [.open]),
@@ -86,65 +85,6 @@ enum SessionNotificationContract {
 struct SessionNotificationMessage: Equatable, Sendable {
     let title: String
     let body: String
-}
-
-enum BlockedAppNotificationContract {
-    static let categoryIdentifier = "notification_app_blocked"
-    static let delay: TimeInterval = 0.5
-
-    static func message(applicationName: String) -> SessionNotificationMessage {
-        SessionNotificationMessage(
-            title: String(
-                format: String(localized: "%@ 在你的黑名单上"),
-                locale: .autoupdatingCurrent,
-                applicationName
-            ),
-            body: String(localized: "在NanaFlow期间，黑名单上的应用程序被阻止")
-        )
-    }
-}
-
-@MainActor
-protocol BlockedAppNotificationScheduling {
-    func scheduleBlockedApplication(applicationName: String)
-}
-
-@MainActor
-final class BlockedAppNotificationScheduler: BlockedAppNotificationScheduling {
-    private var identifiers: [String: String] = [:]
-
-    func request(applicationName: String) -> UNNotificationRequest {
-        let identifier: String
-        if let existing = identifiers[applicationName] {
-            identifier = existing
-        } else {
-            identifier = UUID().uuidString
-            identifiers[applicationName] = identifier
-        }
-
-        let message = BlockedAppNotificationContract.message(applicationName: applicationName)
-        let content = UNMutableNotificationContent()
-        content.title = message.title
-        content.body = message.body
-        content.categoryIdentifier = BlockedAppNotificationContract.categoryIdentifier
-        content.sound = nil
-
-        return UNNotificationRequest(
-            identifier: identifier,
-            content: content,
-            trigger: UNTimeIntervalNotificationTrigger(
-                timeInterval: BlockedAppNotificationContract.delay,
-                repeats: false
-            )
-        )
-    }
-
-    func scheduleBlockedApplication(applicationName: String) {
-        let request = request(applicationName: applicationName)
-        Task {
-            try await UNUserNotificationCenter.current().add(request)
-        }
-    }
 }
 
 enum SessionNotificationCopy {

@@ -34,6 +34,72 @@ final class ProductScopeTests: XCTestCase {
         XCTAssertFalse(controller.contains("func addSessionToCalendar"))
     }
 
+    func testDormantExcludedFeatureSourceFilesDoNotExist() {
+        let repositoryURL = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let sourcesRoot = repositoryURL.appendingPathComponent("Sources/NanaFocus")
+        let removedFiles = [
+            "FocusSessionCalendarRecorder.swift",
+            "BlockerConfiguration.swift",
+            "BlockerView.swift",
+            "BrowserURLController.swift",
+            "ProUnlockedView.swift",
+            "TagManagementView.swift",
+            "SessionTags.swift",
+            "TimerSyncView.swift",
+            "Blocked.html",
+            "NanaFlowBlockedIcon.png",
+            "NanaFlowCalendarAccess.png",
+        ]
+        for name in removedFiles {
+            XCTAssertFalse(
+                FileManager.default.fileExists(atPath: sourcesRoot.appendingPathComponent(name).path),
+                "\(name) belongs to an excluded feature and must not be reintroduced into version 1.0"
+            )
+        }
+    }
+
+    func testRemovedFeatureResourcesDoNotShipInTheAppBundle() {
+        XCTAssertNil(
+            Bundle.main.url(forResource: "Blocked", withExtension: "html"),
+            "Blocked.html was only used by the removed Blocker feature"
+        )
+        XCTAssertNil(
+            Bundle.main.url(forResource: "NanaFlowBlockedIcon", withExtension: "png"),
+            "NanaFlowBlockedIcon.png was only used by the removed Blocker feature"
+        )
+        XCTAssertNil(
+            Bundle.main.url(forResource: "NanaFlowCalendarAccess", withExtension: "png"),
+            "NanaFlowCalendarAccess.png was only used by the removed Calendar feature"
+        )
+    }
+
+    func testTimerControllerHasNoTagCatalogOrCloudSyncSurface() throws {
+        let controller = try sourceFile("TimerController.swift")
+
+        XCTAssertFalse(controller.contains("func addTag("))
+        XCTAssertFalse(controller.contains("func updateTag("))
+        XCTAssertFalse(controller.contains("func removeTag("))
+        XCTAssertFalse(controller.contains("func selectTag("))
+        XCTAssertFalse(controller.contains("tagSettings"))
+        XCTAssertFalse(controller.contains("SessionTagSettings"))
+        XCTAssertFalse(controller.contains("cloudStore"))
+        XCTAssertFalse(controller.contains("NSUbiquitousKeyValueStore"))
+        XCTAssertFalse(controller.contains("pushHistoryToCloud"))
+        XCTAssertFalse(controller.contains("import Security"))
+        XCTAssertTrue(controller.contains("func updateSession(\n        id: UUID,\n        type: RecordedSessionType,"))
+    }
+
+    func testTimerPreferencesHasNoTimerSyncSurface() throws {
+        let preferences = try sourceFile("TimerPreferences.swift")
+
+        XCTAssertFalse(preferences.contains("timerSyncEnabled"))
+        XCTAssertFalse(preferences.contains("calendarSyncEnabled"))
+        XCTAssertFalse(preferences.contains("calendarIdentifier"))
+    }
+
     private func sourceFile(_ name: String) throws -> String {
         let repositoryURL = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()
