@@ -80,6 +80,7 @@ final class TimerControllerTests: XCTestCase {
             autoStartFocus: false,
             autoStartBreaks: false,
             notificationSoundEnabled: true,
+            notificationsEnabled: true,
             motivationalQuotesEnabled: false
         )
         let controller = TimerController(
@@ -211,7 +212,8 @@ final class TimerControllerTests: XCTestCase {
         let preferences = TimerPreferences(
             autoStartFocus: false,
             autoStartBreaks: true,
-            notificationSoundEnabled: true
+            notificationSoundEnabled: true,
+            notificationsEnabled: true
         )
         let notifications = NotificationSpy()
 
@@ -299,7 +301,8 @@ final class TimerControllerTests: XCTestCase {
         let preferences = TimerPreferences(
             autoStartFocus: false,
             autoStartBreaks: true,
-            notificationSoundEnabled: false
+            notificationSoundEnabled: false,
+            notificationsEnabled: true
         )
         let controller = TimerController(
             persistence: persistence,

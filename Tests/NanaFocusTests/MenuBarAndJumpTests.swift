@@ -18,6 +18,7 @@ enum MenuBarAndJumpChecks {
 
     static func run() throws {
         var preferences = TimerPreferences.standard
+        preferences.notificationsEnabled = true
         preferences.showTodayCompletedCount = true
         preferences.hideWindowWhenTimerStarts = false
         let encoded = try JSONEncoder().encode(preferences)
