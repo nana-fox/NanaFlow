@@ -45,7 +45,7 @@ An unchecked gate is not evidence of completion. Record links or build identifie
 ## 5. Metadata and public pages
 
 - [x] `python3 AppStore/validate_metadata.py` passes at commit preparation time.
-- [x] `metadata.zh-Hans.md` is copied into the Simplified Chinese locale.
+- [ ] `metadata.zh-Hans.md` is copied into the Simplified Chinese locale; the version page still shows an empty description.
 - [ ] `metadata.en-US.md` is copied into the English locale.
 - [x] Privacy URL is public over HTTPS: `https://nana-fox.github.io/privacy/` and `https://nana-fox.github.io/en/privacy/`.
 - [x] Support URL is public over HTTPS and links to the public issue tracker: `https://nana-fox.github.io/support/` and `https://nana-fox.github.io/en/support/`.
@@ -61,7 +61,7 @@ An unchecked gate is not evidence of completion. Record links or build identifie
 - [ ] Exactly one Widget review-note variant matches the uploaded binary.
 - [ ] Reviewer can reach the main window from the menu bar using the documented steps.
 - [x] Build 2 is uploaded, processing is complete, and App Store Connect reports “Ready to Submit.”
-- [ ] Processed build is attached to version 1.0.
+- [x] Processed build 2 is attached to version 1.0 and saved in App Store Connect.
 - [ ] Export compliance, content rights, advertising identifier, and review-information questions are answered against the final binary.
 - [ ] Submission is configured for manual release after approval.
 - [ ] Final submission diff is reviewed by a second person or an independent checklist pass.
