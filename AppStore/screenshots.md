@@ -30,5 +30,15 @@ Fill this only after capture; a row without a source build is not upload-ready.
 
 | Locale | Shot | Source build | Filename | Visual QA | Uploaded |
 |---|---:|---|---|---|---|
-| zh-Hans | 1–6 | `[VERSION] ([BUILD])` | `[FILES]` | ☐ | ☐ |
-| en-US | 1–6 | `[VERSION] ([BUILD])` | `[FILES]` | ☐ | ☐ |
+| zh-Hans | 1 | `1.0.0 (2)` | `Screenshots/zh-Hans/main-1280x800.jpg` | ☑ | ☐ |
+| zh-Hans | 2 | `1.0.0 (2)` | `Screenshots/zh-Hans/menu-1280x800.jpg` | ☑ | ☐ |
+| zh-Hans | 3 | `1.0.0 (2)` | `Screenshots/zh-Hans/stats-year-1280x800.jpg` | ☑ | ☐ |
+| en-US | 1 | `1.0.0 (2)` | `Screenshots/en-US/main-1280x800.jpg` | ☑ | ☐ |
+| en-US | 2 | `1.0.0 (2)` | `Screenshots/en-US/menu-1280x800.jpg` | ☑ | ☐ |
+| en-US | 3 | `1.0.0 (2)` | `Screenshots/en-US/stats-year-1280x800.jpg` | ☑ | ☐ |
+
+The six files above are 1280×800 JPEG captures sourced from the installed
+TestFlight candidate `/Applications/NanaFlow 2.app` (`1.0.0 (2)`). The English
+locale currently reuses the same candidate UI capture because the binary was
+verified under the user's Simplified Chinese macOS locale; do not claim English
+visual localization until a separate English-locale capture is made.

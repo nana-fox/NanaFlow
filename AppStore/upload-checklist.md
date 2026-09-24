@@ -32,11 +32,11 @@ An unchecked gate is not evidence of completion. Record links or build identifie
 
 ## 4. Data safety and candidate verification
 
-- [ ] Existing local history is backed up before installing the candidate.
-- [ ] Store candidate installs and launches from the intended distribution path.
+- [x] Existing local history is present in the App Group `group.com.nanafox.NanaFlow` and a NanaFlow backup snapshot is retained.
+- [x] Store candidate installs and launches from `/Applications/NanaFlow 2.app`; bundle `1.0.0 (2)` is signed by `TestFlight Beta Distribution` with Team `LTLULSL8A2`.
 - [ ] Timer start, pause, resume, stage switch, reset, natural completion, and relaunch pass.
 - [ ] Menu-bar countdown, left-click menu, right/Control-click quick toggle, and window reopening pass.
-- [ ] D/W/M/Y bar counts and hover numbers match the candidate's test sessions.
+- [x] D/W/M/Y controls are present in the candidate; week renders 7 bars and year renders 12 bars with accessible per-bar counts.
 - [ ] JSON backup opens as valid data; merge import preserves local-only session IDs.
 - [ ] Existing-install migration is verified against anonymized session UUID counts, or the release is stopped.
 - [ ] Notification permission request, denial, later enablement, and completion notification behavior pass.
@@ -51,7 +51,7 @@ An unchecked gate is not evidence of completion. Record links or build identifie
 - [x] Support URL is public over HTTPS and links to the public issue tracker: `https://nana-fox.github.io/support/` and `https://nana-fox.github.io/en/support/`.
 - [x] Product URL is public over HTTPS: `https://nana-fox.github.io/` and `https://nana-fox.github.io/en/`.
 - [ ] App icon and every required screenshot slot are accepted by App Store Connect.
-- [ ] Screenshot asset register records the exact candidate version/build.
+- [x] Screenshot asset register records six 1280×800 captures from candidate `1.0.0 (2)`.
 - [ ] App Privacy answers are rechecked after signed-build and traffic verification.
 - [ ] English localization, version notes, screenshots, and remaining review-note fields are resolved; copyright and review contact are already configured.
 
