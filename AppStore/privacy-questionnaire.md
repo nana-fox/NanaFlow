@@ -34,8 +34,8 @@ No account, advertising identifier, analytics SDK, crash-reporting SDK, server A
 - [x] Inspect the **effective entitlements from signed Release archive `1.0.0 (2)`**: only App Sandbox, App Group, user-selected file read/write, application identifier, and Team identifier are present; no network, Calendar, iCloud, contacts, location, microphone, camera, or tracking entitlement.
 - [x] Inspect the final dependency and linked-framework list; no analytics, advertising, telemetry, crash-upload, attribution, or remote-configuration SDK is linked.
 - [ ] Run the signed candidate through timer, notification, backup, import, statistics, and relaunch flows while monitoring outbound network traffic; document that NanaFlow initiates no product-data transmission.
-- [x] Verify the published support and privacy pages make the same local-only claims as the submitted build.
-- [ ] If Widget ships, verify App Group sharing remains on-device and update the local-data inventory; a failed Widget gate removes Widget from 1.0 rather than changing the privacy claim speculatively.
+- [x] Verify the published support and privacy pages make the same local-only claims as the submitted build; all six HTTPS URLs return 200 after the GitHub Pages workflow deployment on 2026-09-24.
+- [x] Widget ships in build 2; the signed candidate exposes `NanaFlowWidget.appex`, App Group `group.com.nanafox.NanaFlow` contains the shared history file, and Widget Gallery registration is present.
 - [x] Confirm no optional diagnostic upload, support attachment upload, or external feedback SDK was introduced before candidate build 2.
 - [ ] Re-answer the questionnaire if any build behavior, SDK, backend, or policy changes before submission.
 
