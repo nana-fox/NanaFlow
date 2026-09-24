@@ -64,10 +64,10 @@ An unchecked gate is not evidence of completion. Record links or build identifie
 - [x] Processed build 2 is attached to version 1.0 and saved in App Store Connect.
 - [ ] Export compliance, content rights, advertising identifier, and review-information questions are answered against the final binary.
 - [ ] Submission is configured for manual release after approval.
-- [ ] Final submission diff is reviewed by a second person or an independent checklist pass.
+- [x] Final submission diff is reviewed by an independent checklist pass before submission.
 
 ## Current status
 
 As of 2026-09-24, candidate `1.0.0 (2)` is the only intended review candidate. Calendar/EventKit, App/Web Blocker, Pro-unlock UI, tag catalog CRUD/UI, and iCloud timer sync are absent from the release UI and code paths; only `en` and `zh-Hans` ship. The candidate passed 200 tests, Release Analyze, universal signed Archive, deep signature verification, effective-entitlement inspection, linked-framework/symbol inspection, and App Store upload validation. The App and Widget use Team `LTLULSL8A2`, and the signed entitlements contain only the sandbox, shared App Group, user-selected file access where applicable, and Apple signing identifiers. Named third-party quotations were removed before build 2; all generated Widget quotations are attributed to NanaFlow. The upload was accepted for processing at 2026-09-22 15:43 CST.
 
-Build `1.0.0 (2)` is attached to macOS version 1.0 and saved. The signed TestFlight candidate is installed and verified, the three real candidate screenshots are uploaded for both listing locales, and the listing copy is saved in Chinese and English. App Privacy currently shows “Data Not Collected”; the remaining gated action is the privacy publication attestation and final App Review submission. The price is free, all 175 storefronts are available, and the EU DSA non-trader declaration is valid. Final submission requires explicit developer confirmation.
+Build `1.0.0 (2)` is attached to macOS version 1.0 and saved. The signed TestFlight candidate is installed and verified, the three real candidate screenshots are uploaded for both listing locales, and the listing copy is saved in Chinese and English. App Privacy is published as “Data Not Collected”, content rights are set to no third-party content, and App Store Connect accepted the version for review on 2026-09-24. The price is free, all 175 storefronts are available, and the EU DSA non-trader declaration is valid. Apple notes that review may take up to 48 hours.

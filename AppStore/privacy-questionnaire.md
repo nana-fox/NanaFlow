@@ -7,7 +7,7 @@
 - **Data linked to the user?** No.
 - **Privacy nutrition label candidate:** Data Not Collected.
 
-This answer is supported by source review and signed-build entitlement/dependency inspection, but publication in App Store Connect remains a developer legal attestation. “Collected” here means transmitted off the device by NanaFlow or its third-party partners for access beyond what is required to service a user request.
+This answer is supported by source review and signed-build entitlement/dependency inspection. The answer was published in App Store Connect on 2026-09-24 after explicit developer confirmation. “Collected” here means transmitted off the device by NanaFlow or its third-party partners for access beyond what is required to service a user request.
 
 ## Local data inventory
 
