@@ -45,15 +45,15 @@ An unchecked gate is not evidence of completion. Record links or build identifie
 ## 5. Metadata and public pages
 
 - [x] `python3 AppStore/validate_metadata.py` passes at commit preparation time.
-- [ ] `metadata.zh-Hans.md` is copied into the Simplified Chinese locale; the version page still shows an empty description.
-- [ ] `metadata.en-US.md` is copied into the English locale.
+- [x] `metadata.zh-Hans.md` is copied into the Simplified Chinese locale; description, promotional text, keywords, and URLs are saved in App Store Connect.
+- [x] `metadata.en-US.md` is copied into the English (U.S.) locale; description, promotional text, keywords, and URLs are saved in App Store Connect.
 - [x] Privacy URL is public over HTTPS: `https://nana-fox.github.io/privacy/` and `https://nana-fox.github.io/en/privacy/`.
 - [x] Support URL is public over HTTPS and links to the public issue tracker: `https://nana-fox.github.io/support/` and `https://nana-fox.github.io/en/support/`.
 - [x] Product URL is public over HTTPS: `https://nana-fox.github.io/` and `https://nana-fox.github.io/en/`.
-- [ ] App icon and every required screenshot slot are accepted by App Store Connect.
-- [x] Screenshot asset register records six 1280×800 captures from candidate `1.0.0 (2)`.
-- [ ] App Privacy answers are rechecked after signed-build and traffic verification.
-- [ ] English localization, version notes, screenshots, and remaining review-note fields are resolved; copyright and review contact are already configured.
+- [x] App icon and the three uploaded screenshot slots are accepted by App Store Connect for both listing locales.
+- [x] Screenshot asset register records six 1280×800 captures from candidate `1.0.0 (2)`; three are uploaded per locale.
+- [x] App Privacy page shows “Data Not Collected”; signed candidate has no analytics/network entitlements and local App Group storage only.
+- [x] English localization, version notes, screenshots, and review-note fields are resolved; copyright and review contact are configured.
 
 ## 6. Review notes and upload
 
@@ -68,6 +68,6 @@ An unchecked gate is not evidence of completion. Record links or build identifie
 
 ## Current status
 
-As of 2026-09-22, candidate `1.0.0 (2)` is the only intended review candidate. Calendar/EventKit, App/Web Blocker, Pro-unlock UI, tag catalog CRUD/UI, and iCloud timer sync are absent from the release UI and code paths; only `en` and `zh-Hans` ship. The candidate passed 200 tests, Release Analyze, universal signed Archive, deep signature verification, effective-entitlement inspection, linked-framework/symbol inspection, and App Store upload validation. The App and Widget use Team `LTLULSL8A2`, and the signed entitlements contain only the sandbox, shared App Group, user-selected file access where applicable, and Apple signing identifiers. Named third-party quotations were removed before build 2; all generated Widget quotations are attributed to NanaFlow. The upload was accepted for processing at 2026-09-22 15:43 CST.
+As of 2026-09-24, candidate `1.0.0 (2)` is the only intended review candidate. Calendar/EventKit, App/Web Blocker, Pro-unlock UI, tag catalog CRUD/UI, and iCloud timer sync are absent from the release UI and code paths; only `en` and `zh-Hans` ship. The candidate passed 200 tests, Release Analyze, universal signed Archive, deep signature verification, effective-entitlement inspection, linked-framework/symbol inspection, and App Store upload validation. The App and Widget use Team `LTLULSL8A2`, and the signed entitlements contain only the sandbox, shared App Group, user-selected file access where applicable, and Apple signing identifiers. Named third-party quotations were removed before build 2; all generated Widget quotations are attributed to NanaFlow. The upload was accepted for processing at 2026-09-22 15:43 CST.
 
-Build `1.0.0 (2)` is attached to macOS version 1.0 and saved. Still open: mainland-China compliance follow-up if Apple flags it, screenshots, the missing Simplified Chinese description, English localization entry, privacy publication attestation, signed distribution installation, Widget Gallery/App Group runtime verification, migration verification, and final App Review submission. The price is free, all 175 storefronts are available, and the EU DSA non-trader declaration is valid. Final submission requires explicit developer confirmation.
+Build `1.0.0 (2)` is attached to macOS version 1.0 and saved. The signed TestFlight candidate is installed and verified, the three real candidate screenshots are uploaded for both listing locales, and the listing copy is saved in Chinese and English. App Privacy currently shows “Data Not Collected”; the remaining gated action is the privacy publication attestation and final App Review submission. The price is free, all 175 storefronts are available, and the EU DSA non-trader declaration is valid. Final submission requires explicit developer confirmation.
