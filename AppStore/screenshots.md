@@ -11,7 +11,7 @@ Capture screenshots from the exact release candidate after the 1.0 UI scope is l
 | 3 | Weekly statistics in the main window | 一周七天，一眼看清专注节奏 | See your focus rhythm across seven days | Show seven bars and visible weekday labels. |
 | 4 | Monthly statistics with one bar hovered | 每一天的完成数量，悬停即可查看 | Hover to see each day's completed count | Show the selected month with its real day count and the concise numeric tooltip. |
 | 5 | Settings: menu bar and reminder sections | 按你的习惯设置菜单栏与提醒 | Tune menu-bar controls and reminders | Crop to actual 1.0 settings only; do not show Calendar or iCloud controls. |
-| 6 | Session history with the More menu open | 完整备份，也能安全合并导入 | Back up history and safely merge an import | Capture only after the tag/filter UI is removed or hidden from the 1.0 candidate. Show backup/import actions without personal session text. |
+| 6 | Reserved for a future build with an accessible history UI | — | — | Do not capture or upload for build 2; the history view has no UI entry point. |
 
 ## Capture rules
 

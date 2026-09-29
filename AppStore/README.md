@@ -19,7 +19,7 @@ The store listing may describe only:
 - focus, short-break, and long-break timers;
 - pause, resume, skip, reset, and optional automatic starts;
 - main-window D/W/M/Y statistics and per-bar hover counts;
-- local session history plus JSON backup and merge import;
+- local session data used for statistics (the history/backup UI is not reachable in build 2 and must not be advertised);
 - menu-bar countdown and controls;
 - notifications, completion sounds, and keyboard shortcuts.
 

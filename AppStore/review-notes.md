@@ -18,8 +18,7 @@ Core review path:
 1. In the main window, use the circular button to start or pause a focus session.
 2. Use the reset control or the menu-bar commands to reset or switch stages.
 3. Select the chart button to open D/W/M/Y statistics in the same window. Hover over a bar to display its session count.
-4. From the session history More menu, “Full Backup” exports JSON and “Import Backup…” merges a selected JSON backup with local history.
-5. Open Settings to configure the menu-bar completed count, completion sounds, and notifications.
+4. Open Settings to configure the menu-bar completed count, completion sounds, and notifications.
 
 Notifications are used only to announce timer stage completion and offer the next timer action. Notifications are off by default; enabling them in Settings requests system permission. NanaFlow remains usable if notification permission is denied.
 
@@ -44,8 +43,7 @@ NanaFlow 是一款 macOS 菜单栏专注计时器，无需账号或登录。
 1. 在主窗口使用圆形按钮开始或暂停专注。
 2. 使用重置按钮或菜单栏命令重置或切换阶段。
 3. 点击柱状图按钮，在同一窗口查看 D/W/M/Y 统计；悬停柱形可显示会话数量。
-4. 在会话历史的“更多”菜单中，“完整备份”导出 JSON，“导入备份…”将所选 JSON 备份与本机历史合并。
-5. 打开设置，配置菜单栏完成数、完成声音和通知。
+4. 打开设置，配置菜单栏完成数、完成声音和通知。
 
 通知只用于提示计时阶段结束并提供下一步计时操作。通知默认关闭；在设置中开启时会请求系统权限。拒绝通知权限不影响计时器使用。
 

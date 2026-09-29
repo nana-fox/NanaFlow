@@ -25,7 +25,7 @@ Start a focus session from a compact window or the menu bar, then review your rh
 
 <!-- field:en-US.description -->
 ```text
-NanaFlow is a native macOS focus timer that keeps timing, statistics, and session history in one compact window. A menu-bar countdown keeps the controls close while you work.
+NanaFlow is a native macOS focus timer that keeps timing and statistics in one compact window. A menu-bar countdown keeps the controls close while you work.
 
 Start focusing
 • Use the default 25-minute focus, 5-minute short break, and 30-minute long break cycle
@@ -43,12 +43,10 @@ Understand your rhythm
 • Switch between day, week, month, and year statistics in the main window
 • Review 24 hours, 7 days, every day of the selected month, or all 12 months
 • Hover over a bar to see its session count
-• Browse and manage session history stored on your Mac
 
 Keep control of your data
-• Sessions and settings stay on your Mac
-• Export complete session history as a JSON backup
-• Merge an imported backup without replacing sessions unique to this Mac
+• Session data used for statistics and settings stay on your Mac
+• No cloud sync is required
 • No account required
 
 NanaFlow stays simple: open it, start, focus, and get back to your work.
@@ -80,7 +78,6 @@ The first Mac App Store release of NanaFlow includes:
 • Focus, short-break, and long-break timers
 • Menu-bar countdown and quick controls
 • Daily, weekly, monthly, and yearly statistics
-• Local session history with JSON backup and import
 • Notifications, completion sounds, and keyboard shortcuts
 ```
 
