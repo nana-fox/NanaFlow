@@ -5,7 +5,7 @@
 "Help" = "Help";
 
 "休息" = "Break";
-"长时间停顿" = "Long Break";
+"长时间停顿" = "Long break";
 "菜单" = "Menu";
 "升级" = "Upgrade";
 "编辑会话名称" = "Edit Session Name";
@@ -15,11 +15,11 @@
 "无法保存" = "Unable to Save";
 "好" = "OK";
 "未知错误" = "Unknown Error";
-"停止" = "Stop";
+"停止" = "Pause";
 "开始" = "Start";
 "关闭" = "Close";
-"跳过休息时间" = "Skip Break";
-"重新开始周期" = "Restart Cycle";
+"跳过休息时间" = "Skip break";
+"重新开始周期" = "Restart cycle";
 "统计" = "Statistics";
 "设置" = "Settings";
 "应用与网页阻断器" = "App & Web Blocker";
@@ -48,12 +48,11 @@
 "个人" = "Personal";
 "学习" = "Study";
 "第 %1$lld 轮，共 %2$lld 轮" = "Session %1$lld of %2$lld";
-"%lld 分钟" = "%lld minutes";
-
+"%lld 分钟" = "%lld min";
 /* Settings */
 "启动" = "Launch";
 "在登录时启动" = "Launch at Login";
-"启动时显示窗口" = "Show Window at Launch";
+"启动时显示窗口" = "Show window at launch";
 "启动时重置周期" = "Reset Cycle at Launch";
 "启动时启动计时器" = "Start Timer at Launch";
 "一般" = "General";
@@ -70,7 +69,7 @@
 "与日历同步" = "Sync to Calendar";
 "启用承诺模式" = "Commitment Mode";
 "通知" = "Notifications";
-"允许通知" = "Allow Notifications";
+"允许通知" = "Allow notifications";
 "NanaFlow 已完成" = "NanaFlow Complete";
 "休息已完成" = "Break Complete";
 "显示励志名言" = "Show Motivational Quotes";
@@ -95,10 +94,10 @@
 "圆形" = "Circular";
 "进度条" = "Progress bar";
 "无" = "None";
-"闹钟" = "Alarm Clock";
+"闹钟" = "Alarm clock";
 "铃声" = "Bell";
 "铃铛" = "Bells";
-"唱钵" = "Bowl";
+"唱钵" = "Singing bowl";
 "风铃" = "Chime";
 "和弦" = "Chord";
 "竖琴" = "Harp";
@@ -106,7 +105,6 @@
 "脉冲" = "Pulse";
 "波纹" = "Ripple";
 "吹口哨" = "Whistle";
-
 /* Statistics and sessions */
 "按标签过滤" = "Filter by Tags";
 "清除过滤" = "Clear Filter";
@@ -120,7 +118,7 @@
 "统计指标" = "Statistics Metric";
 "总计次数" = "Total Count";
 "总用时" = "Total Time";
-"分钟" = "Minutes";
+"分钟" = "min";
 "天" = "Day";
 "周" = "Week";
 "月" = "Month";
@@ -357,10 +355,68 @@
 "全部关闭" = "Close All";
 "文件" = "File";
 
-"菜单栏" = "Menu Bar";
-
+"菜单栏" = "Menu bar";
 "显示今日完成数" = "Show today’s completed count";
-
-"只统计今天已完成的专注" = "Only counts focus sessions completed today";
-
+"只统计今天已完成的专注" = "Counts only focus sessions completed today";
 "today_completed_focus_format" = "%lld focus sessions completed today";
+
+"登录时启动" = "Launch at login";
+"计时开始后隐藏窗口" = "Hide window when timer starts";
+"专注时播放滴答声" = "Tick during focus";
+"计时设置" = "Timer settings";
+"计时设置…" = "Timer settings…";
+"设置…" = "Settings…";
+"开始休息" = "Start break";
+"返回专注" = "Return to focus";
+"专注完成声音" = "Focus completion sound";
+"休息完成声音" = "Break completion sound";
+"关闭通知也会关闭完成声音。音量受系统设置影响。" = "Turning off notifications also turns off completion sounds. System volume applies.";
+"次数" = "Count";
+"专注、休息、继续。" = "Focus, rest, repeat.";
+"duration_decrease_format" = "Decrease %@";
+"duration_increase_format" = "Increase %@";
+"duration_cycles_format" = "%lld cycles";
+"about_version_format" = "Version %@";
+"statistics_minutes_format" = "%@ min";
+"statistics_hours_format" = "%@ hr";
+"statistics_hours_minutes_format" = "%@ hr %@ min";
+"statistics_less_than_minute" = "<1 min";
+"statistics_count_format" = "%@ completed";
+"statistics_previous_period" = "Previous period";
+"statistics_next_period" = "Next period";
+"selected" = "Selected";
+"提醒" = "Alerts";
+"返回计时器" = "Back to timer";
+"短休息" = "Short break";
+"长休息" = "Long break";
+"循环" = "Cycles";
+"自动开始" = "Auto start";
+"专注" = "Focus";
+"显示统计" = "Show statistics";
+"隐藏计时器" = "Hide timer";
+"显示计时器" = "Show timer";
+"跳到休息" = "Skip to break";
+"跳到专注" = "Skip to focus";
+"重新开始" = "Restart";
+"退出 NanaFlow" = "Quit NanaFlow";
+
+"已配置" = "Configured";
+"上次本地处理" = "Last Local Processing";
+"已配置和本地处理时间不代表数据已送达 iCloud 或其他设备。" = "Configured status and local processing time do not confirm delivery to iCloud or other devices.";
+
+"无法写入日历。请在设置中重新选择可写入的日历。" = "Unable to write to Calendar. Select a writable calendar again in Settings.";
+"无法写入日历。请允许完整的日历访问权限后重试。" = "Unable to write to Calendar. Allow full calendar access and try again.";
+"无法保存日历事件。请检查所选日历后重试。" = "Unable to save the calendar event. Check the selected calendar and try again.";
+"旧版数据" = "Legacy Data";
+"导入旧版数据…" = "Import Legacy Data…";
+"导入旧版数据" = "Import Legacy Data";
+"旧版数据已导入。" = "Legacy data was imported.";
+"旧版数据已存在，未做任何更改。" = "Legacy data is already present. Nothing was changed.";
+"无法读取所选文件。未做任何更改。" = "Unable to read the selected file. Nothing was changed.";
+"所选文件不包含完整的 NanaFlow 旧版数据。未做任何更改。" = "The selected file doesn't contain complete NanaFlow legacy data. Nothing was changed.";
+"当前版本无法读取所选旧版数据。未做任何更改。" = "This version can't read the selected legacy data. Nothing was changed.";
+"旧版数据中的计时器仍在运行。请先在旧版中暂停后再导入。未做任何更改。" = "The timer in the legacy data is still running. Pause it in the legacy version, then import again. Nothing was changed.";
+"旧版设置开启了启动时开始计时、启动时重置周期或定时器同步。请先在旧版中关闭后再导入。未做任何更改。" = "The legacy settings start the timer at launch, reset the cycle at launch, or use Timer Sync. Turn these off in the legacy version, then import again. Nothing was changed.";
+"请先暂停当前计时再导入。未做任何更改。" = "Pause the current timer before importing. Nothing was changed.";
+"当前已有不同的数据或会话记录。为避免覆盖，未做任何更改。" = "Different data or session history already exists. To avoid overwriting it, nothing was changed.";
+"导入后的校验未通过。请退出 NanaFlow 后再检查数据。" = "Verification failed after importing. Quit NanaFlow, then check your data.";

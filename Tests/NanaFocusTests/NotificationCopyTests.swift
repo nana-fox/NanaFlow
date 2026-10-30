@@ -61,6 +61,11 @@ final class NotificationCopyTests: XCTestCase {
         XCTAssertNil(SessionNotificationContract.command(for: "unknown"))
     }
 
+    @MainActor
+    func testNotificationBodyAndDismissActions() throws {
+        try R1BehaviorChecks.notificationDefaultActions()
+    }
+
     func testProvidesFlowsExactChineseFocusAndBreakCompletionVariants() {
         XCTAssertEqual(
             SessionNotificationCopy.focusCompleted,

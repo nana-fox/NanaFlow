@@ -115,14 +115,14 @@ struct CustomDurationView: View {
             Text(LocalizedStringKey(title))
             Spacer()
             HStack(spacing: 0) {
-                stepperButton("minus", accessibilityLabel: "减少\(title)") {
+                stepperButton("minus", accessibilityLabel: String(format: String(localized: "duration_decrease_format"), NSLocalizedString(title, comment: ""))) {
                     value.wrappedValue = max(range.lowerBound, value.wrappedValue - step)
                 }
-                Text("\(value.wrappedValue)\(unit)")
+                Text(String(format: NSLocalizedString(unit == "轮" ? "duration_cycles_format" : "%lld 分钟", comment: ""), value.wrappedValue))
                     .font(.system(size: 13, weight: .semibold))
                     .monospacedDigit()
-                    .frame(width: 62)
-                stepperButton("plus", accessibilityLabel: "增加\(title)") {
+                    .frame(width: 82)
+                stepperButton("plus", accessibilityLabel: String(format: String(localized: "duration_increase_format"), NSLocalizedString(title, comment: ""))) {
                     value.wrappedValue = min(range.upperBound, value.wrappedValue + step)
                 }
             }

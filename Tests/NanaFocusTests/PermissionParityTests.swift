@@ -4,6 +4,16 @@ import XCTest
 
 @MainActor
 final class PermissionParityTests: XCTestCase {
+    func testPackagedContainerMigrationMovesOnlyOwnPreferences() throws {
+        // Inspect the real app resource, not just a source-file or project string.
+        let appBundle = Bundle(for: TimerController.self)
+        let url = try XCTUnwrap(appBundle.url(forResource: "container-migration", withExtension: "plist"))
+        let data = try Data(contentsOf: url)
+        let manifest = try XCTUnwrap(PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any])
+        XCTAssertEqual(Set(manifest.keys), Set(["Move"]))
+        XCTAssertEqual(manifest["Move"] as? [String], ["${Library}/Preferences/${BundleId}.plist"])
+    }
+
     func testReleaseEntitlementsCoverSandboxedSystemIntegrations() throws {
         let repositoryURL = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()
@@ -121,6 +131,28 @@ final class PermissionParityTests: XCTestCase {
         if let notificationImage { attach(notificationImage, name: "nanaflow-notification-alert") }
         if let calendarImage { attach(calendarImage, name: "nanaflow-calendar-alert") }
         if let chooserImage { attach(chooserImage, name: "nanaflow-calendar-chooser") }
+    }
+
+    func testCalendarChooserRequiresACurrentExplicitSelection() {
+        let choices = [CalendarChoice(id: "calendar.work", title: "Work", red: 0, green: 1, blue: 0)]
+        let invalidIdentifiers: [String?] = [nil, "", " \n", "calendar.deleted"]
+        for identifier in invalidIdentifiers {
+            let chooser = CalendarChooserView(
+                choices: choices,
+                selectedIdentifier: .constant(identifier),
+                onCancel: {},
+                onDone: {}
+            )
+            XCTAssertFalse(chooser.canComplete)
+        }
+        let empty = CalendarChooserView(
+            choices: [], selectedIdentifier: .constant("calendar.work"), onCancel: {}, onDone: {}
+        )
+        XCTAssertFalse(empty.canComplete)
+        let valid = CalendarChooserView(
+            choices: choices, selectedIdentifier: .constant("calendar.work"), onCancel: {}, onDone: {}
+        )
+        XCTAssertTrue(valid.canComplete)
     }
 
     func testCalendarPermissionIconIsBundled() {

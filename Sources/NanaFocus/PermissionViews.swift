@@ -164,6 +164,12 @@ struct CalendarChooserView: View {
     let onCancel: () -> Void
     let onDone: () -> Void
 
+    var canComplete: Bool {
+        guard let selectedIdentifier,
+              !selectedIdentifier.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return false }
+        return choices.contains(where: { $0.id == selectedIdentifier })
+    }
+
     var body: some View {
         ZStack(alignment: .topLeading) {
             Text("日历")
@@ -212,6 +218,8 @@ struct CalendarChooserView: View {
             HStack(spacing: 12) {
                 chooserButton("取消", filled: false, action: onCancel)
                 chooserButton("完成", filled: true, action: onDone)
+                    .disabled(!canComplete)
+                    .opacity(canComplete ? 1 : 0.5)
             }
             .position(x: 150, y: 304)
         }
@@ -336,17 +344,21 @@ struct CalendarChooserWindow: View {
         )
         .onAppear {
             choices = permissionClient.calendarChoices()
+            selectedIdentifier = controller.preferences.calendarIdentifier
             if !choices.contains(where: { $0.id == selectedIdentifier }) {
-                selectedIdentifier = choices.first?.id
+                selectedIdentifier = nil
             }
         }
     }
 
     private func saveSelection() {
-        var preferences = controller.preferences
-        preferences.calendarIdentifier = selectedIdentifier
-        preferences.calendarSyncEnabled = selectedIdentifier != nil
-        controller.updatePreferences(preferences)
+        choices = permissionClient.calendarStatus() == .authorized
+            ? permissionClient.calendarChoices()
+            : []
+        guard controller.selectCalendar(selectedIdentifier, availableIdentifiers: choices.map(\.id)) else {
+            selectedIdentifier = nil
+            return
+        }
         dismissWindow(id: "calendar-chooser")
     }
 }

@@ -35,12 +35,13 @@ struct TimerSyncSettings: Codable, Equatable, Sendable {
 }
 
 enum TimerSyncStatus: Equatable, Sendable {
+    /// Retained for source compatibility; configured locally, not remote delivery.
     case available
     case unavailable
 
     var title: String {
         switch self {
-        case .available: String(localized: "可用")
+        case .available: String(localized: "已配置")
         case .unavailable: String(localized: "不可用")
         }
     }
@@ -50,7 +51,27 @@ struct TimerSyncDiagnostics: Equatable, Sendable {
     var status: TimerSyncStatus
     var syncKey: String
     var deviceKey: String
+    /// Legacy name: last successful local processing, never a cloud delivery receipt.
     var lastSyncDate: Date?
+
+    mutating func recordLocalProcessing(succeeded: Bool, at date: Date = Date()) {
+        status = succeeded ? .available : .unavailable
+        if succeeded { lastSyncDate = date }
+    }
+
+    /// Account changes invalidate the previous account's cache. Defer applying
+    /// values until a normal event; quota failures must not trigger another write.
+    mutating func shouldProcessExternalChange(reason: Int?) -> Bool {
+        switch reason {
+        case NSUbiquitousKeyValueStoreServerChange, NSUbiquitousKeyValueStoreInitialSyncChange:
+            return true
+        case NSUbiquitousKeyValueStoreAccountChange, NSUbiquitousKeyValueStoreQuotaViolationChange:
+            status = .unavailable
+            return false
+        default:
+            return false
+        }
+    }
 
     static let unavailable = TimerSyncDiagnostics(
         status: .unavailable,
@@ -77,6 +98,7 @@ enum TimerSyncContract {
     }
     static var regionalWarning: String { String(localized: "某些云服务在您的地区可能无法完全使用。因此，计时同步功能可能无法正常运行。我们正在积极寻找解决方案。") }
     static var diagnosticsTitle: String { String(localized: "诊断") }
+    static var diagnosticsExplanation: String { String(localized: "已配置和本地处理时间不代表数据已送达 iCloud 或其他设备。") }
 }
 
 struct TimerSyncView: View {
@@ -198,10 +220,14 @@ struct TimerSyncView: View {
                 diagnosticRow("设备密钥", diagnostics.deviceKey)
                 if let lastSyncDate = diagnostics.lastSyncDate {
                     Divider().padding(.leading, 12)
-                    diagnosticRow("上次同步", lastSyncDate.formatted(date: .abbreviated, time: .shortened))
+                    diagnosticRow("上次本地处理", lastSyncDate.formatted(date: .abbreviated, time: .shortened))
                 }
             }
             .background(cardBackground, in: RoundedRectangle(cornerRadius: 13, style: .continuous))
+            Text(TimerSyncContract.diagnosticsExplanation)
+                .font(.system(size: 11))
+                .foregroundStyle(.secondary)
+                .padding(.horizontal, 12)
         }
     }
 

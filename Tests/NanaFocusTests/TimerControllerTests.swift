@@ -39,6 +39,7 @@ final class TimerControllerTests: XCTestCase {
         let notifications = NotificationSpy()
         let controller = TimerController(
             persistence: persistence,
+            preferencesPersistence: PreferencesSpy(),
             historyPersistence: HistoryNoop(),
             notifications: notifications,
             now: start
@@ -112,6 +113,7 @@ final class TimerControllerTests: XCTestCase {
         let notifications = NotificationSpy()
         let controller = TimerController(
             persistence: persistence,
+            preferencesPersistence: PreferencesSpy(),
             historyPersistence: HistoryNoop(),
             notifications: notifications,
             now: start
@@ -131,6 +133,7 @@ final class TimerControllerTests: XCTestCase {
         let notifications = NotificationSpy()
         let controller = TimerController(
             persistence: persistence,
+            preferencesPersistence: PreferencesSpy(),
             historyPersistence: HistoryNoop(),
             notifications: notifications,
             now: start
@@ -142,7 +145,15 @@ final class TimerControllerTests: XCTestCase {
         XCTAssertEqual(controller.engine.state.phase, .shortBreak)
         XCTAssertFalse(controller.engine.state.isRunning)
         XCTAssertEqual(persistence.saved.count, 2)
-        XCTAssertEqual(notifications.cancelCount, 1)
+        XCTAssertEqual(notifications.completedDates, [start.addingTimeInterval(25 * 60)])
+        XCTAssertEqual(notifications.completedPhases, [.focus])
+        XCTAssertEqual(notifications.retired.count, 1)
+        XCTAssertNil(notifications.pending)
+        XCTAssertEqual(notifications.cancelCount, 0)
+        controller.tick(at: start.addingTimeInterval(25 * 60 + 2))
+        XCTAssertEqual(notifications.completedDates.count, 1)
+        XCTAssertEqual(notifications.scheduled.count, 1)
+        XCTAssertEqual(controller.sessions.count, 1)
     }
 
     func testCelebrationTriggersOnlyWhenTheFinalFocusCompletesIntoLongBreak() {
@@ -165,6 +176,7 @@ final class TimerControllerTests: XCTestCase {
         let completed = TimerController(
             configuration: configuration,
             persistence: PersistenceSpy(loaded: finalFocus),
+            preferencesPersistence: PreferencesSpy(),
             historyPersistence: HistoryNoop(),
             notifications: NotificationSpy(),
             now: start
@@ -178,6 +190,7 @@ final class TimerControllerTests: XCTestCase {
         let skipped = TimerController(
             configuration: configuration,
             persistence: PersistenceSpy(loaded: finalFocus),
+            preferencesPersistence: PreferencesSpy(),
             historyPersistence: HistoryNoop(),
             notifications: NotificationSpy(),
             now: start
@@ -196,6 +209,7 @@ final class TimerControllerTests: XCTestCase {
 
         let controller = TimerController(
             persistence: persistence,
+            preferencesPersistence: PreferencesSpy(),
             historyPersistence: HistoryNoop(),
             notifications: notifications,
             now: start.addingTimeInterval(25 * 60 + 1)
@@ -203,6 +217,11 @@ final class TimerControllerTests: XCTestCase {
 
         XCTAssertEqual(controller.engine.state.phase, .shortBreak)
         XCTAssertEqual(persistence.saved.count, 1)
+        XCTAssertEqual(notifications.restoredDates, [start.addingTimeInterval(25 * 60)])
+        XCTAssertEqual(notifications.completedDates, notifications.restoredDates)
+        XCTAssertEqual(notifications.completedPhases, [.focus])
+        XCTAssertTrue(notifications.scheduled.isEmpty)
+        XCTAssertEqual(notifications.cancelCount, 0)
     }
 
     func testRestoringExpiredStateHonorsAutoStartBreakPreference() {
@@ -226,12 +245,15 @@ final class TimerControllerTests: XCTestCase {
         XCTAssertEqual(controller.engine.state.phase, .shortBreak)
         XCTAssertTrue(controller.engine.state.isRunning)
         XCTAssertEqual(notifications.scheduledDates, [start.addingTimeInterval(30 * 60 + 1)])
+        XCTAssertEqual(notifications.completedDates, [start.addingTimeInterval(25 * 60)])
+        XCTAssertEqual(notifications.cancelCount, 0)
     }
 
     func testPersistenceFailureIsVisible() {
         let persistence = PersistenceSpy(saveError: TestError.failed)
         let controller = TimerController(
             persistence: persistence,
+            preferencesPersistence: PreferencesSpy(),
             historyPersistence: HistoryNoop(),
             notifications: NotificationSpy(),
             now: start
@@ -246,6 +268,7 @@ final class TimerControllerTests: XCTestCase {
         let persistence = PersistenceSpy(saveError: TestError.failed)
         let controller = TimerController(
             persistence: persistence,
+            preferencesPersistence: PreferencesSpy(),
             historyPersistence: HistoryNoop(),
             notifications: NotificationSpy(),
             now: start
@@ -316,6 +339,9 @@ final class TimerControllerTests: XCTestCase {
         XCTAssertTrue(controller.engine.state.isRunning)
         XCTAssertEqual(notifications.scheduled.count, 2)
         XCTAssertEqual(notifications.scheduled.last?.sound, CompletionSound.none)
+        XCTAssertEqual(notifications.retired.count, 1)
+        XCTAssertEqual(notifications.pending?.date, controller.engine.state.endDate)
+        XCTAssertEqual(notifications.cancelCount, 0)
     }
 
     func testConfigurationChangePersistsAndUpdatesPausedTimer() {
@@ -549,6 +575,11 @@ private final class NotificationSpy: SessionNotificationScheduling {
     private(set) var scheduled: [Scheduled] = []
     var scheduledDates: [Date] { scheduled.map(\.date) }
     private(set) var cancelCount = 0
+    private(set) var pending: Scheduled?
+    private(set) var retired: [Scheduled] = []
+    private(set) var restoredDates: [Date] = []
+    private(set) var completedDates: [Date] = []
+    private(set) var completedPhases: [SessionPhase] = []
 
     func scheduleCompletion(at date: Date, nextPhase: SessionPhase, sound: CompletionSound, volume: Double, quote: String?) {
         scheduled.append(Scheduled(
@@ -559,6 +590,7 @@ private final class NotificationSpy: SessionNotificationScheduling {
             volume: volume,
             quote: quote
         ))
+        pending = scheduled.last
     }
 
     func scheduleCompletion(
@@ -577,10 +609,23 @@ private final class NotificationSpy: SessionNotificationScheduling {
             volume: volume,
             quote: quote
         ))
+        pending = scheduled.last
+    }
+
+    func restoreCompletion(at date: Date, phase: SessionPhase) {
+        restoredDates.append(date)
+    }
+
+    func completeCompletion(at date: Date, phase: SessionPhase) {
+        completedDates.append(date)
+        completedPhases.append(phase)
+        if let pending, pending.date == date { retired.append(pending) }
+        pending = nil
     }
 
     func cancelCompletion() {
         cancelCount += 1
+        pending = nil
     }
 }
 

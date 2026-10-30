@@ -5,6 +5,11 @@ import WidgetKit
 protocol SessionHistoryPersisting {
     func load() -> [FocusSession]
     func save(_ sessions: [FocusSession]) throws
+    func prepareSharedSnapshot()
+}
+
+extension SessionHistoryPersisting {
+    func prepareSharedSnapshot() {}
 }
 
 struct SessionHistoryPersistence: SessionHistoryPersisting {
@@ -12,15 +17,41 @@ struct SessionHistoryPersistence: SessionHistoryPersisting {
 
     private let defaults: UserDefaults
     private let sharedDefaults: UserDefaults?
+    private let reloadWidgetTimelines: @MainActor () -> Void
 
-    init(defaults: UserDefaults = .standard, sharedDefaults: UserDefaults? = nil) {
+    init(
+        defaults: UserDefaults = .standard,
+        sharedDefaults: UserDefaults? = nil,
+        reloadWidgetTimelines: @escaping @MainActor () -> Void = { WidgetCenter.shared.reloadAllTimelines() }
+    ) {
         self.defaults = defaults
         self.sharedDefaults = sharedDefaults
+        self.reloadWidgetTimelines = reloadWidgetTimelines
     }
 
+    /// `defaults` is the record of truth; `sharedDefaults` is the Widget mirror and a recovery
+    /// source. Both sides are decoded independently so a corrupt or missing copy never wipes the
+    /// other, and a side that ended up out of date is repaired with the merged result. An absent
+    /// mirror is left to `prepareSharedSnapshot`, which seeds it without rewriting local history.
     func load() -> [FocusSession] {
-        guard let data = defaults.data(forKey: Self.storageKey) else { return [] }
-        return (try? JSONDecoder().decode([FocusSession].self, from: data)) ?? []
+        let primary = decode(defaults)
+        guard let sharedDefaults else { return primary ?? [] }
+
+        let mirror = decode(sharedDefaults)
+        guard primary != nil || mirror != nil else { return [] }
+
+        // Primary is `incoming` so it wins when both stores hold the same session ID.
+        let merged = Self.merge(local: mirror ?? [], incoming: primary ?? [])
+        let mirrorIsStale = mirror != merged && sharedDefaults.object(forKey: Self.storageKey) != nil
+        if primary != merged || mirrorIsStale {
+            try? save(merged)
+        }
+        return merged
+    }
+
+    private func decode(_ defaults: UserDefaults) -> [FocusSession]? {
+        guard let data = defaults.data(forKey: Self.storageKey) else { return nil }
+        return try? JSONDecoder().decode([FocusSession].self, from: data)
     }
 
     func save(_ sessions: [FocusSession]) throws {
@@ -28,14 +59,34 @@ struct SessionHistoryPersistence: SessionHistoryPersisting {
         defaults.set(data, forKey: Self.storageKey)
         sharedDefaults?.set(data, forKey: Self.storageKey)
         if sharedDefaults != nil {
-            WidgetCenter.shared.reloadAllTimelines()
+            reloadWidgetTimelines()
         }
     }
 
+    /// Seed a newly authorized group without rewriting local history or guessing
+    /// whether an existing shared value (even an invalid one) can be discarded.
+    func prepareSharedSnapshot() {
+        guard let sharedDefaults,
+              sharedDefaults.object(forKey: Self.storageKey) == nil,
+              let data = defaults.object(forKey: Self.storageKey) as? Data,
+              (try? JSONDecoder().decode([FocusSession].self, from: data)) != nil else { return }
+        sharedDefaults.set(data, forKey: Self.storageKey)
+        reloadWidgetTimelines()
+    }
+
+    /// Last writer wins per UUID, so `incoming` overrides `local`. Decoded JSON may repeat a UUID
+    /// within one side, which must not trap, and the ID tie-break keeps the order deterministic so
+    /// callers do not see a "changed" array every launch.
     static func merge(local: [FocusSession], incoming: [FocusSession]) -> [FocusSession] {
-        var sessionsByID = Dictionary(uniqueKeysWithValues: local.map { ($0.id, $0) })
-        incoming.forEach { sessionsByID[$0.id] = $0 }
-        return sessionsByID.values.sorted { $0.endedAt > $1.endedAt }
+        var sessionsByID: [UUID: FocusSession] = [:]
+        for session in local + incoming {
+            sessionsByID[session.id] = session
+        }
+        return sessionsByID.values.sorted {
+            $0.endedAt == $1.endedAt
+                ? $0.id.uuidString < $1.id.uuidString
+                : $0.endedAt > $1.endedAt
+        }
     }
 }
 
@@ -146,6 +197,19 @@ struct TagSummary: Identifiable, Equatable, Sendable {
     var id: String { name }
 }
 
+/// Statistics use finite, nonnegative seconds. Overflow saturates at Double's
+/// finite limit; the stored sessions are unchanged. Share this policy across
+/// totals, buckets, tags and presentation so positive time never becomes zero.
+func statisticsFiniteDuration(_ duration: TimeInterval) -> TimeInterval {
+    if duration.isNaN || duration <= 0 { return 0 }
+    return min(duration, .greatestFiniteMagnitude)
+}
+
+func statisticsAddingDuration(_ total: TimeInterval, _ duration: TimeInterval) -> TimeInterval {
+    let sum = statisticsFiniteDuration(total) + statisticsFiniteDuration(duration)
+    return statisticsFiniteDuration(sum)
+}
+
 struct SessionStatistics: Equatable, Sendable {
     let totalCount: Int
     let totalDuration: TimeInterval
@@ -167,14 +231,14 @@ struct SessionStatistics: Equatable, Sendable {
                 && (tag == nil || $0.tag == tag)
         }
         totalCount = matching.count
-        totalDuration = matching.reduce(0) { $0 + $1.duration }
+        totalDuration = matching.reduce(0) { statisticsAddingDuration($0, $1.duration) }
         buckets = Self.bucketIntervals(for: period, in: interval, calendar: calendar).map { bucket in
             let sessionsInBucket = matching.filter { $0.endedAt >= bucket.start && $0.endedAt < bucket.end }
             let segments = Dictionary(grouping: sessionsInBucket, by: \.tag).map { tag, sessions in
                 StatisticsTagSegment(
                     tag: tag,
                     sessionCount: sessions.count,
-                    duration: sessions.reduce(0) { $0 + $1.duration }
+                    duration: sessions.reduce(0) { statisticsAddingDuration($0, $1.duration) }
                 )
             }
             .sorted { ($0.tag ?? "\u{10FFFF}") < ($1.tag ?? "\u{10FFFF}") }
@@ -182,7 +246,7 @@ struct SessionStatistics: Equatable, Sendable {
                 start: bucket.start,
                 end: bucket.end,
                 sessionCount: sessionsInBucket.count,
-                duration: sessionsInBucket.reduce(0) { $0 + $1.duration },
+                duration: sessionsInBucket.reduce(0) { statisticsAddingDuration($0, $1.duration) },
                 tagSegments: segments.isEmpty
                     ? [StatisticsTagSegment(tag: nil, sessionCount: 0, duration: 0)]
                     : segments
@@ -195,7 +259,7 @@ struct SessionStatistics: Equatable, Sendable {
             TagSummary(
                 name: name,
                 sessionCount: entries.count,
-                duration: entries.reduce(0) { $0 + $1.1.duration }
+                duration: entries.reduce(0) { statisticsAddingDuration($0, $1.1.duration) }
             )
         }
         .sorted { lhs, rhs in

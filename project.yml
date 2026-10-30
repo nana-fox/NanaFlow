@@ -39,9 +39,7 @@ targets:
         GENERATE_INFOPLIST_FILE: false
         CODE_SIGN_STYLE: Automatic
         ENABLE_APP_SANDBOX: YES
-      configs:
-        Release:
-          CODE_SIGN_ENTITLEMENTS: Sources/NanaFocus/NanaFlow.entitlements
+        CODE_SIGN_ENTITLEMENTS: Sources/NanaFocus/NanaFlow.entitlements
   NanaFlowWidget:
     type: app-extension
     platform: macOS
@@ -65,9 +63,7 @@ targets:
         CODE_SIGN_STYLE: Automatic
         ENABLE_APP_SANDBOX: YES
         SKIP_INSTALL: YES
-      configs:
-        Release:
-          CODE_SIGN_ENTITLEMENTS: Sources/NanaFlowWidget/NanaFlowWidget.entitlements
+        CODE_SIGN_ENTITLEMENTS: Sources/NanaFlowWidget/NanaFlowWidget.entitlements
   NanaFlowTests:
     type: bundle.unit-test
     platform: macOS

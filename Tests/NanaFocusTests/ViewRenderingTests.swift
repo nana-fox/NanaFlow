@@ -107,7 +107,7 @@ final class ViewRenderingTests: XCTestCase {
 
         let expected = [
             "休息": "Break",
-            "长时间停顿": "Long Break",
+            "长时间停顿": "Long break",
             "菜单": "Menu",
             "NanaFlow 持续时间": "NanaFlow Duration",
             "休息时间": "Break Duration",
@@ -163,7 +163,7 @@ final class ViewRenderingTests: XCTestCase {
             "休息已完成": "Break Complete",
             "恢复默认": "Restore Defaults",
             "音量": "Volume",
-            "允许通知": "Allow Notifications",
+            "允许通知": "Allow notifications",
             "允许日历访问": "Allow Calendar Access",
             "日历": "Calendar",
 
@@ -257,9 +257,13 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertTrue(settings.contains("String(localized: \"系统\")"))
         XCTAssertTrue(settings.contains("Text(LocalizedStringKey(title))"))
         XCTAssertTrue(sync.contains("String(localized: \"定时器同步\")"))
-        XCTAssertTrue(sync.contains("String(localized: \"可用\")"))
+        XCTAssertTrue(sync.contains("String(localized: \"已配置\")"))
+        XCTAssertTrue(sync.contains("diagnosticRow(\"上次本地处理\","))
+        XCTAssertTrue(sync.contains("Text(LocalizedStringKey(title))"))
         XCTAssertTrue(statistics.contains("Locale.autoupdatingCurrent"))
-        XCTAssertTrue(statistics.contains("localizedMinutes("))
+        XCTAssertTrue(statistics.contains("func statisticsDurationText("))
+        XCTAssertTrue(statistics.contains(#"formatter.setLocalizedDateFormatFromTemplate(period == .year ? "y" : period == .month ? "yMMM" : "MMMd")"#))
+        XCTAssertTrue(statistics.contains(#"formatter.setLocalizedDateFormatFromTemplate(period == .day ? "MMMdjmmZZZZ" : period == .year ? "yMMM" : "MMMEd")"#))
         XCTAssertTrue(app.contains("String(localized: \"menu_bar_accessibility_format\")"))
         XCTAssertFalse(app.contains("，剩余"))
         XCTAssertTrue(tags.contains("String(localized: \"edit_tag_accessibility_format\")"))
@@ -339,7 +343,8 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertFalse(tags.contains("return \"删除标签"))
         XCTAssertTrue(durations.contains("String(localized: \"自定义持续时间\")"))
         XCTAssertTrue(durations.contains("Text(LocalizedStringKey(title))"))
-        XCTAssertTrue(durations.contains("Text(\"\\(value.wrappedValue)\\(unit)\")"))
+        XCTAssertTrue(durations.contains(#"Text(String(format: NSLocalizedString(unit == "轮" ? "duration_cycles_format" : "%lld 分钟", comment: ""), value.wrappedValue))"#))
+        XCTAssertFalse(durations.contains(#"Text("\(value.wrappedValue)\(unit)")"#))
         XCTAssertTrue(pro.contains("String(localized: \"NanaFlow Pro 已解锁\")"))
         XCTAssertTrue(pro.contains("String(localized: \"跨设备同步\")"))
         XCTAssertTrue(pro.contains("Text(\"已启用\")"))
@@ -580,7 +585,7 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertFalse(timerSource.contains("keyWindow?.orderOut"))
         XCTAssertTrue(timerSource.contains("NSApplication.shared.keyWindow?.close()"))
         XCTAssertFalse(timerSource.contains("window.styleMask.formUnion"))
-        XCTAssertTrue(appSource.contains(".windowStyle(.plain)\n        .commands"))
+        XCTAssertTrue(appSource.contains(".windowStyle(.hiddenTitleBar)\n        .commands"))
         XCTAssertTrue(timerSource.contains("window.setAccessibilitySubrole(.standardWindow)"))
         XCTAssertTrue(delegateSource.contains("configureFileMenuCommands()"))
         XCTAssertTrue(delegateSource.contains("#selector(showFullscreenWindow(_:))"))
@@ -592,7 +597,7 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertTrue(delegateSource.contains("#selector(closeAllWindows(_:))"))
     }
 
-    func testWindowMenuDeclaresFlowsWindowListInsteadOfEverySwiftUIScene() throws {
+    func testWindowMenuHidesAuxiliaryScenesAndKeepsNanaFlowEntry() throws {
         let repositoryURL = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()
             .deletingLastPathComponent()
@@ -606,9 +611,10 @@ final class ViewRenderingTests: XCTestCase {
             encoding: .utf8
         )
 
-        XCTAssertTrue(source.contains("CommandGroup(replacing: .singleWindowList)"))
+        XCTAssertTrue(source.contains("CommandGroup(replacing: .singleWindowList) {}"))
         for title in ["Welcome", "Notification Alert", "Calendar Alert", "Calendar Chooser"] {
-            XCTAssertTrue(source.contains("\"\(title)\""), "Missing Flow window item: \(title)")
+            XCTAssertFalse(source.contains("\"\(title)\""), "Auxiliary window still in menu: \(title)")
+            XCTAssertTrue(appSource.contains("Window(\"\(title)\""), "Scene title changed: \(title)")
         }
         for removedTitle in ["About", "Pro Upgrade", "How It Works"] {
             XCTAssertFalse(source.contains("\"\(removedTitle)\""))
@@ -714,14 +720,15 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertTrue(timerSource.contains("guard !Self.configuredWindows.contains(window) else { return }"))
         XCTAssertTrue(timerSource.contains("Self.configuredWindows.add(window)"))
         XCTAssertTrue(timerSource.contains("DispatchQueue.main.async"))
-        XCTAssertTrue(timerSource.contains("[.titled, .resizable, .fullSizeContentView]"))
+        XCTAssertFalse(timerSource.contains("window.styleMask ="))
+        XCTAssertTrue(timerSource.contains("window.isMovableByWindowBackground = false"))
         XCTAssertTrue(timerSource.contains(
-            ".frame(width: 380, height: TimerVisualMetrics.windowContentHeight, alignment: .top)"
+            ".frame(width: 380, height: TimerVisualMetrics.windowContentHeight - nativeTitlebarInset, alignment: .top)"
         ))
         XCTAssertTrue(timerSource.contains("window.titlebarAppearsTransparent = true"))
         XCTAssertTrue(timerSource.contains("window.standardWindowButton(.zoomButton)?.isEnabled = false"))
         XCTAssertTrue(timerSource.contains(".ignoresSafeArea()"))
-        XCTAssertTrue(appSource.contains(".windowResizability(.contentMinSize)\n        .windowStyle(.plain)"))
+        XCTAssertTrue(appSource.contains(".windowResizability(.contentSize)\n        .windowStyle(.hiddenTitleBar)"))
         XCTAssertFalse(appSource.contains(".windowResizability(.automatic)\n        .windowStyle(.plain)"))
     }
 
@@ -752,7 +759,6 @@ final class ViewRenderingTests: XCTestCase {
     }
 
     func testMainTimerMatchesFlowLayoutContract() {
-        XCTAssertEqual(TimerVisualMetrics.windowCornerRadius, 26)
         XCTAssertEqual(TimerVisualMetrics.titleFontSize, 20)
         XCTAssertEqual(TimerVisualMetrics.timerFontSize, 70)
         XCTAssertEqual(TimerVisualMetrics.timerKerning, -1.5)
@@ -780,7 +786,7 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertEqual(TimerVisualMetrics.inactiveIndicatorOpacity, 0.23)
         XCTAssertEqual(TimerVisualMetrics.toolbarFocusOpacity, 1)
         XCTAssertEqual(TimerVisualMetrics.closeFocusOpacity, 0.42)
-        XCTAssertEqual(TimerVisualMetrics.windowContentHeight, 240)
+        XCTAssertEqual(TimerVisualMetrics.windowContentHeight, TimerVisualMetrics.windowFrameHeight)
         XCTAssertTrue(TimerVisualMetrics.showsSkipButton(for: .shortBreak))
         XCTAssertFalse(TimerVisualMetrics.showsSkipButton(for: .focus))
         XCTAssertEqual(FlowPalette.windowRed, 248.0 / 255.0, accuracy: 0.0001)
@@ -837,8 +843,8 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertEqual(StatisticsVisualMetrics.periodPickerHeight, 32)
         XCTAssertEqual(StatisticsVisualMetrics.periodPickerCornerRadius, 10)
         XCTAssertEqual(StatisticsVisualMetrics.selectedPeriodOpacity, 1, accuracy: 0.0001)
-        XCTAssertEqual(StatisticsVisualMetrics.chartHeight, 181)
-        XCTAssertEqual(StatisticsVisualMetrics.chartTrackHeight, 137)
+        XCTAssertEqual(StatisticsVisualMetrics.chartHeight, 153)
+        XCTAssertEqual(StatisticsVisualMetrics.chartTrackHeight, 109)
         XCTAssertEqual(StatisticsVisualMetrics.navigationButtonDiameter, 31)
         XCTAssertEqual(StatisticsVisualMetrics.periodTitleWidth, 258)
     }
@@ -852,12 +858,13 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertEqual(
             StatisticsVisualMetrics.headerHeight
                 + StatisticsVisualMetrics.periodSwitcherHeight
+                + StatisticsVisualMetrics.metricSwitcherHeight
                 + StatisticsVisualMetrics.chartHeight,
             TimerVisualMetrics.windowFrameHeight
         )
         XCTAssertEqual(
             TimerVisualMetrics.windowFrameHeight - TimerVisualMetrics.windowContentHeight,
-            32
+            0
         )
     }
 
@@ -896,8 +903,8 @@ final class ViewRenderingTests: XCTestCase {
             encoding: .utf8
         )
 
-        XCTAssertTrue(source.contains("accessibilityLabel: \"减少\\(title)\""))
-        XCTAssertTrue(source.contains("accessibilityLabel: \"增加\\(title)\""))
+        XCTAssertTrue(source.contains(#"stepperButton("minus", accessibilityLabel: String(format: String(localized: "duration_decrease_format"), NSLocalizedString(title, comment: "")))"#))
+        XCTAssertTrue(source.contains(#"stepperButton("plus", accessibilityLabel: String(format: String(localized: "duration_increase_format"), NSLocalizedString(title, comment: "")))"#))
         XCTAssertTrue(source.contains(".accessibilityLabel(Text(LocalizedStringKey(accessibilityLabel)))"))
         XCTAssertTrue(source.contains(".accessibilityLabel(Text(LocalizedStringKey(title)))"))
     }
@@ -1189,7 +1196,7 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertTrue(fullscreenSource.contains("label: String(localized: \"跳过休息时间\")"))
     }
 
-    func testRunningMainTimerUsesFlowsStopAccessibilityLabel() throws {
+    func testMainTimerLocalizesRunningAndPausedAccessibilityLabels() throws {
         let repositoryURL = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()
             .deletingLastPathComponent()
@@ -1199,7 +1206,7 @@ final class ViewRenderingTests: XCTestCase {
             encoding: .utf8
         )
 
-        XCTAssertTrue(timerSource.contains(#".accessibilityLabel(controller.engine.state.isRunning ? "停止" : "开始")"#))
+        XCTAssertTrue(timerSource.contains(#".accessibilityLabel(controller.engine.state.isRunning ? String(localized: "停止") : String(localized: "开始"))"#))
     }
 
     func testTagAndSessionDeletionUseFlowsConfirmationCopy() throws {
@@ -1262,10 +1269,10 @@ final class ViewRenderingTests: XCTestCase {
             encoding: .utf8
         )
 
-        XCTAssertTrue(statisticsSource.contains(#"\(statistics.totalCount)次"#))
+        XCTAssertTrue(statisticsSource.contains("metric.totalText(statistics)"))
         XCTAssertTrue(statisticsSource.contains(#"case .focus: "NanaFlow""#))
         XCTAssertTrue(statisticsSource.contains(#".accessibilityLabel("统计图表")"#))
-        XCTAssertTrue(statisticsSource.contains(#""\(bucket.sessionCount)次""#))
+        XCTAssertTrue(statisticsSource.contains("metric.accessibilityValue(bucket)"))
         XCTAssertFalse(statisticsSource.contains(#".accessibilityLabel("显示所有会话")"#))
         XCTAssertFalse(statisticsSource.contains(#"String(localized: "tag_summary_format")"#))
         XCTAssertTrue(widgetSource.contains(#"entry.statisticsUnit == .count ? "NanaFlows" : String(localized: "分钟")"#))
@@ -1284,7 +1291,7 @@ final class ViewRenderingTests: XCTestCase {
 
         XCTAssertTrue(source.contains("@State private var hoveredBucketID: Date?"))
         XCTAssertTrue(source.contains(".onHover { isHovered in"))
-        XCTAssertTrue(source.contains("statisticsBucketTooltipText(bucket)"))
+        XCTAssertTrue(source.contains("statisticsBucketTooltipText(bucket, metric: metric)"))
         XCTAssertTrue(source.contains(".fixedSize(horizontal: true, vertical: false)"))
         XCTAssertFalse(source.contains("@State private var selectedBucketID: Date?"))
         XCTAssertFalse(source.contains("点击固定此数据"))
@@ -1372,12 +1379,21 @@ final class ViewRenderingTests: XCTestCase {
         )
 
         XCTAssertTrue(source.contains("func settingsRow(showsDivider: Bool = true)"))
-        XCTAssertEqual(source.components(separatedBy: "showsDivider: false").count - 1, 2)
+        XCTAssertEqual(source.components(separatedBy: "showsDivider: false").count - 1, 3)
+        let lastRowPattern = try NSRegularExpression(
+            pattern: #"SettingsToggleRow\(\s*"([^"]+)",\s*isOn: preferenceBinding\(\\\.\w+\),\s*showsDivider: false\s*\)"#
+        )
+        let lastRows = lastRowPattern.matches(in: source, range: NSRange(source.startIndex..., in: source))
+            .map { (source as NSString).substring(with: $0.range(at: 1)) }
+        XCTAssertEqual(Set(lastRows), ["计时开始后隐藏窗口", "显示今日完成数", "专注时播放滴答声"])
+        for section in ["启动", "菜单栏", "提醒"] {
+            XCTAssertTrue(source.contains("settingsSection(\"\(section)\")"), section)
+        }
         XCTAssertTrue(source.contains(".padding(.top, SettingsVisualMetrics.contentOffsetY)"))
         XCTAssertFalse(source.contains(".offset(y: SettingsVisualMetrics.contentOffsetY)"))
     }
 
-    func testCompactSettingsDoesNotExposeSecondaryVolumeRows() throws {
+    func testCompactSettingsExposesCompletionVolume() throws {
         let repositoryURL = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()
             .deletingLastPathComponent()
@@ -1391,7 +1407,9 @@ final class ViewRenderingTests: XCTestCase {
         let visibleSettings = try XCTUnwrap(
             source.split(separator: "enum SettingsVisualMetrics", maxSplits: 1).first
         )
-        XCTAssertFalse(visibleSettings.contains("SettingsVolumeView(volume:"))
+        XCTAssertTrue(visibleSettings.contains("SettingsVolumeView(volume:"))
+        XCTAssertTrue(visibleSettings.contains("专注完成声音"))
+        XCTAssertTrue(visibleSettings.contains("休息完成声音"))
     }
 
     func testKeyboardShortcutDescriptionsMatchFlowLocalizedResources() throws {
@@ -1474,7 +1492,7 @@ final class ViewRenderingTests: XCTestCase {
         attach(image, name: "nanaflow-break-menu-icon")
     }
 
-    func testLongBreakMatchesFlowVisibleContract() throws {
+    func testLongBreakKeepsLocalizedTitleAndSharedBreakBackground() throws {
         let controller = makeController(engine: TimerEngine(
             configuration: TimerConfiguration(
                 focusDuration: 30 * 60,
@@ -1490,7 +1508,7 @@ final class ViewRenderingTests: XCTestCase {
                 startedAt: nil
             )
         ))
-        XCTAssertEqual(controller.phaseTitle, "长时间停顿")
+        XCTAssertEqual(controller.phaseTitle, String(localized: "长时间停顿"))
 
         let renderer = ImageRenderer(content: TimerView(controller: controller))
         renderer.proposedSize = ProposedViewSize(width: 380, height: 272)
@@ -1579,7 +1597,7 @@ final class ViewRenderingTests: XCTestCase {
 
         XCTAssertTrue(source.contains("Text(\"关于 NanaFlow\")"))
         XCTAssertTrue(source.contains("Text(\"专注、休息、继续。\")"))
-        XCTAssertTrue(source.contains("Text(\"版本 \\(version)\")"))
+        XCTAssertTrue(source.contains(#"Text(String(format: String(localized: "about_version_format"), version))"#))
         XCTAssertTrue(source.contains("Button(\"完成\", action: onBack)"))
     }
 
@@ -1683,7 +1701,109 @@ final class ViewRenderingTests: XCTestCase {
         )
     }
 
-    func testAllFlowLanguageRegionsShipCompleteBrandSafeLocalizations() throws {
+    // R1-A covers these public additions in zh-Hans, zh-Hant and en. The other
+    // shipped languages retain their existing 340-key resources and fallback.
+    private static let r1PublicLocalizationKeys: Set<String> = [
+        "菜单栏", "显示今日完成数", "只统计今天已完成的专注", "today_completed_focus_format",
+        "登录时启动", "计时开始后隐藏窗口", "专注时播放滴答声", "计时设置", "计时设置…", "设置…",
+        "开始休息", "返回专注", "专注完成声音", "休息完成声音",
+        "关闭通知也会关闭完成声音。音量受系统设置影响。", "次数", "专注、休息、继续。",
+        "duration_decrease_format", "duration_increase_format", "duration_cycles_format", "about_version_format",
+        "statistics_minutes_format", "statistics_hours_format", "statistics_hours_minutes_format",
+        "statistics_less_than_minute", "statistics_count_format", "statistics_previous_period", "statistics_next_period",
+        "selected", "提醒", "返回计时器", "短休息", "长休息", "循环", "自动开始", "专注",
+        "显示统计", "隐藏计时器", "显示计时器", "跳到休息", "跳到专注", "重新开始", "退出 NanaFlow",
+        "已配置", "上次本地处理", "已配置和本地处理时间不代表数据已送达 iCloud 或其他设备。",
+        "旧版数据", "导入旧版数据…", "导入旧版数据", "旧版数据已导入。", "旧版数据已存在，未做任何更改。",
+        "无法读取所选文件。未做任何更改。", "所选文件不包含完整的 NanaFlow 旧版数据。未做任何更改。",
+        "当前版本无法读取所选旧版数据。未做任何更改。",
+        "旧版数据中的计时器仍在运行。请先在旧版中暂停后再导入。未做任何更改。",
+        "旧版设置开启了启动时开始计时、启动时重置周期或定时器同步。请先在旧版中关闭后再导入。未做任何更改。",
+        "请先暂停当前计时再导入。未做任何更改。", "当前已有不同的数据或会话记录。为避免覆盖，未做任何更改。",
+        "导入后的校验未通过。请退出 NanaFlow 后再检查数据。",
+        "无法保存日历事件。请检查所选日历后重试。", "无法写入日历。请允许完整的日历访问权限后重试。",
+        "无法写入日历。请在设置中重新选择可写入的日历。",
+    ]
+
+    func testR1PrimaryLanguagesShipCompletePublicLocalizationKeys() throws {
+        let repositoryURL = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let appBundle = Bundle(for: TimerController.self)
+        let widgetURL = try XCTUnwrap(
+            appBundle.builtInPlugInsURL?.appendingPathComponent("NanaFlowWidget.appex")
+        )
+        let widgetBundle = try XCTUnwrap(Bundle(url: widgetURL))
+        let expectedCopy = [
+            "en": [
+                "长时间停顿": "Long break", "长休息": "Long break", "停止": "Pause", "开始": "Start",
+                "允许通知": "Allow notifications", "分钟": "min", "%lld 分钟": "%lld min",
+                "duration_decrease_format": "Decrease %@", "duration_increase_format": "Increase %@",
+                "duration_cycles_format": "%lld cycles", "about_version_format": "Version %@",
+            ],
+            "zh-Hans": [
+                "长时间停顿": "长休息", "长休息": "长休息", "停止": "暂停", "开始": "开始",
+                "允许通知": "允许通知", "分钟": "分钟", "%lld 分钟": "%lld 分钟",
+                "duration_decrease_format": "减少%@", "duration_increase_format": "增加%@",
+                "duration_cycles_format": "%lld 轮", "about_version_format": "版本 %@",
+            ],
+            "zh-Hant": [
+                "长时间停顿": "長休息", "长休息": "長休息", "停止": "暫停", "开始": "開始",
+                "允许通知": "允許通知", "分钟": "分鐘", "%lld 分钟": "%lld 分鐘",
+                "duration_decrease_format": "減少%@", "duration_increase_format": "增加%@",
+                "duration_cycles_format": "%lld 輪", "about_version_format": "版本 %@",
+            ],
+        ]
+        let formatArguments = [
+            "today_completed_focus_format": ["lld"], "%lld 分钟": ["lld"], "duration_cycles_format": ["lld"],
+            "duration_decrease_format": ["@"], "duration_increase_format": ["@"], "about_version_format": ["@"],
+            "statistics_minutes_format": ["@"], "statistics_hours_format": ["@"],
+            "statistics_hours_minutes_format": ["@", "@"], "statistics_count_format": ["@"],
+        ]
+        let argumentPattern = try NSRegularExpression(pattern: #"%(?:\d+\$)?(lld|@)"#)
+
+        for locale in ["en", "zh-Hans", "zh-Hant"] {
+            let copy = try XCTUnwrap(expectedCopy[locale])
+            let requiredKeys = Self.r1PublicLocalizationKeys.union(copy.keys)
+            let sourceURL = repositoryURL.appendingPathComponent("Sources/NanaFocus/\(locale).lproj/Localizable.strings")
+            let source = try XCTUnwrap(
+                try PropertyListSerialization.propertyList(from: Data(contentsOf: sourceURL), options: [], format: nil)
+                    as? [String: String]
+            )
+            // Parse the actual locale tables so Bundle fallback cannot conceal
+            // an absent primary-language key in either shipped target.
+            for (target, bundle) in [("App", appBundle), ("Widget", widgetBundle)] {
+                let url = try XCTUnwrap(bundle.url(
+                    forResource: "Localizable", withExtension: "strings", subdirectory: nil, localization: locale
+                ))
+                XCTAssertEqual(url.deletingLastPathComponent().lastPathComponent, "\(locale).lproj")
+                let localization = try XCTUnwrap(
+                    try PropertyListSerialization.propertyList(from: Data(contentsOf: url), options: [], format: nil)
+                        as? [String: String]
+                )
+                for key in requiredKeys.sorted() {
+                    let expected = try XCTUnwrap(source[key], "\(locale) source missing public key: \(key)")
+                    let value = try XCTUnwrap(localization[key], "\(target) \(locale) missing public key: \(key)")
+                    XCTAssertFalse(value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, key)
+                    XCTAssertEqual(value, expected, "\(target) \(locale) resource differs from source: \(key)")
+                    if let exactCopy = copy[key] {
+                        XCTAssertEqual(value, exactCopy, "\(target) \(locale): \(key)")
+                    }
+                    if key.unicodeScalars.allSatisfy({ $0.isASCII }) {
+                        XCTAssertNotEqual(value, key, "\(target) \(locale) exposes a raw localization key")
+                    }
+                    if let expectedArguments = formatArguments[key] {
+                        let arguments = argumentPattern.matches(in: value, range: NSRange(value.startIndex..., in: value))
+                            .map { (value as NSString).substring(with: $0.range(at: 1)) }
+                        XCTAssertEqual(arguments, expectedArguments, "\(target) \(locale) format arguments: \(key)")
+                    }
+                }
+            }
+        }
+    }
+
+    func testLanguageResourcesPreserveLegacyTranslationsAndBrandSafety() throws {
         let repositoryURL = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()
             .deletingLastPathComponent()
@@ -1702,6 +1822,8 @@ final class ViewRenderingTests: XCTestCase {
                 format: nil
             ) as? [String: String]
         )
+        let legacyKeys = Set(english.keys).subtracting(Self.r1PublicLocalizationKeys)
+        XCTAssertEqual(legacyKeys.count, 340, "Keep the pre-R1 language resource coverage")
         let appBundle = Bundle(for: TimerController.self)
         let widgetURL = try XCTUnwrap(
             appBundle.builtInPlugInsURL?.appendingPathComponent("NanaFlowWidget.appex")
@@ -1725,6 +1847,20 @@ final class ViewRenderingTests: XCTestCase {
                 ) as? [String: String],
                 locale
             )
+            // English permission copy lives in the base Info.plist; the other
+            // shipped languages provide localized InfoPlist.strings tables.
+            let resourceNames = locale == "en"
+                ? ["Localizable.stringsdict"]
+                : ["Localizable.stringsdict", "InfoPlist.strings"]
+            for resource in resourceNames {
+                let url = localizationRoot.appendingPathComponent("\(locale).lproj/\(resource)")
+                let dictionary = try XCTUnwrap(
+                    try PropertyListSerialization.propertyList(from: Data(contentsOf: url), options: [], format: nil)
+                        as? [String: Any],
+                    "\(locale) \(resource) must remain a valid resource dictionary"
+                )
+                XCTAssertFalse(dictionary.isEmpty, "\(locale) \(resource)")
+            }
             if ["ca", "de", "es", "fr", "it", "ja", "ko", "nb", "nl", "pl", "pt-BR", "pt-PT", "ru", "zh-Hant"].contains(locale) {
                 let stringsdictURL = localizationRoot
                     .appendingPathComponent("\(locale).lproj/Localizable.stringsdict")
@@ -1780,16 +1916,21 @@ final class ViewRenderingTests: XCTestCase {
                     XCTAssertEqual(sessions[category], value, "\(locale) \(category) plural form")
                 }
             }
-            if locale != "zh-Hans" {
+            if locale == "zh-Hant" {
                 XCTAssertEqual(
                     Set(localization.keys),
                     Set(english.keys),
                     "\(locale) must localize every user-facing key"
                 )
+            } else if locale != "en" && locale != "zh-Hans" {
+                XCTAssertTrue(
+                    legacyKeys.isSubset(of: Set(localization.keys)),
+                    "\(locale) lost existing keys: \(legacyKeys.subtracting(localization.keys).sorted())"
+                )
             }
             if locale != "en" && locale != "zh-Hans" {
                 let translatedCount = english.reduce(into: 0) { count, entry in
-                    if localization[entry.key] != entry.value { count += 1 }
+                    if let value = localization[entry.key], value != entry.value { count += 1 }
                 }
                 if locale == "zh-Hant" {
                     XCTAssertEqual(
@@ -1814,11 +1955,11 @@ final class ViewRenderingTests: XCTestCase {
                     case "pt-BR", "pt-PT":
                         intentionallySharedValues = ["网页", "好", "菜单", "圆形", "本地", "音量", "duration_hms_format", "定时器同步", "状态", "全局", "应用", "网站"]
                     case "nl":
-                        intentionallySharedValues = ["网页", "Help", "好", "菜单", "帮助", "本地", "音量", "duration_hms_format", "全局", "自动", "竖琴", "定时器同步", "停止", "重置", "升级", "类型", "状态", "应用", "标签", "周", "网站", "筛选"]
+                        intentionallySharedValues = ["网页", "Help", "好", "菜单", "帮助", "本地", "音量", "duration_hms_format", "全局", "自动", "竖琴", "定时器同步", "重置", "升级", "类型", "状态", "应用", "标签", "周", "网站", "筛选"]
                     case "nb":
                         intentionallySharedValues = ["好", "暂停", "本地", "系统", "音量", "duration_hms_format", "全局", "定时器同步", "开始", "类型", "状态", "应用"]
                     case "pl":
-                        intentionallySharedValues = ["好", "好的", "菜单", "系统", "开始", "状态"]
+                        intentionallySharedValues = ["好", "好的", "菜单", "系统", "开始", "状态", "%lld 分钟"]
                     case "ru":
                         intentionallySharedValues = []
                     case "ja":
@@ -1828,7 +1969,7 @@ final class ViewRenderingTests: XCTestCase {
                     case "fr":
                         intentionallySharedValues = [
                             "网页", "好", "菜单", "暂停", "本地", "音量", "风格 1", "打断", "全局",
-                            "风格 2", "%lld 分钟", "风格 3", "周期", "风格 4", "通知", "分钟",
+                            "风格 2", "风格 3", "周期", "风格 4", "通知",
                             "支持", "类型", "阶段", "应用", "标签", "网站",
                         ]
                     default:
@@ -2212,12 +2353,12 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertEqual(StatisticsVisualMetrics.contentHeight, 272)
         XCTAssertEqual(StatisticsVisualMetrics.headerHeight, 49)
         XCTAssertEqual(StatisticsVisualMetrics.periodSwitcherHeight, 42)
-        XCTAssertEqual(StatisticsVisualMetrics.chartHeight, 181)
-        XCTAssertEqual(StatisticsVisualMetrics.chartTrackHeight, 137)
+        XCTAssertEqual(StatisticsVisualMetrics.chartHeight, 153)
+        XCTAssertEqual(StatisticsVisualMetrics.chartTrackHeight, 109)
         XCTAssertFalse(statistics.contains("FlowPalette.breakBackground"))
         XCTAssertFalse(statistics.contains("cardInset"))
         XCTAssertFalse(statistics.contains("cardCornerRadius"))
-        XCTAssertTrue(statistics.contains(#"\(statistics.totalCount)次"#))
+        XCTAssertTrue(statistics.contains("metric.totalText(statistics)"))
 
         XCTAssertTrue(timer.contains("case .about:"))
         XCTAssertTrue(timer.contains("AboutNanaFlowView"))

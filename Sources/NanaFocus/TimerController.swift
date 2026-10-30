@@ -23,6 +23,18 @@ enum TimerAutomationCommand: String, Equatable, Sendable {
     }
 }
 
+/// The same read/write operations as KVS, with an in-memory implementation for
+/// checks that must never access a person's iCloud account.
+@MainActor
+protocol TimerCloudStoring: AnyObject {
+    func string(forKey key: String) -> String?
+    func data(forKey key: String) -> Data?
+    func set(_ value: Any?, forKey key: String)
+    func synchronize() -> Bool
+}
+
+extension NSUbiquitousKeyValueStore: TimerCloudStoring {}
+
 @MainActor
 @Observable
 final class TimerController {
@@ -45,8 +57,9 @@ final class TimerController {
     @ObservationIgnored private let notifications: any SessionNotificationScheduling
     @ObservationIgnored private let calendarRecorder: any FocusSessionCalendarRecording
     @ObservationIgnored private let tickSound: any TimerTickSoundPlaying
+    @ObservationIgnored private let legacyCoreDataStore: any LegacyCoreDataStoring
     @ObservationIgnored private var lastTickSecond: Int?
-    @ObservationIgnored private var cloudStore: NSUbiquitousKeyValueStore?
+    @ObservationIgnored private var cloudStore: (any TimerCloudStoring)?
     @ObservationIgnored private var cloudObserver: NSObjectProtocol?
     @ObservationIgnored private var isApplyingCloudState = false
 
@@ -66,6 +79,7 @@ final class TimerController {
         notifications: any SessionNotificationScheduling = SessionNotificationScheduler(),
         calendarRecorder: any FocusSessionCalendarRecording = FocusSessionCalendarRecorder(),
         tickSound: any TimerTickSoundPlaying = TimerTickSoundPlayer(),
+        legacyCoreDataStore: any LegacyCoreDataStoring = UserDefaults.standard,
         now: Date = Date()
     ) {
         self.persistence = persistence
@@ -75,15 +89,22 @@ final class TimerController {
         self.notifications = notifications
         self.calendarRecorder = calendarRecorder
         self.tickSound = tickSound
+        self.legacyCoreDataStore = legacyCoreDataStore
         self.now = now
         self.engine = persistence.load() ?? TimerEngine(configuration: configuration)
         self.preferences = preferencesPersistence.load() ?? .standard
         self.tagSettings = tagPersistence.load() ?? .standard
         self.sessions = historyPersistence.load().sorted { $0.endedAt > $1.endedAt }
+        historyPersistence.prepareSharedSnapshot()
 
+        if let endDate = engine.state.endDate {
+            notifications.restoreCompletion(at: endDate, phase: engine.state.phase)
+        }
         let expiredEngine = engine
         if engine.reconcile(at: now) {
-            notifications.cancelCompletion()
+            if let endDate = expiredEngine.state.endDate {
+                notifications.completeCompletion(at: endDate, phase: expiredEngine.state.phase)
+            }
             autoStartIfEnabled(at: now)
             persist()
             recordSession(from: expiredEngine, endedAt: expiredEngine.state.endDate ?? now, completed: true)
@@ -92,6 +113,7 @@ final class TimerController {
         let shouldPersistLaunchState = preferences.resetCycleOnLaunch || preferences.startTimerOnLaunch
         if preferences.resetCycleOnLaunch {
             engine.resetCycle(at: now)
+            notifications.cancelCompletion()
         }
         if preferences.startTimerOnLaunch, !engine.state.isRunning {
             engine.start(at: now)
@@ -241,7 +263,9 @@ final class TimerController {
         if completesCycle, engine.state.phase == .longBreak {
             celebrationSequence += 1
         }
-        notifications.cancelCompletion()
+        if let endDate = completedEngine.state.endDate {
+            notifications.completeCompletion(at: endDate, phase: completedEngine.state.phase)
+        }
         autoStartIfEnabled(at: date)
         persist()
         recordSession(
@@ -285,8 +309,18 @@ final class TimerController {
         if isCommittedFocus {
             preferences.commitmentModeEnabled = true
         }
-        let wasSyncing = self.preferences.timerSyncEnabled
+        let previous = self.preferences
+        let phase = engine.state.phase
+        let previousSound = phase == .focus ? previous.focusCompletionSound : previous.breakCompletionSound
+        let currentSound = phase == .focus ? preferences.focusCompletionSound : preferences.breakCompletionSound
+        let completionChanged = previous.notificationsEnabled != preferences.notificationsEnabled
+            || previousSound.fileName(volume: previous.notificationVolume) != currentSound.fileName(volume: preferences.notificationVolume)
+        let wasSyncing = previous.timerSyncEnabled
         self.preferences = preferences
+        if completionChanged, engine.state.isRunning, engine.state.endDate != nil {
+            if preferences.notificationsEnabled { scheduleCompletionIfNeeded() }
+            else { notifications.cancelCompletion() }
+        }
         do {
             try preferencesPersistence.save(preferences)
             errorMessage = nil
@@ -299,9 +333,9 @@ final class TimerController {
         }
         if let cloudStore {
             if !wasSyncing, preferences.timerSyncEnabled {
-                pullTimerState(from: cloudStore)
+                timerSyncDiagnostics.recordLocalProcessing(succeeded: pullTimerState(from: cloudStore))
             } else if preferences.timerSyncEnabled {
-                pushTimerState(to: cloudStore)
+                timerSyncDiagnostics.recordLocalProcessing(succeeded: pushTimerState(to: cloudStore))
             }
         }
     }
@@ -324,6 +358,18 @@ final class TimerController {
         defaults.set(deviceKey, forKey: Self.localDeviceKey)
         let syncKey = store.string(forKey: Self.cloudSyncKey) ?? Self.makeDiagnosticKey()
         store.set(syncKey, forKey: Self.cloudSyncKey)
+        cloudObserver = NotificationCenter.default.addObserver(
+            forName: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
+            object: store,
+            queue: .main
+        ) { [weak self] notification in
+            let reason = (notification.userInfo?[NSUbiquitousKeyValueStoreChangeReasonKey] as? NSNumber)?.intValue
+            Task { @MainActor [weak self] in self?.handleCloudChange(reason: reason) }
+        }
+        configureCloudSync(store: store, syncKey: syncKey, deviceKey: deviceKey)
+    }
+
+    func configureCloudSync(store: any TimerCloudStoring, syncKey: String, deviceKey: String) {
         cloudStore = store
         timerSyncDiagnostics = TimerSyncDiagnostics(
             status: .available,
@@ -331,14 +377,15 @@ final class TimerController {
             deviceKey: deviceKey,
             lastSyncDate: nil
         )
-        cloudObserver = NotificationCenter.default.addObserver(
-            forName: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
-            object: store,
-            queue: .main
-        ) { [weak self] _ in
-            Task { @MainActor [weak self] in self?.pullCloudState() }
+        guard store.synchronize() else {
+            timerSyncDiagnostics.recordLocalProcessing(succeeded: false)
+            return
         }
-        store.synchronize()
+        pullCloudState()
+    }
+
+    func handleCloudChange(reason: Int?) {
+        guard timerSyncDiagnostics.shouldProcessExternalChange(reason: reason) else { return }
         pullCloudState()
     }
 
@@ -486,14 +533,93 @@ final class TimerController {
         guard let session = sessions.first(where: { $0.id == id }),
               session.type == .focus,
               session.completed else { return }
+        recordSessionInCalendar(session)
+    }
+
+    @discardableResult
+    func selectCalendar(_ identifier: String?, availableIdentifiers: [String]) -> Bool {
+        guard let identifier,
+              !identifier.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+              availableIdentifiers.contains(identifier) else {
+            errorMessage = CalendarRecordingError.targetUnavailable.message
+            return false
+        }
+        var preferences = self.preferences
+        preferences.calendarIdentifier = identifier
+        preferences.calendarSyncEnabled = true
+        updatePreferences(preferences)
+        return true
+    }
+
+    private func recordSessionInCalendar(_ session: FocusSession) {
         calendarRecorder.record(
             session,
             calendarIdentifier: preferences.calendarIdentifier
-        )
+        ) { [weak self] result in
+            if case .failure(let error) = result {
+                self?.errorMessage = error.message
+            }
+        }
     }
 
     func dismissError() {
         errorMessage = nil
+    }
+
+    /// Imports the four core values from a legacy NanaFlow preferences file the
+    /// person selected. A rejection writes nothing. On success the validated
+    /// values replace the in-memory state in the same main-actor turn, so a later
+    /// save cannot overwrite the import with launch defaults. This does not start,
+    /// schedule, record, sync or play anything.
+    func importLegacyCoreData(from url: URL) -> Result<LegacyCoreDataImportOutcome, LegacyCoreDataImportError> {
+        let isScoped = url.startAccessingSecurityScopedResource()
+        defer {
+            if isScoped { url.stopAccessingSecurityScopedResource() }
+        }
+        do {
+            let source = try LegacyCoreDataImportPlan.readPropertyList(at: url)
+            return importLegacyCoreData(source: source)
+        } catch {
+            return .failure(error as? LegacyCoreDataImportError ?? .unreadableFile)
+        }
+    }
+
+    func importLegacyCoreData(source: [String: Any]) -> Result<LegacyCoreDataImportOutcome, LegacyCoreDataImportError> {
+        let plan: LegacyCoreDataImportPlan
+        do {
+            plan = try LegacyCoreDataImportPlan.make(
+                source: source,
+                target: legacyCoreDataStore,
+                targetTimerRunning: engine.state.isRunning,
+                targetHasHistory: !sessions.isEmpty
+            )
+        } catch {
+            return .failure(error as? LegacyCoreDataImportError ?? .unreadableFile)
+        }
+        // Original bytes are stored unchanged; keys were absent, so a failed
+        // read-back tries to remove only what this import added. Not a
+        // crash-safe transaction across processes.
+        for write in plan.writes {
+            legacyCoreDataStore.set(write.data, forKey: write.key)
+        }
+        guard plan.writes.allSatisfy({ legacyCoreDataStore.object(forKey: $0.key) as? Data == $0.data }) else {
+            for write in plan.writes {
+                legacyCoreDataStore.set(nil, forKey: write.key)
+            }
+            return .failure(.writeVerificationFailed)
+        }
+
+        // Also refresh when every value was already present: memory may still
+        // hold launch defaults that a later save would otherwise write back.
+        engine = plan.engine
+        preferences = plan.preferences
+        sessions = plan.sessions.sorted { $0.endedAt > $1.endedAt }
+        if let tags = plan.tags {
+            tagSettings = tags
+        }
+        lastTickSecond = nil
+        errorMessage = nil
+        return .success(plan.writes.isEmpty ? .alreadyPresent : .imported(writtenKeys: plan.writes.map(\.key)))
     }
 
     private func scheduleCompletionIfNeeded() {
@@ -504,6 +630,7 @@ final class TimerController {
         let nextPhase = preview.state.phase
         notifications.scheduleCompletion(
             at: endDate,
+            phase: engine.state.phase,
             nextPhase: nextPhase,
             autoStartsNext: nextPhase == .focus
                 ? preferences.autoStartFocus
@@ -593,10 +720,7 @@ final class TimerController {
         sessions.insert(session, at: 0)
         persistSessions()
         if completed, type == .focus, preferences.calendarSyncEnabled {
-            calendarRecorder.record(
-                session,
-                calendarIdentifier: preferences.calendarIdentifier
-            )
+            recordSessionInCalendar(session)
         }
     }
 
@@ -628,7 +752,7 @@ final class TimerController {
         guard !isApplyingCloudState,
               preferences.timerSyncEnabled,
               let cloudStore else { return }
-        pushTimerState(to: cloudStore)
+        timerSyncDiagnostics.recordLocalProcessing(succeeded: pushTimerState(to: cloudStore))
     }
 
     private func persistTags() {
@@ -649,42 +773,42 @@ final class TimerController {
         if let syncKey = cloudStore.string(forKey: Self.cloudSyncKey) {
             timerSyncDiagnostics.syncKey = syncKey
         }
-        pullHistory(from: cloudStore)
-        guard preferences.timerSyncEnabled else { return }
-        pullTimerState(from: cloudStore)
+        let historyProcessed = pullHistory(from: cloudStore)
+        let timerProcessed = historyProcessed && (!preferences.timerSyncEnabled || pullTimerState(from: cloudStore))
+        timerSyncDiagnostics.recordLocalProcessing(succeeded: timerProcessed)
     }
 
-    private func pullHistory(from store: NSUbiquitousKeyValueStore) {
+    private func pullHistory(from store: any TimerCloudStoring) -> Bool {
         guard let data = store.data(forKey: Self.cloudSessionsKey),
               let incoming = try? JSONDecoder().decode([FocusSession].self, from: data) else {
-            pushHistoryToCloud()
-            return
+            return writeHistory(to: store)
         }
         let merged = SessionHistoryPersistence.merge(local: sessions, incoming: incoming)
-        guard merged != sessions else { return }
+        guard merged != sessions else { return true }
         sessions = merged
         do {
             try historyPersistence.save(merged)
             store.set(try JSONEncoder().encode(merged), forKey: Self.cloudSessionsKey)
-            store.synchronize()
+            return store.synchronize()
         } catch {
             errorMessage = String(
                 format: String(localized: "无法同步会话记录：%@"),
                 locale: .autoupdatingCurrent,
                 error.localizedDescription
             )
+            return false
         }
     }
 
-    private func pullTimerState(from store: NSUbiquitousKeyValueStore) {
+    private func pullTimerState(from store: any TimerCloudStoring) -> Bool {
         let decoder = JSONDecoder()
         guard let engineData = store.data(forKey: Self.cloudEngineKey),
               let remoteEngine = try? decoder.decode(TimerEngine.self, from: engineData) else {
-            pushTimerState(to: store)
-            return
+            return pushTimerState(to: store)
         }
 
         isApplyingCloudState = true
+        defer { isApplyingCloudState = false }
         engine = remoteEngine
         now = Date()
         _ = engine.reconcile(at: now)
@@ -703,36 +827,39 @@ final class TimerController {
             try persistence.save(engine)
             try preferencesPersistence.save(preferences)
             errorMessage = nil
-            timerSyncDiagnostics.lastSyncDate = now
+            return true
         } catch {
             errorMessage = String(
                 format: String(localized: "无法同步计时器：%@"),
                 locale: .autoupdatingCurrent,
                 error.localizedDescription
             )
+            return false
         }
-        isApplyingCloudState = false
     }
 
-    private func pushTimerState(to store: NSUbiquitousKeyValueStore) {
+    private func pushTimerState(to store: any TimerCloudStoring) -> Bool {
         guard preferences.timerSyncEnabled,
               let engineData = try? JSONEncoder().encode(engine),
               let settingsData = try? JSONEncoder().encode(TimerSyncSettings(
                   configuration: engine.configuration,
                   preferences: preferences
-              )) else { return }
+              )) else { return false }
         store.set(engineData, forKey: Self.cloudEngineKey)
         store.set(settingsData, forKey: Self.cloudSettingsKey)
-        store.synchronize()
-        timerSyncDiagnostics.lastSyncDate = Date()
+        return store.synchronize()
     }
 
     private func pushHistoryToCloud() {
+        guard let cloudStore else { return }
+        timerSyncDiagnostics.recordLocalProcessing(succeeded: writeHistory(to: cloudStore))
+    }
+
+    private func writeHistory(to store: any TimerCloudStoring) -> Bool {
         // ponytail: iCloud KVS is capped; migrate this payload to CloudKit if histories approach 1 MB.
-        guard let cloudStore,
-              let data = try? JSONEncoder().encode(sessions) else { return }
-        cloudStore.set(data, forKey: Self.cloudSessionsKey)
-        cloudStore.synchronize()
+        guard let data = try? JSONEncoder().encode(sessions) else { return false }
+        store.set(data, forKey: Self.cloudSessionsKey)
+        return store.synchronize()
     }
 
     private static func makeDiagnosticKey() -> String {

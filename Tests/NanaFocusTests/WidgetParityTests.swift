@@ -16,7 +16,7 @@ final class WidgetParityTests: XCTestCase {
         let expected = [
             "统计单位": "Statistics Unit",
             "数量": "Count",
-            "分钟": "Minutes",
+            "分钟": "min",
             "组件颜色": "Widget Color",
             "每日统计组件": "Daily Statistics Widget",
             "显示今天完成的 NanaFlow 数量或专注分钟数。": "Show today's completed NanaFlows or focused minutes.",

@@ -12,8 +12,65 @@ func filteredSessionHistory(
     }
 }
 
-func statisticsBucketTooltipText(_ bucket: StatisticsBucket) -> String {
-    "\(bucket.sessionCount)"
+func statisticsBucketTooltipText(_ bucket: StatisticsBucket, metric: StatisticsMetric = .count) -> String {
+    metric == .count ? bucket.sessionCount.formatted() : statisticsDurationText(bucket.duration)
+}
+
+/// Format after summing seconds. Double arithmetic avoids overflowing Int for
+/// imported very large durations; a scientific hour count stays readable.
+func statisticsDurationText(
+    _ duration: TimeInterval,
+    locale: Locale = .autoupdatingCurrent,
+    bundle: Bundle = .main
+) -> String {
+    let seconds = statisticsFiniteDuration(duration)
+    func localized(_ key: String) -> String { bundle.localizedString(forKey: key, value: nil, table: nil) }
+    func number(_ value: Double) -> String {
+        let formatter = NumberFormatter()
+        formatter.locale = locale
+        formatter.numberStyle = value >= 1_000_000_000 ? .scientific : .decimal
+        formatter.maximumFractionDigits = value >= 1_000_000_000 ? 2 : 0
+        return formatter.string(from: NSNumber(value: value)) ?? "0"
+    }
+    if seconds > 0 && seconds < 60 { return localized("statistics_less_than_minute") }
+    let minutes = floor(seconds / 60)
+    guard minutes >= 60 else {
+        return String(format: localized("statistics_minutes_format"), number(minutes))
+    }
+    let hours = floor(minutes / 60)
+    let remainder = minutes.truncatingRemainder(dividingBy: 60)
+    if remainder == 0 {
+        return String(format: localized("statistics_hours_format"), number(hours))
+    }
+    return String(format: localized("statistics_hours_minutes_format"), number(hours), number(remainder))
+}
+
+/// Normalize before multiplying: trackHeight * value may overflow even when
+/// value and maximum are finite. Only return legal SwiftUI frame heights.
+func statisticsBarHeight(value: Double, maximum: Double, trackHeight: CGFloat) -> CGFloat {
+    guard trackHeight.isFinite, trackHeight > 0 else { return 0 }
+    let value = statisticsFiniteDuration(value)
+    guard value > 0 else { return 0 }
+    let maximum = max(1, statisticsFiniteDuration(maximum))
+    let fraction = min(1, value / maximum)
+    return min(trackHeight, max(min(8, trackHeight), CGFloat(fraction) * trackHeight))
+}
+
+extension StatisticsMetric {
+    var compactTitle: String { self == .count ? String(localized: "次数") : String(localized: "时长") }
+    func value(for bucket: StatisticsBucket) -> Double {
+        self == .count ? Double(bucket.sessionCount) : bucket.duration
+    }
+    func totalText(_ statistics: SessionStatistics) -> String {
+        self == .count ? statisticsCountText(statistics.totalCount) : statisticsDurationText(statistics.totalDuration)
+    }
+    func accessibilityValue(_ bucket: StatisticsBucket) -> String {
+        self == .count ? statisticsCountText(bucket.sessionCount) : statisticsDurationText(bucket.duration)
+    }
+}
+
+func statisticsCountText(_ count: Int) -> String {
+    String(format: String(localized: "statistics_count_format"), count.formatted())
 }
 
 func statisticsCanMoveForward(
@@ -53,7 +110,8 @@ enum StatisticsVisualMetrics {
     static let periodPickerHeight: CGFloat = 32
     static let periodPickerCornerRadius: CGFloat = 10
     static let selectedPeriodOpacity = 1.0
-    static let chartHeight = contentHeight - headerHeight - periodSwitcherHeight
+    static let metricSwitcherHeight: CGFloat = 28
+    static let chartHeight = contentHeight - headerHeight - periodSwitcherHeight - metricSwitcherHeight
     static let chartTrackHeight = chartHeight - 44
     static let navigationButtonDiameter: CGFloat = 31
     static let periodTitleWidth: CGFloat = 258
@@ -87,6 +145,7 @@ struct StatisticsView: View {
 
     @State private var period: StatisticsPeriod = .week
     @State private var anchor = Date()
+    @State private var metric: StatisticsMetric = .count
 
     init(controller: TimerController, onBack: @escaping () -> Void = {}) {
         self.controller = controller
@@ -117,11 +176,15 @@ struct StatisticsView: View {
                 navigationButton(systemName: "chevron.left", disabled: false) {
                     moveAnchor(by: -1)
                 }
-                Text("\(periodTitle) · \(statistics.totalCount)次")
-                    .font(.system(size: 14, weight: .semibold, design: .rounded))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.8)
-                    .frame(width: StatisticsVisualMetrics.periodTitleWidth)
+                VStack(spacing: 1) {
+                    Text(periodTitle).font(.system(size: 11))
+                    Text(metric.totalText(statistics))
+                        .font(.system(size: 14, weight: .semibold, design: .rounded))
+                        .accessibilityIdentifier("statistics-total")
+                }
+                .lineLimit(1)
+                .minimumScaleFactor(0.75)
+                .frame(width: StatisticsVisualMetrics.periodTitleWidth)
                 navigationButton(systemName: "chevron.right", disabled: !canMoveForward) {
                     moveAnchor(by: 1)
                 }
@@ -129,13 +192,29 @@ struct StatisticsView: View {
             .padding(.horizontal, 15)
             .frame(height: StatisticsVisualMetrics.periodSwitcherHeight)
 
-            StatisticsBars(buckets: statistics.buckets, period: period)
+            HStack(spacing: 6) {
+                ForEach(StatisticsMetric.allCases) { item in
+                    Button { metric = item } label: {
+                        Text(item.compactTitle)
+                            .font(.system(size: 11, weight: .medium))
+                            .padding(.horizontal, 12)
+                            .frame(height: 23)
+                            .background(metric == item ? FlowPalette.compactAccent.opacity(0.16) : Color.clear, in: Capsule())
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(item.compactTitle)
+                    .accessibilityValue(metric == item ? String(localized: "selected") : "")
+                }
+            }
+            .frame(height: StatisticsVisualMetrics.metricSwitcherHeight)
+
+            StatisticsBars(buckets: statistics.buckets, period: period, metric: metric)
                 .frame(height: StatisticsVisualMetrics.chartHeight)
                 .accessibilityElement(children: .contain)
                 .accessibilityLabel("统计图表")
         }
         .frame(width: StatisticsVisualMetrics.windowWidth, height: StatisticsVisualMetrics.contentHeight)
-        .background(Color(red: 249 / 255, green: 251 / 255, blue: 250 / 255))
+        .background(FlowPalette.window)
     }
 
     private var statistics: SessionStatistics {
@@ -149,31 +228,16 @@ struct StatisticsView: View {
 
     private var periodTitle: String {
         let calendar = flowStatisticsCalendar
-        switch period {
-        case .day:
-            return compactDate(anchor, format: "M月d日")
-        case .week:
-            guard let first = statistics.buckets.first?.start,
-                  let last = statistics.buckets.last?.start else { return "" }
-            let end = calendar.date(byAdding: .day, value: 1, to: last) ?? last
-            let visibleEnd = calendar.date(byAdding: .second, value: -1, to: end) ?? last
-            if calendar.component(.month, from: first) == calendar.component(.month, from: visibleEnd) {
-                return "\(compactDate(first, format: "M月d日"))至\(compactDate(visibleEnd, format: "d日"))"
-            }
-            return "\(compactDate(first, format: "M月d日"))至\(compactDate(visibleEnd, format: "M月d日"))"
-        case .month:
-            return compactDate(anchor, format: "yyyy年M月")
-        case .year:
-            return compactDate(anchor, format: "yyyy年")
-        }
-    }
-
-    private func compactDate(_ date: Date, format: String) -> String {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "zh_CN")
-        formatter.calendar = flowStatisticsCalendar
-        formatter.dateFormat = format
-        return formatter.string(from: date)
+        formatter.locale = .autoupdatingCurrent
+        formatter.calendar = calendar
+        formatter.timeZone = calendar.timeZone
+        formatter.setLocalizedDateFormatFromTemplate(period == .year ? "y" : period == .month ? "yMMM" : "MMMd")
+        if period == .week, let interval = calendar.dateInterval(of: .weekOfYear, for: anchor),
+           let lastDay = calendar.date(byAdding: .day, value: -1, to: interval.end) {
+            return "\(formatter.string(from: interval.start)) – \(formatter.string(from: lastDay))"
+        }
+        return formatter.string(from: anchor)
     }
 
     private func navigationButton(
@@ -191,6 +255,7 @@ struct StatisticsView: View {
         }
         .buttonStyle(.plain)
         .disabled(disabled)
+        .accessibilityLabel(systemName == "chevron.left" ? String(localized: "statistics_previous_period") : String(localized: "statistics_next_period"))
     }
 
     private var canMoveForward: Bool {
@@ -219,7 +284,7 @@ private struct StatisticsPeriodPicker: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .background(
                             selection == period
-                                ? Color.white.opacity(StatisticsVisualMetrics.selectedPeriodOpacity)
+                                ? Color(nsColor: .controlBackgroundColor).opacity(StatisticsVisualMetrics.selectedPeriodOpacity)
                                 : Color.clear,
                             in: RoundedRectangle(
                                 cornerRadius: StatisticsVisualMetrics.periodPickerCornerRadius - 2,
@@ -228,7 +293,8 @@ private struct StatisticsPeriodPicker: View {
                         )
                 }
                 .buttonStyle(.plain)
-                .accessibilityValue(selection == period ? "1" : "0")
+                .accessibilityLabel(period.shortTitle)
+                .accessibilityValue(selection == period ? String(localized: "selected") : "")
             }
         }
         .padding(2)
@@ -249,6 +315,7 @@ private struct StatisticsPeriodPicker: View {
 private struct StatisticsBars: View {
     let buckets: [StatisticsBucket]
     let period: StatisticsPeriod
+    let metric: StatisticsMetric
     @State private var hoveredBucketID: Date?
 
     var body: some View {
@@ -256,7 +323,7 @@ private struct StatisticsBars: View {
             let spacing = barSpacing
             let usableWidth = proxy.size.width - horizontalInset * 2
             let width = max(2, (usableWidth - spacing * CGFloat(max(0, buckets.count - 1))) / CGFloat(max(1, buckets.count)))
-            let maxValue = max(1, buckets.map(\.sessionCount).max() ?? 0)
+            let maxValue = max(1, buckets.map { metric.value(for: $0) }.max() ?? 0)
 
             ZStack(alignment: .topLeading) {
                 HStack(alignment: .bottom, spacing: spacing) {
@@ -264,10 +331,10 @@ private struct StatisticsBars: View {
                         VStack(spacing: 7) {
                             ZStack(alignment: .bottom) {
                                 Capsule().fill(FlowPalette.compactAccent.opacity(0.12))
-                                if bucket.sessionCount > 0 {
+                                if metric.value(for: bucket) > 0 {
                                     Capsule()
                                         .fill(FlowPalette.compactAccent)
-                                        .frame(height: max(8, StatisticsVisualMetrics.chartTrackHeight * CGFloat(bucket.sessionCount) / CGFloat(maxValue)))
+                                        .frame(height: statisticsBarHeight(value: metric.value(for: bucket), maximum: maxValue, trackHeight: StatisticsVisualMetrics.chartTrackHeight))
                                 }
                             }
                             .frame(width: min(trackWidth, width), height: StatisticsVisualMetrics.chartTrackHeight)
@@ -289,7 +356,8 @@ private struct StatisticsBars: View {
                         }
                         .accessibilityElement(children: .ignore)
                         .accessibilityLabel(accessibilityLabel(for: bucket.start))
-                        .accessibilityValue("\(bucket.sessionCount)次")
+                        .accessibilityValue(metric.accessibilityValue(bucket))
+                        .accessibilityIdentifier("statistics-bucket-\(index)")
                     }
                 }
                 .padding(.horizontal, horizontalInset)
@@ -298,11 +366,15 @@ private struct StatisticsBars: View {
 
                 if let bucket = activeBucket,
                    let index = buckets.firstIndex(where: { $0.id == bucket.id }) {
-                    Text(statisticsBucketTooltipText(bucket))
+                    let text = statisticsBucketTooltipText(bucket, metric: metric)
+                    let tooltipWidth = min(proxy.size.width - 16, max(32, (text as NSString).size(withAttributes: [.font: NSFont.systemFont(ofSize: 11, weight: .semibold)]).width + 18))
+                    Text(text)
+                        .accessibilityIdentifier("statistics-bucket-tooltip")
                         .font(.system(size: 11, weight: .semibold, design: .rounded))
                         .foregroundStyle(.white)
                         .lineLimit(1)
-                        .frame(width: 32)
+                        .minimumScaleFactor(0.75)
+                        .frame(width: tooltipWidth)
                         .padding(.vertical, 4)
                         .background(FlowPalette.compactAccent, in: Capsule())
                         .shadow(color: .black.opacity(0.12), radius: 4, y: 2)
@@ -311,7 +383,8 @@ private struct StatisticsBars: View {
                                 at: index,
                                 barWidth: width,
                                 spacing: spacing,
-                                availableWidth: proxy.size.width
+                                availableWidth: proxy.size.width,
+                                tooltipWidth: tooltipWidth
                             ),
                             y: 17
                         )
@@ -333,10 +406,12 @@ private struct StatisticsBars: View {
         at index: Int,
         barWidth: CGFloat,
         spacing: CGFloat,
-        availableWidth: CGFloat
+        availableWidth: CGFloat,
+        tooltipWidth: CGFloat
     ) -> CGFloat {
         let naturalCenter = horizontalInset + barWidth / 2 + CGFloat(index) * (barWidth + spacing)
-        return min(max(16, naturalCenter), availableWidth - 16)
+        let halfWidth = tooltipWidth / 2 + 8
+        return min(max(halfWidth, naturalCenter), availableWidth - halfWidth)
     }
 
     private var barSpacing: CGFloat {
@@ -393,12 +468,13 @@ private struct StatisticsBars: View {
     }
 
     private func accessibilityLabel(for date: Date) -> String {
-        switch period {
-        case .day: "\(label(for: date))时"
-        case .week: label(for: date)
-        case .month: "\(label(for: date))日"
-        case .year: "\(label(for: date))月"
-        }
+        let formatter = DateFormatter()
+        formatter.locale = .autoupdatingCurrent
+        formatter.calendar = flowStatisticsCalendar
+        formatter.timeZone = flowStatisticsCalendar.timeZone
+        // Include the offset on hourly buckets so a repeated DST hour is distinct.
+        formatter.setLocalizedDateFormatFromTemplate(period == .day ? "MMMdjmmZZZZ" : period == .year ? "yMMM" : "MMMEd")
+        return formatter.string(from: date)
     }
 }
 
@@ -954,7 +1030,12 @@ enum FlowPalette {
     static let windowRed = 248.0 / 255.0
     static let windowGreen = 249.0 / 255.0
     static let windowBlue = 250.0 / 255.0
-    static let window = Color(red: windowRed, green: windowGreen, blue: windowBlue)
+    static let window = Color(nsColor: NSColor(name: "NanaFlowWindow") { appearance in
+        if appearance.bestMatch(from: [.aqua, .darkAqua]) == .darkAqua {
+            return NSColor(calibratedRed: 0.12, green: 0.14, blue: 0.13, alpha: 1)
+        }
+        return NSColor(calibratedRed: windowRed, green: windowGreen, blue: windowBlue, alpha: 1)
+    })
     static let focusRed = 62.0 / 255.0
     static let focusGreen = 146.0 / 255.0
     static let focusBlue = 122.0 / 255.0

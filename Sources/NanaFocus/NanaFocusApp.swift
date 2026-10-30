@@ -27,8 +27,8 @@ struct NanaFlowApp: App {
                 }
         }
         .defaultSize(width: 380, height: TimerVisualMetrics.windowFrameHeight)
-        .windowResizability(.contentMinSize)
-        .windowStyle(.plain)
+        .windowResizability(.contentSize)
+        .windowStyle(.hiddenTitleBar)
         .commands {
             NanaFlowCommands()
         }
@@ -205,7 +205,7 @@ final class AppStatusItemService: NSObject {
     private func item(_ title: String, systemImage: String, action: Selector) -> NSMenuItem {
         let item = NSMenuItem(title: String(localized: String.LocalizationValue(title)), action: action, keyEquivalent: "")
         item.target = self
-        item.image = NSImage(systemSymbolName: systemImage, accessibilityDescription: title)
+        item.image = NSImage(systemSymbolName: systemImage, accessibilityDescription: NSLocalizedString(title, comment: ""))
         return item
     }
 

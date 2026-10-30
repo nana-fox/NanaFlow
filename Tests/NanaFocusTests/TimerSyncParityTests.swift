@@ -4,6 +4,11 @@ import XCTest
 
 @MainActor
 final class TimerSyncParityTests: XCTestCase {
+    func testDiagnosticsNeverTreatLocalOrFailureEventsAsCloudDelivery() throws {
+        try R1BehaviorChecks.syncDiagnostics()
+        try R1BehaviorChecks.syncDiagnosticsLocalizations()
+    }
+
     func testTimerSyncSettingsOnlyApplyFlowsPublishedCrossDeviceBoundary() {
         let remotePreferences = TimerPreferences(
             autoStartFocus: true,

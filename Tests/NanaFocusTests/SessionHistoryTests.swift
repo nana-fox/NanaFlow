@@ -5,6 +5,10 @@ import XCTest
 final class SessionHistoryTests: XCTestCase {
     private let start = Date(timeIntervalSince1970: 1_700_000_000)
 
+    func testMissingSharedSnapshotBootstrapsWithoutRewritingHistory() throws {
+        try R1BehaviorChecks.sharedHistoryBootstrap()
+    }
+
     func testHistoryRoundTripsSessions() throws {
         let suiteName = "SessionHistoryTests-\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
@@ -42,6 +46,103 @@ final class SessionHistoryTests: XCTestCase {
 
         let data = try XCTUnwrap(shared.data(forKey: SessionHistoryPersistence.storageKey))
         XCTAssertEqual(try JSONDecoder().decode([FocusSession].self, from: data), sessions)
+    }
+
+    func testLoadMergesPrimaryAndSharedHistoriesAndRepairsBothStores() throws {
+        let stores = try HistoryStores()
+        defer { stores.clear() }
+        let onlyInPrimary = session(on: start, minutes: 25)
+        let onlyInShared = session(on: start.addingTimeInterval(3_600), minutes: 10)
+        let conflictID = UUID()
+        var primaryEdit = session(on: start.addingTimeInterval(7_200), minutes: 50, id: conflictID)
+        primaryEdit.title = "主记录标题"
+        var staleMirror = primaryEdit
+        staleMirror.title = "旧镜像标题"
+        try stores.write([onlyInPrimary, primaryEdit], to: stores.primary)
+        try stores.write([onlyInShared, staleMirror], to: stores.shared)
+
+        let loaded = stores.persistence.load()
+
+        XCTAssertEqual(Set(loaded.map(\.id)), [onlyInPrimary.id, onlyInShared.id, conflictID])
+        XCTAssertEqual(loaded.count, 3)
+        XCTAssertEqual(loaded.first { $0.id == conflictID }?.title, "主记录标题")
+        XCTAssertEqual(loaded, loaded.sorted { $0.endedAt > $1.endedAt })
+        XCTAssertEqual(try stores.read(stores.primary), loaded)
+        XCTAssertEqual(try stores.read(stores.shared), loaded)
+    }
+
+    func testLoadRecoversFromSharedHistoryWhenPrimaryIsMissing() throws {
+        let stores = try HistoryStores()
+        defer { stores.clear() }
+        let mirrored = [session(on: start, minutes: 25)]
+        try stores.write(mirrored, to: stores.shared)
+
+        let loaded = stores.persistence.load()
+
+        XCTAssertEqual(loaded, mirrored)
+        XCTAssertEqual(try stores.read(stores.primary), mirrored)
+    }
+
+    func testLoadRecoversFromSharedHistoryWhenPrimaryIsCorrupt() throws {
+        let stores = try HistoryStores()
+        defer { stores.clear() }
+        let mirrored = [session(on: start, minutes: 25)]
+        stores.primary.set(Data("not json".utf8), forKey: SessionHistoryPersistence.storageKey)
+        try stores.write(mirrored, to: stores.shared)
+
+        let loaded = stores.persistence.load()
+
+        XCTAssertEqual(loaded, mirrored)
+        XCTAssertEqual(try stores.read(stores.primary), mirrored)
+        XCTAssertEqual(try stores.read(stores.shared), mirrored)
+    }
+
+    func testLoadKeepsPrimaryHistoryWhenSharedDataIsCorrupt() throws {
+        let stores = try HistoryStores()
+        defer { stores.clear() }
+        let primarySessions = [session(on: start, minutes: 25)]
+        try stores.write(primarySessions, to: stores.primary)
+        stores.shared.set(Data("not json".utf8), forKey: SessionHistoryPersistence.storageKey)
+
+        let loaded = stores.persistence.load()
+
+        XCTAssertEqual(loaded, primarySessions)
+        XCTAssertEqual(try stores.read(stores.primary), primarySessions)
+        XCTAssertEqual(try stores.read(stores.shared), primarySessions)
+    }
+
+    func testLoadLeavesAMissingMirrorForTheSharedSnapshot() throws {
+        let stores = try HistoryStores()
+        defer { stores.clear() }
+        let primarySessions = [session(on: start, minutes: 25)]
+        try stores.write(primarySessions, to: stores.primary)
+        let primaryBefore = stores.primary.data(forKey: SessionHistoryPersistence.storageKey)
+
+        XCTAssertEqual(stores.persistence.load(), primarySessions)
+
+        XCTAssertEqual(stores.primary.data(forKey: SessionHistoryPersistence.storageKey), primaryBefore)
+        XCTAssertNil(stores.shared.object(forKey: SessionHistoryPersistence.storageKey))
+    }
+
+    func testLoadReturnsEmptyWhenBothHistoriesAreInvalid() throws {
+        let stores = try HistoryStores()
+        defer { stores.clear() }
+        stores.primary.set(Data("not json".utf8), forKey: SessionHistoryPersistence.storageKey)
+        stores.shared.set(Data([0x00, 0x01]), forKey: SessionHistoryPersistence.storageKey)
+
+        XCTAssertTrue(stores.persistence.load().isEmpty)
+        XCTAssertNotNil(stores.primary.data(forKey: SessionHistoryPersistence.storageKey))
+        XCTAssertNotNil(stores.shared.data(forKey: SessionHistoryPersistence.storageKey))
+    }
+
+    func testLoadWithoutSharedDefaultsKeepsSingleStoreBehaviour() throws {
+        let suiteName = "SessionHistoryPrimary-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+        let sessions = [session(on: start, minutes: 25)]
+        defaults.set(try JSONEncoder().encode(sessions), forKey: SessionHistoryPersistence.storageKey)
+
+        XCTAssertEqual(SessionHistoryPersistence(defaults: defaults).load(), sessions)
     }
 
     func testLegacySessionJSONDecodesWithNewDefaults() throws {
@@ -99,6 +200,66 @@ final class SessionHistoryTests: XCTestCase {
         XCTAssertEqual(merged.last?.title, "新标题")
     }
 
+    func testMergeSurvivesDuplicateIDsOnEitherSide() {
+        let duplicated = UUID()
+        var localFirst = session(on: start, minutes: 25, id: duplicated)
+        localFirst.title = "镜像旧值"
+        var localSecond = localFirst
+        localSecond.title = "镜像新值"
+        var incomingFirst = session(on: start, minutes: 25, id: duplicated)
+        incomingFirst.title = "主记录旧值"
+        var incomingSecond = incomingFirst
+        incomingSecond.title = "主记录新值"
+
+        let merged = SessionHistoryPersistence.merge(
+            local: [localFirst, localSecond],
+            incoming: [incomingFirst, incomingSecond]
+        )
+
+        XCTAssertEqual(merged.map(\.id), [duplicated])
+        XCTAssertEqual(merged.first?.title, "主记录新值")
+    }
+
+    func testLoadDeduplicatesARepeatedIDInStoredHistory() throws {
+        let stores = try HistoryStores()
+        defer { stores.clear() }
+        let repeated = session(on: start, minutes: 25)
+        try stores.write([repeated, repeated], to: stores.primary)
+        try stores.write([repeated], to: stores.shared)
+
+        XCTAssertEqual(stores.persistence.load(), [repeated])
+        XCTAssertEqual(try stores.read(stores.primary), [repeated])
+    }
+
+    func testMergeOrdersSessionsWithEqualEndDatesByID() {
+        let sameEnd = (0 ..< 5).map { index in
+            session(on: start, minutes: 25, id: UUID(uuidString: "0000000\(index)-0000-0000-0000-000000000000")!)
+        }
+        let expected = sameEnd.sorted { $0.id.uuidString < $1.id.uuidString }
+
+        XCTAssertEqual(SessionHistoryPersistence.merge(local: [], incoming: sameEnd.shuffled()), expected)
+        XCTAssertEqual(SessionHistoryPersistence.merge(local: sameEnd.shuffled(), incoming: []), expected)
+    }
+
+    func testLoadLeavesBothStoresUntouchedWhenTheyAlreadyAgree() throws {
+        let stores = try HistoryStores()
+        defer { stores.clear() }
+        let tied = (0 ..< 5)
+            .map { index in
+                session(on: start, minutes: 25, id: UUID(uuidString: "0000000\(index)-0000-0000-0000-000000000000")!)
+            }
+            .sorted { $0.id.uuidString < $1.id.uuidString }
+        try stores.write(tied, to: stores.primary)
+        try stores.write(tied, to: stores.shared)
+        let primaryBefore = stores.primary.data(forKey: SessionHistoryPersistence.storageKey)
+        let sharedBefore = stores.shared.data(forKey: SessionHistoryPersistence.storageKey)
+
+        XCTAssertEqual(stores.persistence.load(), tied)
+
+        XCTAssertEqual(stores.primary.data(forKey: SessionHistoryPersistence.storageKey), primaryBefore)
+        XCTAssertEqual(stores.shared.data(forKey: SessionHistoryPersistence.storageKey), sharedBefore)
+    }
+
     func testWeeklyStatisticsCountOnlySessionsInSelectedWeek() {
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = TimeZone(secondsFromGMT: 0)!
@@ -146,7 +307,7 @@ final class SessionHistoryTests: XCTestCase {
         XCTAssertEqual(bucketCount(.year, year: 2026, month: 8, day: 30), 12)
     }
 
-    func testStatisticsBucketTooltipShowsOnlyTheExactFlowCount() {
+    func testStatisticsBucketTooltipUsesTheSelectedMetric() {
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = TimeZone(secondsFromGMT: 0)!
         let start = calendar.date(from: DateComponents(year: 2026, month: 8, day: 27, hour: 18))!
@@ -159,6 +320,7 @@ final class SessionHistoryTests: XCTestCase {
         )
 
         XCTAssertEqual(statisticsBucketTooltipText(bucket), "3")
+        XCTAssertEqual(statisticsBucketTooltipText(bucket, metric: .duration), statisticsDurationText(75 * 60))
     }
 
     func testStatisticsNavigationStopsAtTheCurrentPeriod() {
@@ -570,6 +732,83 @@ final class SessionHistoryTests: XCTestCase {
         XCTAssertEqual(calendar.identifiers, ["calendar.work"])
     }
 
+    func testCalendarSelectionRevalidatesBeforeChangingPreferences() {
+        let original = TimerPreferences(
+            autoStartFocus: false,
+            autoStartBreaks: false,
+            notificationSoundEnabled: false,
+            calendarSyncEnabled: true,
+            calendarIdentifier: "calendar.old"
+        )
+        let preferences = CalendarPreferencesSpy(stored: original)
+        let controller = calendarController(preferences: preferences, recorder: HistoryCalendarSpy())
+
+        let invalidIdentifiers: [String?] = [nil, "", " \n", "calendar.old"]
+        for identifier in invalidIdentifiers {
+            XCTAssertFalse(controller.selectCalendar(identifier, availableIdentifiers: ["calendar.work"]))
+            XCTAssertEqual(controller.preferences, original)
+            XCTAssertEqual(preferences.stored, original)
+            XCTAssertEqual(controller.errorMessage, CalendarRecordingError.targetUnavailable.message)
+        }
+        // The target was present in the displayed list, but disappeared before Done.
+        XCTAssertFalse(controller.selectCalendar("calendar.work", availableIdentifiers: []))
+        XCTAssertEqual(preferences.stored, original)
+
+        XCTAssertTrue(controller.selectCalendar("calendar.work", availableIdentifiers: ["calendar.work"]))
+        XCTAssertEqual(controller.preferences.calendarIdentifier, "calendar.work")
+        XCTAssertTrue(controller.preferences.calendarSyncEnabled)
+        XCTAssertEqual(preferences.stored, controller.preferences)
+        XCTAssertNil(controller.errorMessage)
+    }
+
+    func testCalendarFailuresReachExistingErrorStateForCompletionAndManualAdd() {
+        for error in [CalendarRecordingError.targetUnavailable, .accessDenied, .saveFailed] {
+            let recorder = HistoryCalendarSpy()
+            recorder.error = error
+            let preferences = CalendarPreferencesSpy(stored: TimerPreferences(
+                autoStartFocus: false,
+                autoStartBreaks: false,
+                notificationSoundEnabled: false,
+                hideWindowWhenTimerStarts: false,
+                calendarSyncEnabled: true,
+                calendarIdentifier: "calendar.work",
+                notificationsEnabled: false
+            ))
+            let controller = calendarController(preferences: preferences, recorder: recorder)
+            controller.start(at: start)
+            controller.tick(at: start.addingTimeInterval(61))
+
+            XCTAssertEqual(controller.errorMessage, error.message)
+            XCTAssertEqual(controller.sessions.count, 1)
+            XCTAssertTrue(controller.sessions[0].completed)
+            XCTAssertEqual(recorder.identifiers, ["calendar.work"])
+
+            let history = controller.sessions
+            controller.dismissError()
+            controller.addSessionToCalendar(id: history[0].id)
+            XCTAssertEqual(controller.errorMessage, error.message)
+            XCTAssertEqual(controller.sessions, history)
+            XCTAssertEqual(recorder.identifiers, ["calendar.work", "calendar.work"])
+        }
+    }
+
+    private func calendarController(
+        preferences: CalendarPreferencesSpy,
+        recorder: any FocusSessionCalendarRecording
+    ) -> TimerController {
+        TimerController(
+            configuration: TimerConfiguration(focusDuration: 60, shortBreakDuration: 30, longBreakDuration: 60, sessionsPerCycle: 4),
+            persistence: HistoryTimerPersistence(),
+            preferencesPersistence: preferences,
+            historyPersistence: HistorySpy(),
+            tagPersistence: CalendarTestTags(),
+            notifications: HistoryNotifications(),
+            calendarRecorder: recorder,
+            tickSound: CalendarTestTickSound(),
+            now: start
+        )
+    }
+
     func testControllerCanEditAndDeleteStoredSessions() {
         let original = session(on: start, minutes: 25)
         let history = HistorySpy(loaded: [original])
@@ -650,15 +889,45 @@ final class SessionHistoryTests: XCTestCase {
         XCTAssertEqual(history.saved.last, [])
     }
 
-    private func session(on date: Date, minutes: Int) -> FocusSession {
+    private func session(on date: Date, minutes: Int, id: UUID = UUID()) -> FocusSession {
         FocusSession(
-            id: UUID(),
+            id: id,
             startedAt: date,
             endedAt: date.addingTimeInterval(Double(minutes * 60)),
             duration: Double(minutes * 60),
             completed: true,
             title: "NanaFlow"
         )
+    }
+}
+
+/// Two throwaway suites so history tests never touch the user's real preferences or Widget timelines.
+@MainActor
+private struct HistoryStores {
+    let primaryName = "SessionHistoryPrimary-\(UUID().uuidString)"
+    let sharedName = "SessionHistoryShared-\(UUID().uuidString)"
+    let primary: UserDefaults
+    let shared: UserDefaults
+    let persistence: SessionHistoryPersistence
+
+    init() throws {
+        primary = try XCTUnwrap(UserDefaults(suiteName: primaryName))
+        shared = try XCTUnwrap(UserDefaults(suiteName: sharedName))
+        persistence = SessionHistoryPersistence(defaults: primary, sharedDefaults: shared, reloadWidgetTimelines: {})
+    }
+
+    func write(_ sessions: [FocusSession], to defaults: UserDefaults) throws {
+        defaults.set(try JSONEncoder().encode(sessions), forKey: SessionHistoryPersistence.storageKey)
+    }
+
+    func read(_ defaults: UserDefaults) throws -> [FocusSession] {
+        let data = try XCTUnwrap(defaults.data(forKey: SessionHistoryPersistence.storageKey))
+        return try JSONDecoder().decode([FocusSession].self, from: data)
+    }
+
+    func clear() {
+        primary.removePersistentDomain(forName: primaryName)
+        shared.removePersistentDomain(forName: sharedName)
     }
 }
 
@@ -712,9 +981,141 @@ private struct HistoryNotifications: SessionNotificationScheduling {
 private final class HistoryCalendarSpy: FocusSessionCalendarRecording {
     private(set) var sessions: [FocusSession] = []
     private(set) var identifiers: [String?] = []
+    var error: CalendarRecordingError?
 
-    func record(_ session: FocusSession, calendarIdentifier: String?) {
+    func record(
+        _ session: FocusSession,
+        calendarIdentifier: String?,
+        completion: @escaping @MainActor (Result<Void, CalendarRecordingError>) -> Void
+    ) {
         sessions.append(session)
         identifiers.append(calendarIdentifier)
+        if let error { completion(.failure(error)) }
+        else { completion(.success(())) }
+    }
+}
+
+@MainActor
+private final class CalendarPreferencesSpy: TimerPreferencesPersisting {
+    var stored: TimerPreferences
+    init(stored: TimerPreferences) { self.stored = stored }
+    func load() -> TimerPreferences? { stored }
+    func save(_ preferences: TimerPreferences) throws { stored = preferences }
+}
+
+@MainActor
+private struct CalendarTestTags: SessionTagPersisting {
+    func load() -> SessionTagSettings? { SessionTagSettings(tags: [], selectedTag: nil) }
+    func save(_: SessionTagSettings) throws {}
+}
+
+@MainActor
+private struct CalendarTestTickSound: TimerTickSoundPlaying {
+    func playTick(volume _: Double) {}
+}
+
+@MainActor
+final class CalendarRecorderDestinationTests: XCTestCase {
+    func testMissingAndEmptyTargetsNeverSaveToAvailableDefault() async {
+        let invalidIdentifiers: [String?] = [nil, "", " \n", "calendar.missing", "calendar.deleted"]
+        for identifier in invalidIdentifiers {
+            let store = CalendarDestinationStoreSpy()
+            store.calendars.removeValue(forKey: "calendar.deleted")
+            let result = await record(using: store, identifier: identifier)
+
+            XCTAssertThrowsError(try result.get()) { XCTAssertEqual($0 as? CalendarRecordingError, .targetUnavailable) }
+            XCTAssertEqual(store.calendars[store.defaultIdentifier], true)
+            XCTAssertFalse(store.lookups.contains(store.defaultIdentifier))
+            XCTAssertTrue(store.saveAttempts.isEmpty)
+        }
+    }
+
+    func testReadOnlyTargetNeverSavesToAvailableDefault() async {
+        let store = CalendarDestinationStoreSpy()
+        let result = await record(using: store, identifier: "calendar.readonly")
+        XCTAssertThrowsError(try result.get()) { XCTAssertEqual($0 as? CalendarRecordingError, .targetUnavailable) }
+        XCTAssertEqual(store.lookups, ["calendar.readonly"])
+        XCTAssertTrue(store.saveAttempts.isEmpty)
+    }
+
+    func testDeniedOrFailedAuthorizationNeverLooksUpOrSaves() async {
+        for throwsError in [false, true] {
+            let store = CalendarDestinationStoreSpy()
+            store.grantsAccess = false
+            store.authorizationThrows = throwsError
+            let result = await record(using: store, identifier: "calendar.work")
+            XCTAssertThrowsError(try result.get()) { XCTAssertEqual($0 as? CalendarRecordingError, .accessDenied) }
+            XCTAssertTrue(store.lookups.isEmpty)
+            XCTAssertTrue(store.saveAttempts.isEmpty)
+        }
+    }
+
+    func testSaveFailureDoesNotRetryOrUseDefault() async {
+        let store = CalendarDestinationStoreSpy()
+        store.saveThrows = true
+        let result = await record(using: store, identifier: "calendar.work")
+        XCTAssertThrowsError(try result.get()) { XCTAssertEqual($0 as? CalendarRecordingError, .saveFailed) }
+        XCTAssertEqual(store.lookups, ["calendar.work"])
+        XCTAssertEqual(store.saveAttempts, ["calendar.work"])
+        XCTAssertTrue(store.savedSessions.isEmpty)
+    }
+
+    func testExplicitWritableTargetRetainsTargetAndSession() async {
+        let store = CalendarDestinationStoreSpy()
+        let session = sampleSession()
+        let result = await record(using: store, identifier: "calendar.work", session: session)
+        XCTAssertNoThrow(try result.get())
+        XCTAssertEqual(store.lookups, ["calendar.work"])
+        XCTAssertEqual(store.saveAttempts, ["calendar.work"])
+        XCTAssertEqual(store.savedSessions, [session])
+    }
+
+    private func sampleSession() -> FocusSession {
+        let start = Date(timeIntervalSince1970: 1_700_000_000)
+        return FocusSession(id: UUID(), startedAt: start, endedAt: start.addingTimeInterval(420), duration: 420, completed: true, title: "NanaFlow", tag: "Work")
+    }
+
+    private func record(
+        using store: CalendarDestinationStoreSpy,
+        identifier: String?,
+        session: FocusSession? = nil
+    ) async -> Result<Void, CalendarRecordingError> {
+        let recorder = store.recorder()
+        let session = session ?? sampleSession()
+        return await withCheckedContinuation { continuation in
+            recorder.record(session, calendarIdentifier: identifier) { result in
+                continuation.resume(returning: result)
+            }
+        }
+    }
+}
+
+@MainActor
+private final class CalendarDestinationStoreSpy {
+    let defaultIdentifier = "calendar.default.personal"
+    var calendars = ["calendar.default.personal": true, "calendar.work": true, "calendar.readonly": false, "calendar.deleted": true]
+    var grantsAccess = true
+    var authorizationThrows = false
+    var saveThrows = false
+    var lookups: [String] = []
+    var saveAttempts: [String] = []
+    var savedSessions: [FocusSession] = []
+
+    func recorder() -> FocusSessionCalendarRecorder {
+        FocusSessionCalendarRecorder(
+            requestAuthorization: {
+                if self.authorizationThrows { throw HistoryTestError.failed }
+                return self.grantsAccess
+            },
+            destination: { identifier in
+                self.lookups.append(identifier)
+                guard let writable = self.calendars[identifier] else { return nil }
+                return .init(allowsContentModifications: writable) { session in
+                    self.saveAttempts.append(identifier)
+                    if self.saveThrows { throw HistoryTestError.failed }
+                    self.savedSessions.append(session)
+                }
+            }
+        )
     }
 }

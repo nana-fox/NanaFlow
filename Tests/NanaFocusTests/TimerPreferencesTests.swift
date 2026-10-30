@@ -112,12 +112,12 @@ final class TimerPreferencesTests: XCTestCase {
         XCTAssertEqual(CompletionSound.bell.fileName(volume: 1.04), "NanaFlow-bell-v2.aiff")
     }
 
-    func testCompletionSoundMenuMatchesFlowOrderAndOmitsHiddenNoneValue() {
+    func testCompletionSoundMenuIncludesNoneAndPreservesSoundOrder() {
         XCTAssertEqual(
             CompletionSound.menuOrder.map(\.title),
-            ["铃声", "唱钵", "闹钟", "铃铛", "风铃", "和弦", "竖琴", "重要事件", "脉冲", "波纹", "吹口哨"]
+            ["无", "铃声", "唱钵", "闹钟", "铃铛", "风铃", "和弦", "竖琴", "重要事件", "脉冲", "波纹", "吹口哨"]
         )
-        XCTAssertFalse(CompletionSound.menuOrder.contains(.none))
+        XCTAssertTrue(CompletionSound.menuOrder.contains(.none))
     }
 
     func testFlowVolumeRangesAreClamped() {

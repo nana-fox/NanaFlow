@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C1261027F100000000000001 /* container-migration.plist in Resources */ = {isa = PBXBuildFile; fileRef = C1261027F100000000000002 /* container-migration.plist */; };
+		C1261026A100000000000001 /* R1BehaviorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1261026A100000000000002 /* R1BehaviorTests.swift */; };
 		BC5484D43D824E12BA8B4221 /* MenuBarAndJumpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5484D43D824E12BA8B4222 /* MenuBarAndJumpTests.swift */; };
 		0095E12A477C16694BE11840 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 58C854D974B18F22C8857F85 /* InfoPlist.strings */; };
 		01040F0C4F7AD3DDADC3E4AA /* AppWindowActivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF45926A3280FE738C6D7B5 /* AppWindowActivation.swift */; };
@@ -100,6 +102,7 @@
 		A6E658F32E8315BC1C13AFF0 /* NanaFlow-alarmClock-v3.aiff in Resources */ = {isa = PBXBuildFile; fileRef = A7DFCFE82D0FC89D1FA311B6 /* NanaFlow-alarmClock-v3.aiff */; };
 		A75AEF7ABF7B98F5B7671B04 /* NanaFlowIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E80B3DDBCB82A6D66926E3 /* NanaFlowIcon.png */; };
 		A7D1DBB9E119DCDA071F8BD1 /* TimerTickSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39232441BB21ABEB7DB1A33C /* TimerTickSound.swift */; };
+		C1261030A100000000000001 /* LegacyCoreDataImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1261030A100000000000002 /* LegacyCoreDataImport.swift */; };
 		A981EE43562152865D6ECAFA /* PermissionViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712A37FF3CDCD6DDBECF091 /* PermissionViews.swift */; };
 		AED70435D6C01E6C03B78954 /* NanaFlow-whistle-v2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = EB7032748070B3679ACB5D51 /* NanaFlow-whistle-v2.aiff */; };
 		AF5E76145996FEB1183CDDAE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B1AD995E6059BF18A9D873F0 /* InfoPlist.strings */; };
@@ -111,6 +114,7 @@
 		B8FED36FAAD089616FBCBF29 /* SessionExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC37D0CFFECF6C021FF8CBB2 /* SessionExporter.swift */; };
 		B9F0204767175B797F2BD0C2 /* TagManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FEEC352AFD46D628F8DE92 /* TagManagementView.swift */; };
 		BD485419788422276A06C898 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45F191F9B54830CC5B45C6F /* TimerView.swift */; };
+		C1261026A200000000000001 /* WindowDragSurface.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1261026A200000000000002 /* WindowDragSurface.swift */; };
 		BDA904A195CD9841CDD9A01A /* NanaFlow-alarmClock-v1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 63493FE65BF50A5955748332 /* NanaFlow-alarmClock-v1.aiff */; };
 		C0617B19C7C70664E78948E0 /* ProUnlockedParityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCE016C37AD408B9C805941 /* ProUnlockedParityTests.swift */; };
 		C23EF939C220AD75D257EEB4 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91381825E11524504B7CB359 /* WelcomeView.swift */; };
@@ -129,6 +133,7 @@
 		E80216D5EE91514E5B601B82 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE692CC9131BEA759CE6A35 /* StatisticsView.swift */; };
 		E8187476F51E44FA9DA54FE5 /* NanaFlowShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0789DA272FB909EF43E3B8E1 /* NanaFlowShared.swift */; };
 		EF26A72A5C136CD3E1957804 /* SessionTagTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7654F4DA858EAAB53B4667C /* SessionTagTests.swift */; };
+		C1261030A100000000000003 /* LegacyCoreDataImportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1261030A100000000000004 /* LegacyCoreDataImportTests.swift */; };
 		EF5249D52A0C881C9355D677 /* NanaFlow-bell.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 3867D7D196EA6A6767A0674B /* NanaFlow-bell.aiff */; };
 		F185626724B7A4AF1A611829 /* BlockerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490CCCB4AEAB1933A59DF926 /* BlockerView.swift */; };
 		F2AA0437B07880F76B32CA29 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 027FA86D7D1DB2338073C419 /* InfoPlist.strings */; };
@@ -172,6 +177,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C1261027F100000000000002 /* container-migration.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "container-migration.plist"; sourceTree = "<group>"; };
+		C1261026A100000000000002 /* R1BehaviorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = R1BehaviorTests.swift; sourceTree = "<group>"; };
 		BC5484D43D824E12BA8B4222 /* MenuBarAndJumpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarAndJumpTests.swift; sourceTree = "<group>"; };
 		027FA86D7D1DB2338073C419 /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		02BCA7F75D68AFCD5A4F2A28 /* NanaFlow-chime.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-chime.aiff"; sourceTree = "<group>"; };
@@ -219,6 +226,7 @@
 		38B5F604F4AC55C0BB1F9AFA /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = nl; path = nl.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		38D78725115E55C3BE3631C9 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ko; path = ko.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		39232441BB21ABEB7DB1A33C /* TimerTickSound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerTickSound.swift; sourceTree = "<group>"; };
+		C1261030A100000000000002 /* LegacyCoreDataImport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyCoreDataImport.swift; sourceTree = "<group>"; };
 		3A842B23E902FBFE9253B97A /* NanaFlowWelcomeBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NanaFlowWelcomeBackground.png; sourceTree = "<group>"; };
 		3C4ED5A09C9690C6A2498975 /* TimerEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerEngine.swift; sourceTree = "<group>"; };
 		3CF2F65AE5AD531B2FD89291 /* NanaFlow-chime-v3.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-chime-v3.aiff"; sourceTree = "<group>"; };
@@ -325,12 +333,14 @@
 		E08A366F44777DCF79300885 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = nb; path = nb.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		E2F25473826A8B11398FB4AD /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "pt-PT"; path = "pt-PT.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		E45F191F9B54830CC5B45C6F /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
+		C1261026A200000000000002 /* WindowDragSurface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDragSurface.swift; sourceTree = "<group>"; };
 		E47E37B10E4978108B3F6552 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E4BB1842E40768ADB9DA27C8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ja; path = ja.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		E558BE58FCAC1BAFD3A8CE36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		E5FEEC352AFD46D628F8DE92 /* TagManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagManagementView.swift; sourceTree = "<group>"; };
 		E720062209550B26D92A50C0 /* TimerPreferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPreferencesTests.swift; sourceTree = "<group>"; };
 		E7654F4DA858EAAB53B4667C /* SessionTagTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTagTests.swift; sourceTree = "<group>"; };
+		C1261030A100000000000004 /* LegacyCoreDataImportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyCoreDataImportTests.swift; sourceTree = "<group>"; };
 		E84597998666511FBDB19AB2 /* TimerPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPersistenceTests.swift; sourceTree = "<group>"; };
 		E9B65FC677BEB9CC95E2207C /* BlockerConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockerConfigurationTests.swift; sourceTree = "<group>"; };
 		EB62D041A95B737E7B22988D /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -403,6 +413,7 @@
 				848CC0CEBEADA96527F8C45C /* InfoPlist.strings */,
 				45CFC222D9DF00FC453CF885 /* KeyboardShortcutRecorder.swift */,
 				1BA8BDCCA30B9FCE19CF5A93 /* NanaFlow.entitlements */,
+				C1261027F100000000000002 /* container-migration.plist */,
 				9A32361AFA867CC5D6E3726B /* NanaFlow.icns */,
 				BBFB83E8B38EF32B16BA4CB8 /* NanaFlow.sdef */,
 				D8F7F8B9A6A64A9BAFE65AE3 /* NanaFlowBlockedIcon.png */,
@@ -430,7 +441,9 @@
 				49DF6506CBB537888C1D7C56 /* TimerSettingsView.swift */,
 				5B9C349CE130ADE86DC9B852 /* TimerSyncView.swift */,
 				39232441BB21ABEB7DB1A33C /* TimerTickSound.swift */,
+				C1261030A100000000000002 /* LegacyCoreDataImport.swift */,
 				E45F191F9B54830CC5B45C6F /* TimerView.swift */,
+				C1261026A200000000000002 /* WindowDragSurface.swift */,
 				91381825E11524504B7CB359 /* WelcomeView.swift */,
 				BE25D749C5AF7CCC0B7A535B /* Localizable.strings */,
 				0D4B0E722EA065DCDE6D8D67 /* Localizable.stringsdict */,
@@ -514,8 +527,10 @@
 				21ABE7BF71C756EF65DE9D88 /* SessionExportTests.swift */,
 				2025B0B869051A21F2F47D07 /* SessionHistoryTests.swift */,
 				E7654F4DA858EAAB53B4667C /* SessionTagTests.swift */,
+				C1261030A100000000000004 /* LegacyCoreDataImportTests.swift */,
 				43B2BCE0A33AC6329EE8963D /* TimerControllerTests.swift */,
 				BC5484D43D824E12BA8B4222 /* MenuBarAndJumpTests.swift */,
+				C1261026A100000000000002 /* R1BehaviorTests.swift */,
 				A7C9563D7632F722F926353E /* TimerEngineTests.swift */,
 				E84597998666511FBDB19AB2 /* TimerPersistenceTests.swift */,
 				E720062209550B26D92A50C0 /* TimerPreferencesTests.swift */,
@@ -736,6 +751,7 @@
 				F4DA45CB61AB10E4CBB48AD0 /* NanaFlowWelcomeBackground.png in Resources */,
 				44CD28DC8C0E509F27A2F933 /* PhosphorIcons-LICENSE.txt in Resources */,
 				394BA27ABE6699EF2CF3E04C /* TimerIcons.xcassets in Resources */,
+				C1261027F100000000000001 /* container-migration.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -764,8 +780,10 @@
 				8453CA824EE08C4BD2B3AA9D /* SessionExportTests.swift in Sources */,
 				FE86D5C01B6B049ABA25A26D /* SessionHistoryTests.swift in Sources */,
 				EF26A72A5C136CD3E1957804 /* SessionTagTests.swift in Sources */,
+				C1261030A100000000000003 /* LegacyCoreDataImportTests.swift in Sources */,
 				04F34D0476CDC6125890BE88 /* TimerControllerTests.swift in Sources */,
 				BC5484D43D824E12BA8B4221 /* MenuBarAndJumpTests.swift in Sources */,
+				C1261026A100000000000001 /* R1BehaviorTests.swift in Sources */,
 				2F0582F5DCCDBC274E9DE4EF /* TimerEngineTests.swift in Sources */,
 				5CF5684428B3C98CB5949EA5 /* TimerPersistenceTests.swift in Sources */,
 				D637BB407D664446C015102D /* TimerPreferencesTests.swift in Sources */,
@@ -810,7 +828,9 @@
 				C81A554BE4362CEF3CC901B3 /* TimerSettingsView.swift in Sources */,
 				364BCAC424008F1DED9F57D0 /* TimerSyncView.swift in Sources */,
 				A7D1DBB9E119DCDA071F8BD1 /* TimerTickSound.swift in Sources */,
+				C1261030A100000000000001 /* LegacyCoreDataImport.swift in Sources */,
 				BD485419788422276A06C898 /* TimerView.swift in Sources */,
+				C1261026A200000000000001 /* WindowDragSurface.swift in Sources */,
 				C23EF939C220AD75D257EEB4 /* WelcomeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -956,6 +976,7 @@
 		6729DA6B1D9A5846C4F71D91 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Sources/NanaFlowWidget/NanaFlowWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_APP_SANDBOX = YES;
@@ -976,6 +997,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Sources/NanaFocus/NanaFlow.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_APP_SANDBOX = YES;

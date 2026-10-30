@@ -1,0 +1,82 @@
+[
+  {
+    "id": "baa6839d-ede3-5fd2-995b-4c429f1e50e9",
+    "startedAt": 814636740.0,
+    "endedAt": 814636800.0,
+    "duration": 60,
+    "completed": true,
+    "title": "R1 isolated acceptance fixture",
+    "type": "focus",
+    "interruptions": []
+  },
+  {
+    "id": "d756c89e-dd9d-5fa1-ae85-94a9382299a7",
+    "startedAt": 814672830.0,
+    "endedAt": 814672860.0,
+    "duration": 30,
+    "completed": true,
+    "title": "R1 isolated acceptance fixture",
+    "type": "focus",
+    "interruptions": []
+  },
+  {
+    "id": "16fc13a9-5138-5505-9080-f33ea885f5ee",
+    "startedAt": 814672860.0,
+    "endedAt": 814676400.0,
+    "duration": 3540,
+    "completed": true,
+    "title": "R1 isolated acceptance fixture",
+    "type": "focus",
+    "interruptions": []
+  },
+  {
+    "id": "edb1525b-af73-5edc-b7ed-29bd11b769fe",
+    "startedAt": 814676400.0,
+    "endedAt": 814680000.0,
+    "duration": 3600,
+    "completed": true,
+    "title": "R1 isolated acceptance fixture",
+    "type": "focus",
+    "interruptions": []
+  },
+  {
+    "id": "73361858-bd4a-5b2d-97bd-f700711ba9a1",
+    "startedAt": 814676400.0,
+    "endedAt": 814683600.0,
+    "duration": 7200,
+    "completed": true,
+    "title": "R1 isolated acceptance fixture",
+    "type": "focus",
+    "interruptions": []
+  },
+  {
+    "id": "83ad4bb7-c77d-586d-926a-bca7d4e08ca6",
+    "startedAt": 814635240.0,
+    "endedAt": 814636740.0,
+    "duration": 1500,
+    "completed": true,
+    "title": "R1 isolated acceptance fixture",
+    "type": "focus",
+    "interruptions": []
+  },
+  {
+    "id": "e078ba00-76d9-5340-af42-502e7d5b12fe",
+    "startedAt": 814683900.0,
+    "endedAt": 814684200.0,
+    "duration": 300,
+    "completed": false,
+    "title": "R1 isolated acceptance fixture",
+    "type": "focus",
+    "interruptions": []
+  },
+  {
+    "id": "df3189fc-05c4-5880-b0ef-f46fd163590e",
+    "startedAt": 814684500.0,
+    "endedAt": 814684800.0,
+    "duration": 300,
+    "completed": true,
+    "title": "R1 isolated acceptance fixture",
+    "type": "shortBreak",
+    "interruptions": []
+  }
+]

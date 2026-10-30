@@ -18,6 +18,6 @@ struct TimerOptionsMenuContent: View {
     }
 
     private var phaseSwitchTitle: String {
-        controller.engine.state.phase == .focus ? "开始休息" : "返回专注"
+        controller.engine.state.phase == .focus ? String(localized: "开始休息") : String(localized: "返回专注")
     }
 }

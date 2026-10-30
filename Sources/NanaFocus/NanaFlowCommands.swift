@@ -14,20 +14,7 @@ struct NanaFlowCommands: Commands {
             }
         }
 
-        CommandGroup(replacing: .singleWindowList) {
-            windowButton("Welcome", id: "welcome", windowTitle: "Welcome")
-            windowButton(
-                "Notification Alert",
-                id: PermissionAlertKind.notification.windowID,
-                windowTitle: "Notification Alert"
-            )
-            windowButton(
-                "Calendar Alert",
-                id: PermissionAlertKind.calendar.windowID,
-                windowTitle: "Calendar Alert"
-            )
-            windowButton("Calendar Chooser", id: "calendar-chooser", windowTitle: "Calendar Chooser")
-        }
+        CommandGroup(replacing: .singleWindowList) {}
 
         CommandGroup(after: .windowList) {
             windowButton("NanaFlow", id: "timer", windowTitle: "NanaFlow")
