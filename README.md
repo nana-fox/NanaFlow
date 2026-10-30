@@ -16,7 +16,7 @@ NanaFlow 是一个原生 macOS 专注计时器。当前产品采用紧凑的单�
 
 `1.0-beta.1` 的应用内版本为 1.0 (3)。安装包与发布状态以 [GitHub Releases](https://github.com/nana-fox/NanaFlow/releases) 为准；发布说明见 [Releases/1.0-beta.1.md](Releases/1.0-beta.1.md)。
 
-安装包完成 Developer ID 签名、公证和最终下载安装验证后，将随 GitHub 公测 Release 提供。
+[1.0-beta.1 公测版](https://github.com/nana-fox/NanaFlow/releases/tag/v1.0-beta.1) 已提供 Developer ID 签名、公证并附票的通用 ZIP。维护者已完成一次受控隔离下载包的实际安装、升级与退出重开核对；这不是浏览器下载路径或所有 Mac 的兼容性验证。
 
 以下三项尚未验收，不代表已通过：
 
@@ -40,7 +40,7 @@ NanaFlow 是一个原生 macOS 专注计时器。当前产品采用紧凑的单�
 - 导入不会开始计时、发送通知、写入日历、同步或播放声音。
 - 不要依赖首次启动的系统自动迁移：工程带有 `container-migration.plist`，但它在维护者的一次真实升级中未生效，原因尚未确定，迁移只在容器首次创建时才可能执行。
 
-导入已在一台 Mac 上用真实数据完成并经重开核对；这是单机验证，不代表所有旧版本和数据形态都已覆盖。
+导入已在较早候选 1.0 (1) 上用一台 Mac 的真实数据验证并重开核对；1.0 (3) 已通过本次导入保护回归。其他旧版本和数据形态未覆盖。主历史缺失而 Widget 镜像为空的特定场景，旧版导入可能被保护规则拒绝；这是静态审查边界，尚未实机覆盖，请保留原数据文件。
 
 ## 菜单栏与阶段跳转
 
@@ -127,7 +127,7 @@ dist/NanaFlow-7d911b9-macOS-universal.zip
 
 ZIP 内只有一个 `NanaFlow.app`。退出旧版后，将它拖入“应用程序”并选择替换。
 
-当前 GitHub 仓库只管理源码，尚未发布 GitHub Release；克隆仓库后请按上述命令本地构建。
+当前公测安装包与校验摘要见 [v1.0-beta.1 Release](https://github.com/nana-fox/NanaFlow/releases/tag/v1.0-beta.1)。该标签保留发行时源码；后续文档说明只更新独立发行分支，不移动标签，也不代表 App Store 分支已更新。
 
 ## 签名边界
 
