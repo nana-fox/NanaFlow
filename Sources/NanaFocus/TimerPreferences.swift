@@ -34,7 +34,7 @@ enum CompletionSound: String, Codable, CaseIterable, Identifiable, Sendable {
     case whistle
 
     static let menuOrder: [CompletionSound] = [
-        .bell, .bowl, .alarmClock, .bells, .chime, .chord,
+        .none, .bell, .bowl, .alarmClock, .bells, .chime, .chord,
         .harp, .milestone, .pulse, .ripple, .whistle
     ]
 
@@ -44,9 +44,14 @@ enum CompletionSound: String, Codable, CaseIterable, Identifiable, Sendable {
         self == .none ? nil : "NanaFlow-\(rawValue).aiff"
     }
 
+    static func volumeLevel(_ volume: Double) -> Int {
+        guard volume.isFinite else { return 0 }
+        return Int((min(max(volume, 0), 2) * 2).rounded())
+    }
+
     func fileName(volume: Double) -> String? {
         guard self != .none else { return nil }
-        let level = Int((min(max(volume, 0), 2) * 2).rounded())
+        let level = Self.volumeLevel(volume)
         guard level > 0 else { return nil }
         return level == 4 ? fileName : "NanaFlow-\(rawValue)-v\(level).aiff"
     }
@@ -182,6 +187,12 @@ struct TimerPreferences: Codable, Equatable, Sendable {
         self.breakCompletionSound = breakCompletionSound ?? legacySound
         self.notificationVolume = min(max(notificationVolume, 0), 2)
         self.sessionTitle = sessionTitle
+    }
+
+    mutating func setCompletionSound(_ sound: CompletionSound, for phase: SessionPhase) {
+        if phase == .focus { focusCompletionSound = sound }
+        else { breakCompletionSound = sound }
+        notificationSoundEnabled = focusCompletionSound != .none || breakCompletionSound != .none
     }
 
     init(from decoder: Decoder) throws {

@@ -40,7 +40,7 @@ struct AboutNanaFlowView: View {
                     .font(.system(size: 12))
                     .foregroundStyle(.secondary)
                     .padding(.top, 2)
-                Text("版本 \(version)")
+                Text(String(format: String(localized: "about_version_format"), version))
                     .font(.system(size: 10))
                     .foregroundStyle(.tertiary)
                     .padding(.top, 6)
@@ -62,7 +62,10 @@ struct AboutNanaFlowView: View {
     }
 
     private var version: String {
-        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+        let info = Bundle.main.infoDictionary
+        let short = info?["CFBundleShortVersionString"] as? String ?? "1.0"
+        guard let build = info?["CFBundleVersion"] as? String, !build.isEmpty else { return short }
+        return "\(short) (\(build))"
     }
 
 }

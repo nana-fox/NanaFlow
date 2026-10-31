@@ -134,6 +134,9 @@ protocol SessionNotificationScheduling {
         volume: Double,
         quote: String?
     )
+    func scheduleCompletion(at date: Date, phase: SessionPhase, nextPhase: SessionPhase, autoStartsNext: Bool, sound: CompletionSound, volume: Double, quote: String?)
+    func restoreCompletion(at date: Date, phase: SessionPhase)
+    func completeCompletion(at date: Date, phase: SessionPhase)
     func cancelCompletion()
 }
 
@@ -148,11 +151,165 @@ extension SessionNotificationScheduling {
     ) {
         scheduleCompletion(at: date, nextPhase: nextPhase, sound: sound, volume: volume, quote: quote)
     }
+
+    func scheduleCompletion(at date: Date, phase _: SessionPhase, nextPhase: SessionPhase, autoStartsNext: Bool, sound: CompletionSound, volume: Double, quote: String?) {
+        scheduleCompletion(at: date, nextPhase: nextPhase, autoStartsNext: autoStartsNext, sound: sound, volume: volume, quote: quote)
+    }
+
+    // Restoring/retiring a phase never creates a notification. Simple effect spies
+    // can keep implementing only scheduling and explicit cancellation.
+    func restoreCompletion(at _: Date, phase _: SessionPhase) {}
+    func completeCompletion(at _: Date, phase _: SessionPhase) {}
+}
+
+/// The port keeps ordering testable with a deliberately suspended asynchronous add.
+@MainActor
+protocol CompletionNotificationSubmitting {
+    func add(_ request: UNNotificationRequest) async throws
+    func pendingRequests() async -> [UNNotificationRequest]
+    func removePending(identifiers: [String])
+}
+
+@MainActor
+private struct SystemCompletionNotificationSubmission: CompletionNotificationSubmitting {
+    func add(_ request: UNNotificationRequest) async throws {
+        try await UNUserNotificationCenter.current().add(request)
+    }
+    func pendingRequests() async -> [UNNotificationRequest] {
+        await UNUserNotificationCenter.current().pendingNotificationRequests()
+    }
+    func removePending(identifiers: [String]) {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifiers)
+    }
 }
 
 @MainActor
 final class SessionNotificationScheduler: SessionNotificationScheduling {
-    private static let notificationIdentifier = "sessionCompletedNotification"
+    static let legacyNotificationIdentifier = "sessionCompletedNotification"
+
+    static func notificationIdentifier(at date: Date, phase: SessionPhase) -> String {
+        "\(legacyNotificationIdentifier).\(phase.rawValue).\(String(date.timeIntervalSinceReferenceDate.bitPattern, radix: 16))"
+    }
+
+    /// An entry retains the latest intent even after its phase naturally ends.
+    /// The successor must not invalidate its queued add or remove its identifier.
+    @MainActor private final class Completion {
+        let identifier: String
+        let deadline: Date
+        let phase: SessionPhase
+        var desiredRequest: UNNotificationRequest?
+        var revision: UInt64 = 0
+        var isQueued = false
+        var ownsLegacyRequest = false
+        var didComplete = false
+
+        init(at date: Date, phase: SessionPhase) {
+            identifier = SessionNotificationScheduler.notificationIdentifier(at: date, phase: phase)
+            deadline = date
+            self.phase = phase
+        }
+    }
+
+    private let submission: any CompletionNotificationSubmitting
+    private var activeCompletion: Completion?
+    private var queuedCompletions: [Completion] = []
+    private let now: () -> Date
+    private var isSubmitting = false
+    private var submissionTask: Task<Void, Never>?
+
+    init(submission: any CompletionNotificationSubmitting = SystemCompletionNotificationSubmission(), now: @escaping () -> Date = { Date() }) {
+        self.submission = submission
+        self.now = now
+    }
+
+    func restoreCompletion(at date: Date, phase: SessionPhase) {
+        guard activeCompletion == nil else { return }
+        let completion = Completion(at: date, phase: phase)
+        completion.ownsLegacyRequest = true
+        activeCompletion = completion
+    }
+
+    func completeCompletion(at date: Date, phase: SessionPhase) {
+        guard let completion = activeCompletion,
+              completion.identifier == Self.notificationIdentifier(at: date, phase: phase) else { return }
+        // Its OS trigger can still be future (for example the one-second floor).
+        // Do not cancel, replay, or mark an in-flight add stale at natural expiry.
+        completion.didComplete = true
+        activeCompletion = nil
+    }
+
+    /// A scheduling barrier for controlled-port checks, never a delivery receipt.
+    func waitForPendingSubmissions() async {
+        await submissionTask?.value
+    }
+
+    private func removePending(for completion: Completion) {
+        submission.removePending(identifiers: [completion.identifier])
+    }
+
+    private func removeLegacyIfOwned(by completion: Completion) async {
+        guard completion.ownsLegacyRequest else { return }
+        completion.ownsLegacyRequest = false
+        let categories = completion.phase == .focus
+            ? ["notification_pending_flow", "notification_autostarted_flow"]
+            : ["notification_pending_break", "notification_autostarted_break"]
+        let pending = await submission.pendingRequests()
+        // A restart just after handoff can leave the predecessor's legacy ID.
+        // Its existing category distinguishes focus completion from break completion.
+        if pending.contains(where: { $0.identifier == Self.legacyNotificationIdentifier && categories.contains($0.content.categoryIdentifier) }) {
+            submission.removePending(identifiers: [Self.legacyNotificationIdentifier])
+        }
+    }
+
+    /// Serialize adds, but keep revisions and cleanup local to their phase.
+    private func submit(_ completion: Completion) {
+        if !completion.isQueued {
+            completion.isQueued = true
+            queuedCompletions.append(completion)
+        }
+        guard !isSubmitting else { return }
+        isSubmitting = true
+        submissionTask = Task { @MainActor in
+            while !queuedCompletions.isEmpty {
+                let completion = queuedCompletions.removeFirst()
+                await removeLegacyIfOwned(by: completion)
+                while let desired = completion.desiredRequest {
+                    let submittedRevision = completion.revision
+                    let submittedAt = now()
+                    let interval = max(1, completion.deadline.timeIntervalSince(submittedAt))
+                    // Calculate the relative trigger at submission, never before
+                    // waiting for an older add to return.
+                    let request = UNNotificationRequest(
+                        identifier: completion.identifier,
+                        content: desired.content,
+                        trigger: UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
+                    )
+                    var added = false
+                    do { try await submission.add(request); added = true }
+                    catch { /* Notification delivery remains best effort. */ }
+                    if submittedRevision == completion.revision {
+                        completion.desiredRequest = nil
+                    } else {
+                        if completion.didComplete, completion.desiredRequest != nil, added,
+                           submittedAt.addingTimeInterval(interval) <= now() {
+                            let pending = await submission.pendingRequests()
+                            if !pending.contains(where: { $0.identifier == completion.identifier }) {
+                                // Absence cannot distinguish a removed request from
+                                // an already-triggered notification awaiting display.
+                                // Prefer no late replay over a possible second alert.
+                                completion.desiredRequest = nil
+                            }
+                        }
+                        // A preference replacement or explicit cancellation,
+                        // never the next phase or natural completion.
+                        removePending(for: completion)
+                    }
+                }
+                completion.isQueued = false
+            }
+            isSubmitting = false
+        }
+    }
 
     func scheduleCompletion(at date: Date, nextPhase: SessionPhase, sound: CompletionSound, volume: Double, quote: String?) {
         scheduleCompletion(
@@ -173,7 +330,16 @@ final class SessionNotificationScheduler: SessionNotificationScheduling {
         volume: Double,
         quote: String?
     ) {
-        let interval = max(1, date.timeIntervalSinceNow)
+        scheduleCompletion(at: date, phase: nextPhase == .focus ? .shortBreak : .focus, nextPhase: nextPhase, autoStartsNext: autoStartsNext, sound: sound, volume: volume, quote: quote)
+    }
+
+    func scheduleCompletion(at date: Date, phase: SessionPhase, nextPhase: SessionPhase, autoStartsNext: Bool, sound: CompletionSound, volume: Double, quote: String?) {
+        let identifier = Self.notificationIdentifier(at: date, phase: phase)
+        if let activeCompletion, activeCompletion.identifier != identifier {
+            cancelCompletion()
+        }
+        let completion = activeCompletion ?? Completion(at: date, phase: phase)
+        activeCompletion = completion
         let message = SessionNotificationCopy.content(
             nextPhase: nextPhase,
             index: Int.random(in: 0 ..< SessionNotificationCopy.focusCompleted.count),
@@ -189,22 +355,24 @@ final class SessionNotificationScheduler: SessionNotificationScheduling {
         content.sound = sound.fileName(volume: volume).map { UNNotificationSound(named: UNNotificationSoundName($0)) }
 
         let request = UNNotificationRequest(
-            identifier: Self.notificationIdentifier,
+            identifier: identifier,
             content: content,
-            trigger: UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
+            trigger: nil
         )
 
-        Task {
-            let center = UNUserNotificationCenter.current()
-            center.removePendingNotificationRequests(withIdentifiers: [Self.notificationIdentifier])
-            try await center.add(request)
-        }
+        completion.revision &+= 1
+        completion.desiredRequest = request
+        removePending(for: completion)
+        submit(completion)
     }
 
     func cancelCompletion() {
-        UNUserNotificationCenter.current().removePendingNotificationRequests(
-            withIdentifiers: [Self.notificationIdentifier]
-        )
+        guard let completion = activeCompletion else { return }
+        activeCompletion = nil
+        completion.revision &+= 1
+        completion.desiredRequest = nil
+        removePending(for: completion)
+        submit(completion)
     }
 }
 

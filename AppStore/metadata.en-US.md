@@ -42,7 +42,7 @@ Stay in your workflow
 Understand your rhythm
 • Switch between day, week, month, and year statistics in the main window
 • Review 24 hours, 7 days, every day of the selected month, or all 12 months
-• Hover over a bar to see its session count
+• Switch between completed focus count and net focus time; hover over a bar for details
 
 Keep control of your data
 • Session data used for statistics and settings stay on your Mac
@@ -70,15 +70,15 @@ focus timer,pomodoro,productivity,time management,menu bar,statistics,break remi
 © 2026 Nio D
 ```
 
-## Version 1.0 notes
+## Version 1.0.1 notes
 
 <!-- field:en-US.version_notes -->
 ```text
-The first Mac App Store release of NanaFlow includes:
-• Focus, short-break, and long-break timers
-• Menu-bar countdown and quick controls
-• Daily, weekly, monthly, and yearly statistics
-• Notifications, completion sounds, and keyboard shortcuts
+• Refined compact window edges and dragging
+• Improved English menus and version information
+• Switch statistics between completed focus sessions and net focus time
+• Choose separate focus and break sounds with consistent volume levels
+• Improved completion notification scheduling and restoration
 ```
 
 ## Store URLs

@@ -61,9 +61,14 @@ final class TimerController {
         self.preferences = preferencesPersistence.load() ?? .standard
         self.sessions = historyPersistence.load().sorted { $0.endedAt > $1.endedAt }
 
+        if let endDate = engine.state.endDate {
+            notifications.restoreCompletion(at: endDate, phase: engine.state.phase)
+        }
         let expiredEngine = engine
         if engine.reconcile(at: now) {
-            notifications.cancelCompletion()
+            if let endDate = expiredEngine.state.endDate {
+                notifications.completeCompletion(at: endDate, phase: expiredEngine.state.phase)
+            }
             autoStartIfEnabled(at: now)
             persist()
             recordSession(from: expiredEngine, endedAt: expiredEngine.state.endDate ?? now, completed: true)
@@ -72,6 +77,7 @@ final class TimerController {
         let shouldPersistLaunchState = preferences.resetCycleOnLaunch || preferences.startTimerOnLaunch
         if preferences.resetCycleOnLaunch {
             engine.resetCycle(at: now)
+            notifications.cancelCompletion()
         }
         if preferences.startTimerOnLaunch, !engine.state.isRunning {
             engine.start(at: now)
@@ -221,7 +227,9 @@ final class TimerController {
         if completesCycle, engine.state.phase == .longBreak {
             celebrationSequence += 1
         }
-        notifications.cancelCompletion()
+        if let endDate = completedEngine.state.endDate {
+            notifications.completeCompletion(at: endDate, phase: completedEngine.state.phase)
+        }
         autoStartIfEnabled(at: date)
         persist()
         recordSession(
@@ -265,7 +273,17 @@ final class TimerController {
         if isCommittedFocus {
             preferences.commitmentModeEnabled = true
         }
+        let previous = self.preferences
+        let phase = engine.state.phase
+        let previousSound = phase == .focus ? previous.focusCompletionSound : previous.breakCompletionSound
+        let currentSound = phase == .focus ? preferences.focusCompletionSound : preferences.breakCompletionSound
+        let completionChanged = previous.notificationsEnabled != preferences.notificationsEnabled
+            || previousSound.fileName(volume: previous.notificationVolume) != currentSound.fileName(volume: preferences.notificationVolume)
         self.preferences = preferences
+        if completionChanged, engine.state.isRunning, engine.state.endDate != nil {
+            if preferences.notificationsEnabled { scheduleCompletionIfNeeded() }
+            else { notifications.cancelCompletion() }
+        }
         do {
             try preferencesPersistence.save(preferences)
             errorMessage = nil
@@ -365,6 +383,7 @@ final class TimerController {
         let nextPhase = preview.state.phase
         notifications.scheduleCompletion(
             at: endDate,
+            phase: engine.state.phase,
             nextPhase: nextPhase,
             autoStartsNext: nextPhase == .focus
                 ? preferences.autoStartFocus

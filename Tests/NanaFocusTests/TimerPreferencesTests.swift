@@ -134,12 +134,42 @@ final class TimerPreferencesTests: XCTestCase {
         XCTAssertEqual(CompletionSound.bell.fileName(volume: 1.04), "NanaFlow-bell-v2.aiff")
     }
 
-    func testCompletionSoundMenuMatchesFlowOrderAndOmitsHiddenNoneValue() {
+    func testCompletionSoundMenuIncludesNoneAndPreservesSoundOrder() {
         XCTAssertEqual(
             CompletionSound.menuOrder.map(\.title),
-            ["铃声", "唱钵", "闹钟", "铃铛", "风铃", "和弦", "竖琴", "重要事件", "脉冲", "波纹", "吹口哨"]
+            ["无", "铃声", "唱钵", "闹钟", "铃铛", "风铃", "和弦", "竖琴", "重要事件", "脉冲", "波纹", "吹口哨"]
         )
-        XCTAssertFalse(CompletionSound.menuOrder.contains(.none))
+        XCTAssertTrue(CompletionSound.menuOrder.contains(.none))
+    }
+
+    func testCompletionSoundsRemainIndependentAndRoundTripLegacyFractionalVolume() throws {
+        var preferences = TimerPreferences.standard
+        preferences.setCompletionSound(.none, for: .shortBreak)
+        preferences.setCompletionSound(.harp, for: .focus)
+        XCTAssertEqual(preferences.focusCompletionSound, .harp)
+        XCTAssertEqual(preferences.breakCompletionSound, .none)
+        XCTAssertTrue(preferences.notificationSoundEnabled)
+        preferences.setCompletionSound(.none, for: .focus)
+        XCTAssertFalse(preferences.notificationSoundEnabled)
+        preferences.notificationVolume = 0.2
+        let decoded = try JSONDecoder().decode(TimerPreferences.self, from: JSONEncoder().encode(preferences))
+        XCTAssertEqual(decoded.notificationVolume, 0.2)
+        XCTAssertEqual(SettingsVolumeContract.percentage(for: decoded.notificationVolume), 0)
+        XCTAssertNil(decoded.focusCompletionSound.fileName(volume: decoded.notificationVolume))
+        XCTAssertFalse(decoded.notificationsEnabled)
+    }
+
+    func testSoundResourceAndDisplayedVolumeUseTheSameFiveEffectiveLevels() {
+        for (volume, level) in [(0.0, 0), (0.2, 0), (0.25, 1), (0.5, 1), (0.75, 2), (1.0, 2), (1.25, 3), (1.5, 3), (1.75, 4), (2.0, 4)] {
+            XCTAssertEqual(CompletionSound.volumeLevel(volume), level)
+            XCTAssertEqual(SettingsVolumeContract.percentage(for: volume), level * 25)
+            let expected = level == 0 ? nil : level == 4 ? "NanaFlow-bell.aiff" : "NanaFlow-bell-v\(level).aiff"
+            XCTAssertEqual(CompletionSound.bell.fileName(volume: volume), expected)
+        }
+        for volume in [Double.nan, .infinity, -.infinity] {
+            XCTAssertEqual(CompletionSound.volumeLevel(volume), 0)
+            XCTAssertNil(CompletionSound.bell.fileName(volume: volume))
+        }
     }
 
     func testFlowVolumeRangesAreClamped() {

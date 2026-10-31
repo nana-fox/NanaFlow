@@ -5,6 +5,99 @@ import XCTest
 final class SessionHistoryTests: XCTestCase {
     private let start = Date(timeIntervalSince1970: 1_700_000_000)
 
+    func testStatisticsUseNetSecondsAndCompletionDateWithoutCountingBreaksOrIncompleteWork() throws {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        let day = try XCTUnwrap(calendar.date(from: DateComponents(year: 2026, month: 10, day: 26)))
+        let end = day.addingTimeInterval(86_400)
+        func record(endedAt: Date, duration: Double = 30, completed: Bool = true, type: RecordedSessionType = .focus) -> FocusSession {
+            FocusSession(id: UUID(), startedAt: day.addingTimeInterval(-3_600), endedAt: endedAt,
+                         duration: duration, completed: completed, title: "fixture", type: type)
+        }
+        let sessions = [record(endedAt: day), record(endedAt: day.addingTimeInterval(60)),
+                        record(endedAt: day.addingTimeInterval(120), duration: 0),
+                        record(endedAt: end), record(endedAt: day.addingTimeInterval(-1)),
+                        record(endedAt: day.addingTimeInterval(60), completed: false),
+                        record(endedAt: day.addingTimeInterval(60), type: .shortBreak),
+                        record(endedAt: day.addingTimeInterval(60), type: .longBreak)]
+        let statistics = SessionStatistics(sessions: sessions, period: .day, anchor: day, calendar: calendar)
+        XCTAssertEqual(statistics.totalCount, 3)
+        XCTAssertEqual(statistics.totalDuration, 60, "Sum stored net seconds; do not use wall time or round each session")
+        XCTAssertEqual(statistics.buckets.reduce(0) { $0 + $1.duration }, 60)
+        XCTAssertEqual(statistics.buckets.reduce(0) { $0 + $1.sessionCount }, 3)
+        XCTAssertEqual(StatisticsMetric.duration.value(for: statistics.buckets[0]), 60)
+        XCTAssertEqual(statisticsBucketTooltipText(statistics.buckets[0], metric: .duration), statisticsDurationText(60))
+    }
+
+    func testStatisticsPreserveRealHoursAndEndExclusiveBoundariesAcrossDST() throws {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = try XCTUnwrap(TimeZone(identifier: "America/New_York"))
+        for (month, day, expectedHours) in [(3, 8, 23), (11, 1, 25)] {
+            let anchor = try XCTUnwrap(calendar.date(from: DateComponents(year: 2026, month: month, day: day, hour: 12)))
+            let interval = try XCTUnwrap(calendar.dateInterval(of: .day, for: anchor))
+            let sessions = (0..<expectedHours).map { index in
+                FocusSession(id: UUID(), startedAt: interval.start,
+                             endedAt: interval.start.addingTimeInterval(Double(index) * 3_600),
+                             duration: 30, completed: true, title: "DST fixture")
+            }
+            let statistics = SessionStatistics(sessions: sessions, period: .day, anchor: anchor, calendar: calendar)
+            XCTAssertEqual(statistics.buckets.count, expectedHours)
+            XCTAssertEqual(Set(statistics.buckets.map(\.id)).count, expectedHours)
+            XCTAssertEqual(statistics.buckets.map(\.sessionCount), Array(repeating: 1, count: expectedHours))
+            XCTAssertEqual(statistics.buckets.last?.end, interval.end)
+            XCTAssertEqual(statistics.totalDuration, Double(expectedHours) * 30)
+        }
+    }
+
+    func testFiniteDurationAggregationSaturatesWithoutMutatingStoredSessions() throws {
+        let huge = Double.greatestFiniteMagnitude
+        let sessions = [0, 1, 2].map { hour in
+            FocusSession(id: UUID(), startedAt: start, endedAt: start.addingTimeInterval(Double(hour) * 3_600),
+                         duration: huge, completed: true, title: "extreme", tag: "legacy tag")
+        }
+        let encoded = try JSONEncoder().encode(sessions)
+        let decoded = try JSONDecoder().decode([FocusSession].self, from: encoded)
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        let statistics = SessionStatistics(sessions: decoded, period: .day, anchor: start, calendar: calendar)
+        XCTAssertEqual(statistics.totalDuration, huge)
+        XCTAssertEqual(statistics.tagSummaries.first?.duration, huge)
+        XCTAssertEqual(statistics.buckets.reduce(0) { statisticsAddingDuration($0, $1.duration) }, huge)
+        for bucket in statistics.buckets {
+            let height = statisticsBarHeight(value: bucket.duration, maximum: huge, trackHeight: StatisticsVisualMetrics.chartTrackHeight)
+            XCTAssertTrue(height.isFinite)
+            XCTAssertGreaterThanOrEqual(height, 0)
+            XCTAssertLessThanOrEqual(height, StatisticsVisualMetrics.chartTrackHeight)
+            if bucket.sessionCount > 0 {
+                XCTAssertGreaterThan(height, 0)
+                XCTAssertEqual(bucket.tagSegments.first?.duration, bucket.duration)
+            }
+        }
+        XCTAssertEqual(decoded, sessions)
+        XCTAssertEqual(statisticsFiniteDuration(.infinity), huge)
+        XCTAssertEqual(statisticsFiniteDuration(.nan), 0)
+        XCTAssertEqual(statisticsFiniteDuration(-1), 0)
+        XCTAssertEqual(statisticsBarHeight(value: huge / 2, maximum: huge, trackHeight: 100), 50)
+        XCTAssertEqual(statisticsBarHeight(value: huge, maximum: huge, trackHeight: .infinity), 0)
+    }
+
+    func testDurationTextLocalizesAfterSummingAndKeepsExtremeValuesReadable() throws {
+        let repository = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
+        for language in ["en", "zh-Hans"] {
+            let bundle = try XCTUnwrap(Bundle(path: repository.appendingPathComponent("Sources/NanaFocus/\(language).lproj").path))
+            let expected = language == "en"
+                ? ["0 min", "<1 min", "1 min", "59 min", "1 hr", "1 hr 1 min", "25 hr 1 min"]
+                : ["0 分钟", "<1 分钟", "1 分钟", "59 分钟", "1 小时", "1 小时 1 分钟", "25 小时 1 分钟"]
+            for (seconds, text) in zip([0.0, 30, 60, 3599, 3600, 3660, 90060], expected) {
+                XCTAssertEqual(statisticsDurationText(seconds, locale: Locale(identifier: language), bundle: bundle), text)
+            }
+            let extreme = statisticsDurationText(.greatestFiniteMagnitude, locale: Locale(identifier: language), bundle: bundle)
+            XCTAssertLessThan(extreme.count, 80)
+            XCTAssertNotEqual(extreme, expected[0])
+            XCTAssertEqual(statisticsDurationText(.infinity, locale: Locale(identifier: language), bundle: bundle), extreme)
+        }
+    }
+
     func testHistoryRoundTripsSessions() throws {
         let suiteName = "SessionHistoryTests-\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))

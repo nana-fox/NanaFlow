@@ -173,6 +173,19 @@ struct TagSummary: Identifiable, Equatable, Sendable {
     var id: String { name }
 }
 
+/// Statistics use finite, nonnegative seconds. Overflow saturates at Double's
+/// finite limit; the stored sessions are unchanged. Share this policy across
+/// totals, buckets, tags and presentation so positive time never becomes zero.
+func statisticsFiniteDuration(_ duration: TimeInterval) -> TimeInterval {
+    if duration.isNaN || duration <= 0 { return 0 }
+    return min(duration, .greatestFiniteMagnitude)
+}
+
+func statisticsAddingDuration(_ total: TimeInterval, _ duration: TimeInterval) -> TimeInterval {
+    let sum = statisticsFiniteDuration(total) + statisticsFiniteDuration(duration)
+    return statisticsFiniteDuration(sum)
+}
+
 struct SessionStatistics: Equatable, Sendable {
     let totalCount: Int
     let totalDuration: TimeInterval
@@ -194,14 +207,14 @@ struct SessionStatistics: Equatable, Sendable {
                 && (tag == nil || $0.tag == tag)
         }
         totalCount = matching.count
-        totalDuration = matching.reduce(0) { $0 + $1.duration }
+        totalDuration = matching.reduce(0) { statisticsAddingDuration($0, $1.duration) }
         buckets = Self.bucketIntervals(for: period, in: interval, calendar: calendar).map { bucket in
             let sessionsInBucket = matching.filter { $0.endedAt >= bucket.start && $0.endedAt < bucket.end }
             let segments = Dictionary(grouping: sessionsInBucket, by: \.tag).map { tag, sessions in
                 StatisticsTagSegment(
                     tag: tag,
                     sessionCount: sessions.count,
-                    duration: sessions.reduce(0) { $0 + $1.duration }
+                    duration: sessions.reduce(0) { statisticsAddingDuration($0, $1.duration) }
                 )
             }
             .sorted { ($0.tag ?? "\u{10FFFF}") < ($1.tag ?? "\u{10FFFF}") }
@@ -209,7 +222,7 @@ struct SessionStatistics: Equatable, Sendable {
                 start: bucket.start,
                 end: bucket.end,
                 sessionCount: sessionsInBucket.count,
-                duration: sessionsInBucket.reduce(0) { $0 + $1.duration },
+                duration: sessionsInBucket.reduce(0) { statisticsAddingDuration($0, $1.duration) },
                 tagSegments: segments.isEmpty
                     ? [StatisticsTagSegment(tag: nil, sessionCount: 0, duration: 0)]
                     : segments
@@ -222,7 +235,7 @@ struct SessionStatistics: Equatable, Sendable {
             TagSummary(
                 name: name,
                 sessionCount: entries.count,
-                duration: entries.reduce(0) { $0 + $1.1.duration }
+                duration: entries.reduce(0) { statisticsAddingDuration($0, $1.1.duration) }
             )
         }
         .sorted { lhs, rhs in

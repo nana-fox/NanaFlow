@@ -569,7 +569,8 @@ final class ViewRenderingTests: XCTestCase {
 
         XCTAssertTrue(source.contains("CommandGroup(replacing: .singleWindowList)"))
         for title in ["Welcome", "Notification Alert"] {
-            XCTAssertTrue(source.contains("\"\(title)\""), "Missing Flow window item: \(title)")
+            XCTAssertFalse(source.contains("\"\(title)\""), "Helper scenes must stay out of the Window menu: \(title)")
+            XCTAssertTrue(appSource.contains("\"\(title)\""), "Settings/onboarding routes must remain available")
         }
         for removedTitle in ["Calendar Alert", "Calendar Chooser"] {
             XCTAssertFalse(source.contains("\"\(removedTitle)\""))
@@ -679,14 +680,18 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertTrue(timerSource.contains("guard !Self.configuredWindows.contains(window) else { return }"))
         XCTAssertTrue(timerSource.contains("Self.configuredWindows.add(window)"))
         XCTAssertTrue(timerSource.contains("DispatchQueue.main.async"))
-        XCTAssertTrue(timerSource.contains("[.titled, .resizable, .fullSizeContentView]"))
+        XCTAssertFalse(timerSource.contains("window.styleMask ="))
+        XCTAssertTrue(timerSource.contains("window.isMovableByWindowBackground = false"))
+        XCTAssertTrue(timerSource.contains("window.frame.height - window.contentLayoutRect.height"))
+        XCTAssertTrue(timerSource.contains("window.setFrame(NSRect(origin: frame.origin, size: size), display: false)"))
+        XCTAssertFalse(timerSource.contains(".clipShape(RoundedRectangle"))
         XCTAssertTrue(timerSource.contains(
-            ".frame(width: 380, height: TimerVisualMetrics.windowContentHeight, alignment: .top)"
+            ".frame(width: 380, height: TimerVisualMetrics.windowContentHeight - nativeTitlebarInset, alignment: .top)"
         ))
         XCTAssertTrue(timerSource.contains("window.titlebarAppearsTransparent = true"))
         XCTAssertTrue(timerSource.contains("window.standardWindowButton(.zoomButton)?.isEnabled = false"))
         XCTAssertTrue(timerSource.contains(".ignoresSafeArea()"))
-        XCTAssertTrue(appSource.contains(".windowResizability(.contentMinSize)\n        .windowStyle(.plain)"))
+        XCTAssertTrue(appSource.contains(".windowResizability(.contentSize)\n        .windowStyle(.hiddenTitleBar)"))
         XCTAssertFalse(appSource.contains(".windowResizability(.automatic)\n        .windowStyle(.plain)"))
     }
 
@@ -716,8 +721,40 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertFalse(timerSource.contains("Button(\"应用与网页阻断器\")"))
     }
 
+    func testNativeDragRegionsExcludeControlsAndKeepOneCoordinateSource() throws {
+        func check(_ condition: Bool, _ message: String) throws {
+            XCTAssertTrue(condition, message)
+        }
+        let bounds = CGRect(x: 0, y: 0, width: 380, height: 272)
+        let button = CGRect(x: 8, y: 8, width: 32, height: 32)
+        let slider = CGRect(x: 60, y: 120, width: 240, height: 24)
+        let regions = WindowDragSurface.regions(in: bounds, excluding: [button, slider])
+        for region in regions {
+            try check(bounds.contains(region) && !region.isEmpty, "drag regions stay in content bounds")
+            try check(region.intersection(button).isEmpty && region.intersection(slider).isEmpty,
+                      "button and slider receive their own input")
+        }
+        for point in [CGPoint(x: 1, y: 100), CGPoint(x: 370, y: 260), CGPoint(x: 190, y: 60)] {
+            try check(regions.contains { $0.contains(point) }, "background remains draggable")
+        }
+        for point in [CGPoint(x: 24, y: 24), CGPoint(x: 180, y: 132)] {
+            try check(!regions.contains { $0.contains(point) }, "interactive center excluded from drag")
+        }
+        let start = NSPoint(x: 500, y: 300), anchor = NSPoint(x: 600, y: 400)
+        for (point, expected) in [(NSPoint(x: 650, y: 430), NSPoint(x: 550, y: 330)),
+                                  (NSPoint(x: 550, y: 370), NSPoint(x: 450, y: 270)),
+                                  (anchor, start)] {
+            try check(WindowDragSurface.DragView.origin(start: start, anchor: anchor, point: point) == expected,
+                      "native drag origin positive/negative/zero displacement")
+        }
+        let quartz = CGPoint(x: 120, y: 340)
+        let pointer = NSPoint(x: 120, y: 740)
+        try check(WindowDragSurface.DragView.screenPoint(quartz: quartz, pointer: pointer, source: .event) == NSPoint(x: 120, y: -340), "event coordinates keep a fixed screen basis")
+        try check(WindowDragSurface.DragView.screenPoint(quartz: nil, pointer: pointer, source: .event) == nil, "missing queued CGEvent never switches to a different y origin")
+        try check(WindowDragSurface.DragView.screenPoint(quartz: quartz, pointer: pointer, source: .pointer) == pointer, "pointer fallback stays locked even if later CGEvent exists")
+    }
+
     func testMainTimerMatchesFlowLayoutContract() {
-        XCTAssertEqual(TimerVisualMetrics.windowCornerRadius, 26)
         XCTAssertEqual(TimerVisualMetrics.titleFontSize, 20)
         XCTAssertEqual(TimerVisualMetrics.timerFontSize, 70)
         XCTAssertEqual(TimerVisualMetrics.timerKerning, -1.5)
@@ -745,7 +782,7 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertEqual(TimerVisualMetrics.inactiveIndicatorOpacity, 0.23)
         XCTAssertEqual(TimerVisualMetrics.toolbarFocusOpacity, 1)
         XCTAssertEqual(TimerVisualMetrics.closeFocusOpacity, 0.42)
-        XCTAssertEqual(TimerVisualMetrics.windowContentHeight, 240)
+        XCTAssertEqual(TimerVisualMetrics.windowContentHeight, 272)
         XCTAssertTrue(TimerVisualMetrics.showsSkipButton(for: .shortBreak))
         XCTAssertFalse(TimerVisualMetrics.showsSkipButton(for: .focus))
         XCTAssertEqual(FlowPalette.windowRed, 248.0 / 255.0, accuracy: 0.0001)
@@ -799,8 +836,8 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertEqual(StatisticsVisualMetrics.periodPickerHeight, 32)
         XCTAssertEqual(StatisticsVisualMetrics.periodPickerCornerRadius, 10)
         XCTAssertEqual(StatisticsVisualMetrics.selectedPeriodOpacity, 1, accuracy: 0.0001)
-        XCTAssertEqual(StatisticsVisualMetrics.chartHeight, 181)
-        XCTAssertEqual(StatisticsVisualMetrics.chartTrackHeight, 137)
+        XCTAssertEqual(StatisticsVisualMetrics.chartHeight, 153)
+        XCTAssertEqual(StatisticsVisualMetrics.chartTrackHeight, 109)
         XCTAssertEqual(StatisticsVisualMetrics.navigationButtonDiameter, 31)
         XCTAssertEqual(StatisticsVisualMetrics.periodTitleWidth, 258)
     }
@@ -814,12 +851,13 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertEqual(
             StatisticsVisualMetrics.headerHeight
                 + StatisticsVisualMetrics.periodSwitcherHeight
+                + StatisticsVisualMetrics.metricSwitcherHeight
                 + StatisticsVisualMetrics.chartHeight,
             TimerVisualMetrics.windowFrameHeight
         )
         XCTAssertEqual(
             TimerVisualMetrics.windowFrameHeight - TimerVisualMetrics.windowContentHeight,
-            32
+            0
         )
     }
 
@@ -1161,7 +1199,7 @@ final class ViewRenderingTests: XCTestCase {
             encoding: .utf8
         )
 
-        XCTAssertTrue(timerSource.contains(#".accessibilityLabel(controller.engine.state.isRunning ? "停止" : "开始")"#))
+        XCTAssertTrue(timerSource.contains(#".accessibilityLabel(controller.engine.state.isRunning ? String(localized: "停止") : String(localized: "开始"))"#))
     }
 
     func testSessionDeletionUsesFlowsConfirmationCopy() throws {
@@ -1194,10 +1232,10 @@ final class ViewRenderingTests: XCTestCase {
             encoding: .utf8
         )
 
-        XCTAssertTrue(statisticsSource.contains(#"\(statistics.totalCount)次"#))
+        XCTAssertTrue(statisticsSource.contains("metric.totalText(statistics)"))
         XCTAssertTrue(statisticsSource.contains(#"case .focus: "NanaFlow""#))
         XCTAssertTrue(statisticsSource.contains(#".accessibilityLabel("统计图表")"#))
-        XCTAssertTrue(statisticsSource.contains(#""\(bucket.sessionCount)次""#))
+        XCTAssertTrue(statisticsSource.contains("metric.accessibilityValue(bucket)"))
         XCTAssertFalse(statisticsSource.contains(#".accessibilityLabel("显示所有会话")"#))
         XCTAssertFalse(statisticsSource.contains(#"String(localized: "tag_summary_format")"#))
         XCTAssertTrue(widgetSource.contains(#"entry.statisticsUnit == .count ? "NanaFlows" : String(localized: "分钟")"#))
@@ -1215,7 +1253,7 @@ final class ViewRenderingTests: XCTestCase {
 
         XCTAssertTrue(source.contains("@State private var hoveredBucketID: Date?"))
         XCTAssertTrue(source.contains(".onHover { isHovered in"))
-        XCTAssertTrue(source.contains("statisticsBucketTooltipText(bucket)"))
+        XCTAssertTrue(source.contains("statisticsBucketTooltipText(bucket, metric: metric)"))
         XCTAssertTrue(source.contains(".fixedSize(horizontal: true, vertical: false)"))
         XCTAssertFalse(source.contains("@State private var selectedBucketID: Date?"))
         XCTAssertFalse(source.contains("点击固定此数据"))
@@ -1308,7 +1346,7 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertFalse(source.contains(".offset(y: SettingsVisualMetrics.contentOffsetY)"))
     }
 
-    func testCompactSettingsDoesNotExposeSecondaryVolumeRows() throws {
+    func testCompactSettingsExposesIndependentCompletionSoundsAndEffectiveVolume() throws {
         let repositoryURL = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()
             .deletingLastPathComponent()
@@ -1322,7 +1360,13 @@ final class ViewRenderingTests: XCTestCase {
         let visibleSettings = try XCTUnwrap(
             source.split(separator: "enum SettingsVisualMetrics", maxSplits: 1).first
         )
-        XCTAssertFalse(visibleSettings.contains("SettingsVolumeView(volume:"))
+        XCTAssertTrue(visibleSettings.contains("SettingsVolumeView(volume:"))
+        XCTAssertTrue(visibleSettings.contains("completionSoundMenu(\"专注完成声音\", phase: .focus"))
+        XCTAssertTrue(visibleSettings.contains("completionSoundMenu(\"休息完成声音\", phase: .shortBreak"))
+        XCTAssertTrue(source.contains("step: 0.5"))
+        XCTAssertTrue(source.contains("sound.fileName(volume: preferences.notificationVolume)"))
+        XCTAssertTrue(source.contains("preview?.volume = 1"))
+        XCTAssertTrue(source.contains("openWindow(id: PermissionAlertKind.notification.windowID)"))
     }
 
     func testKeyboardShortcutDescriptionsMatchFlowLocalizedResources() throws {
@@ -1510,7 +1554,8 @@ final class ViewRenderingTests: XCTestCase {
 
         XCTAssertTrue(source.contains("Text(\"关于 NanaFlow\")"))
         XCTAssertTrue(source.contains("Text(\"专注、休息、继续。\")"))
-        XCTAssertTrue(source.contains("Text(\"版本 \\(version)\")"))
+        XCTAssertTrue(source.contains(#"String(localized: "about_version_format")"#))
+        XCTAssertTrue(source.contains(#"info?["CFBundleVersion"]"#))
         XCTAssertTrue(source.contains("Button(\"完成\", action: onBack)"))
     }
 
@@ -1944,12 +1989,12 @@ final class ViewRenderingTests: XCTestCase {
         XCTAssertEqual(StatisticsVisualMetrics.contentHeight, 272)
         XCTAssertEqual(StatisticsVisualMetrics.headerHeight, 49)
         XCTAssertEqual(StatisticsVisualMetrics.periodSwitcherHeight, 42)
-        XCTAssertEqual(StatisticsVisualMetrics.chartHeight, 181)
-        XCTAssertEqual(StatisticsVisualMetrics.chartTrackHeight, 137)
+        XCTAssertEqual(StatisticsVisualMetrics.chartHeight, 153)
+        XCTAssertEqual(StatisticsVisualMetrics.chartTrackHeight, 109)
         XCTAssertFalse(statistics.contains("FlowPalette.breakBackground"))
         XCTAssertFalse(statistics.contains("cardInset"))
         XCTAssertFalse(statistics.contains("cardCornerRadius"))
-        XCTAssertTrue(statistics.contains(#"\(statistics.totalCount)次"#))
+        XCTAssertTrue(statistics.contains("metric.totalText(statistics)"))
 
         XCTAssertTrue(timer.contains("case .about:"))
         XCTAssertTrue(timer.contains("AboutNanaFlowView"))

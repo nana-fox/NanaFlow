@@ -364,3 +364,18 @@
 "只统计今天已完成的专注" = "Only counts focus sessions completed today";
 
 "today_completed_focus_format" = "%lld focus sessions completed today";
+
+// Compact timer, completion sounds and statistics.
+"专注完成声音" = "Focus completion sound";
+"休息完成声音" = "Break completion sound";
+"关闭通知也会关闭完成声音。音量受系统设置影响。" = "Turning off notifications also turns off completion sounds. System volume applies.";
+"次数" = "Count";
+"about_version_format" = "Version %@";
+"statistics_minutes_format" = "%@ min";
+"statistics_hours_format" = "%@ hr";
+"statistics_hours_minutes_format" = "%@ hr %@ min";
+"statistics_less_than_minute" = "<1 min";
+"statistics_count_format" = "%@ completed";
+"statistics_previous_period" = "Previous period";
+"statistics_next_period" = "Next period";
+"selected" = "Selected";

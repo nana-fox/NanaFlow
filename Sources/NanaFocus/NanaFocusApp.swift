@@ -27,8 +27,8 @@ struct NanaFlowApp: App {
                 }
         }
         .defaultSize(width: 380, height: TimerVisualMetrics.windowFrameHeight)
-        .windowResizability(.contentMinSize)
-        .windowStyle(.plain)
+        .windowResizability(.contentSize)
+        .windowStyle(.hiddenTitleBar)
         .commands {
             NanaFlowCommands()
         }

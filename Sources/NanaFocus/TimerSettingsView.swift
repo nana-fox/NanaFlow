@@ -10,6 +10,7 @@ struct TimerSettingsView: View {
 
     @State private var launchAtLoginEnabled = SMAppService.mainApp.status == .enabled
     @State private var launchError: String?
+    @State private var soundPreview: NSSound?
 
     init(
         controller: TimerController,
@@ -53,11 +54,18 @@ struct TimerSettingsView: View {
 
                     settingsSection("提醒") {
                         SettingsToggleRow("允许通知", isOn: notificationPermissionBinding)
-                        SettingsMenuRow("完成声音", value: controller.preferences.focusCompletionSound.title) {
-                            ForEach(CompletionSound.menuOrder) { sound in
-                                Button(sound.title) { updateCompletionSound(sound) }
-                            }
+                        completionSoundMenu("专注完成声音", phase: .focus, selection: controller.preferences.focusCompletionSound)
+                        completionSoundMenu("休息完成声音", phase: .shortBreak, selection: controller.preferences.breakCompletionSound)
+                        HStack {
+                            Text("音量").font(.system(size: 13))
+                            SettingsVolumeView(volume: preferenceBinding(\.notificationVolume))
                         }
+                        .padding(.horizontal, 14)
+                        Text("关闭通知也会关闭完成声音。音量受系统设置影响。")
+                            .font(.system(size: 11))
+                            .foregroundStyle(.secondary)
+                            .padding(.horizontal, 14)
+                            .padding(.bottom, 8)
                         SettingsToggleRow(
                             "专注时播放滴答声",
                             isOn: preferenceBinding(\.tickingSoundEnabled),
@@ -221,16 +229,25 @@ struct TimerSettingsView: View {
         controller.updatePreferences(preferences)
     }
 
-    private func updateCompletionSound(_ sound: CompletionSound) {
+    private func completionSoundMenu(_ title: String, phase: SessionPhase, selection: CompletionSound) -> some View {
+        SettingsMenuRow(title, value: selection.title) {
+            ForEach(CompletionSound.menuOrder) { sound in
+                Button(sound.title) { updateCompletionSound(sound, phase: phase) }
+            }
+        }
+    }
+
+    private func updateCompletionSound(_ sound: CompletionSound, phase: SessionPhase) {
         var preferences = controller.preferences
-        preferences.focusCompletionSound = sound
-        preferences.breakCompletionSound = sound
-        preferences.notificationSoundEnabled = preferences.focusCompletionSound != .none || preferences.breakCompletionSound != .none
+        preferences.setCompletionSound(sound, for: phase)
         controller.updatePreferences(preferences)
-        guard let fileName = sound.fileName,
+        soundPreview?.stop()
+        soundPreview = nil
+        guard let fileName = sound.fileName(volume: preferences.notificationVolume),
               let url = Bundle.main.url(forResource: fileName, withExtension: nil) else { return }
         let preview = NSSound(contentsOf: url, byReference: true)
-        preview?.volume = Float(preferences.notificationVolume / 2)
+        preview?.volume = 1
+        soundPreview = preview
         preview?.play()
     }
 
@@ -247,7 +264,7 @@ enum SettingsVolumeContract {
     static let range = 0.0 ... 2.0
 
     static func percentage(for volume: Double) -> Int {
-        Int(min(max(volume, range.lowerBound), range.upperBound) * 50)
+        CompletionSound.volumeLevel(volume) * 25
     }
 }
 
@@ -256,20 +273,25 @@ struct SettingsVolumeView: View {
 
     var body: some View {
         HStack(spacing: 8) {
-            Slider(value: $volume, in: SettingsVolumeContract.range)
+            Slider(value: Binding(
+                get: { Double(CompletionSound.volumeLevel(volume)) / 2 },
+                set: { volume = Double(CompletionSound.volumeLevel($0)) / 2 }
+            ), in: SettingsVolumeContract.range, step: 0.5)
                 .controlSize(.small)
                 .tint(FlowPalette.focus)
+                .accessibilityLabel("音量")
+                .accessibilityValue("\(SettingsVolumeContract.percentage(for: volume))%")
             Text("\(SettingsVolumeContract.percentage(for: volume))%")
                 .font(.system(size: 12, weight: .medium))
                 .foregroundStyle(.secondary)
                 .monospacedDigit()
-                .frame(width: 34, alignment: .trailing)
+                .lineLimit(1)
+                .frame(width: 42, alignment: .trailing)
+                .accessibilityHidden(true)
         }
         .padding(.vertical, 5)
         .padding(.horizontal, 8)
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel("音量")
-        .accessibilityValue("\(SettingsVolumeContract.percentage(for: volume))%")
+        .accessibilityElement(children: .contain)
     }
 }
 

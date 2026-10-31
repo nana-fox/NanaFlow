@@ -9,6 +9,7 @@ struct TimerView: View {
     @State private var page: TimerPage = .timer
     @State private var showsCelebration = false
     @State private var menuIsHovered = false
+    @State private var nativeTitlebarInset: CGFloat = 0
     let controller: TimerController
 
     init(
@@ -48,10 +49,16 @@ struct TimerView: View {
                 }
             }
         }
-        .clipShape(RoundedRectangle(cornerRadius: TimerVisualMetrics.windowCornerRadius, style: .continuous))
-        .frame(width: 380, height: TimerVisualMetrics.windowContentHeight, alignment: .top)
+        // The titled window's native corner mask, rim and shadow define the
+        // outline; a separate SwiftUI clip leaves transparent crescents inside it.
+        .frame(width: 380, height: TimerVisualMetrics.windowContentHeight - nativeTitlebarInset, alignment: .top)
+        .overlay(alignment: .top) {
+            WindowDragSurface(regions: windowDragRegions)
+                .frame(width: 380, height: TimerVisualMetrics.windowFrameHeight)
+                .accessibilityHidden(true)
+        }
         .ignoresSafeArea()
-        .background(MainWindowConfigurator())
+        .background(MainWindowConfigurator { nativeTitlebarInset = $0 })
         .onAppear {
             NSApplication.shared.activate()
             configureInitialWindows()
@@ -91,6 +98,36 @@ struct TimerView: View {
             Button("好") { controller.dismissError() }
         } message: {
             Text(controller.errorMessage ?? String(localized: "未知错误"))
+        }
+    }
+
+    private var windowDragRegions: [CGRect] {
+        let bounds = CGRect(x: 0, y: 0, width: 380, height: TimerVisualMetrics.windowFrameHeight)
+        switch page {
+        case .timer:
+            let diameter = TimerVisualMetrics.toolbarControlDiameter + 8
+            var controls = [
+                TimerVisualMetrics.closeControlX,
+                TimerVisualMetrics.resetControlX,
+                TimerVisualMetrics.statisticsControlX,
+                TimerVisualMetrics.menuControlX
+            ].map { x in
+                CGRect(x: x - diameter / 2, y: TimerVisualMetrics.toolbarCenterY - diameter / 2, width: diameter, height: diameter)
+            }
+            if TimerVisualMetrics.showsSkipButton(for: controller.engine.state.phase) {
+                controls.append(CGRect(x: 248 - diameter / 2, y: TimerVisualMetrics.toolbarCenterY - diameter / 2, width: diameter, height: diameter))
+            }
+            let primary = TimerVisualMetrics.primaryButtonDiameter + 12
+            controls.append(CGRect(x: 190 - primary / 2, y: TimerVisualMetrics.primaryButtonCenterY - primary / 2, width: primary, height: primary))
+            return WindowDragSurface.regions(in: bounds, excluding: controls)
+        case .statistics:
+            // Date heading and chart margins; preserve period buttons and hover.
+            return [CGRect(x: 64, y: 50, width: 252, height: 38), CGRect(x: 0, y: 50, width: 12, height: 220), CGRect(x: 368, y: 50, width: 12, height: 220)]
+        case .settings, .durations:
+            // Native scrolling and controls retain the entire content region.
+            return [CGRect(x: 60, y: 0, width: 265, height: 42)]
+        case .about:
+            return WindowDragSurface.regions(in: bounds, excluding: [CGRect(x: 0, y: 0, width: 60, height: 44), CGRect(x: 145, y: 199, width: 90, height: 48)])
         }
     }
 
@@ -139,7 +176,7 @@ struct TimerView: View {
             .buttonStyle(TimerPrimaryButtonStyle())
             .keyboardShortcut(.space, modifiers: [])
             .disabled(controller.isCommittedFocus)
-            .accessibilityLabel(controller.engine.state.isRunning ? "停止" : "开始")
+            .accessibilityLabel(controller.engine.state.isRunning ? String(localized: "停止") : String(localized: "开始"))
             .accessibilityIdentifier("primary-timer-button")
             .position(x: 190, y: TimerVisualMetrics.primaryButtonCenterY)
 
@@ -512,8 +549,7 @@ private struct TimerPrimaryButtonStyle: ButtonStyle {
 
 enum TimerVisualMetrics {
     static let windowFrameHeight: CGFloat = 272
-    static let windowContentHeight: CGFloat = 240
-    static let windowCornerRadius: CGFloat = 26
+    static let windowContentHeight: CGFloat = windowFrameHeight
     static let titleFontSize: CGFloat = 20
     static let timerFontSize: CGFloat = 70
     static let timerKerning: CGFloat = -1.5
@@ -563,13 +599,20 @@ extension Notification.Name {
 }
 
 private struct MainWindowConfigurator: NSViewRepresentable {
-    func makeNSView(context _: Context) -> NSView {
-        ConfiguringView()
+    var onTitlebarInset: (CGFloat) -> Void
+
+    func makeNSView(context _: Context) -> ConfiguringView {
+        let view = ConfiguringView()
+        view.onTitlebarInset = onTitlebarInset
+        return view
     }
 
-    func updateNSView(_: NSView, context _: Context) {}
+    func updateNSView(_ view: ConfiguringView, context _: Context) {
+        view.onTitlebarInset = onTitlebarInset
+    }
 
-    private final class ConfiguringView: NSView {
+    final class ConfiguringView: NSView {
+        var onTitlebarInset: ((CGFloat) -> Void)?
         private static let configuredWindows = NSHashTable<NSWindow>.weakObjects()
 
         override func viewDidMoveToWindow() {
@@ -577,22 +620,27 @@ private struct MainWindowConfigurator: NSViewRepresentable {
             guard let window else { return }
             guard !Self.configuredWindows.contains(window) else { return }
             Self.configuredWindows.add(window)
-            DispatchQueue.main.async { [weak window] in
+            DispatchQueue.main.async { [weak self, weak window] in
                 guard let window else { return }
                 let frame = window.frame
-                window.styleMask = window.styleMask.union([.titled, .resizable, .fullSizeContentView])
+                // Keep native keyboard focus; measure chrome instead of guessing
+                // a platform-specific titlebar height in the SwiftUI layout.
+                let size = NSSize(width: 380, height: TimerVisualMetrics.windowFrameHeight)
                 window.titleVisibility = .hidden
                 window.titlebarAppearsTransparent = true
                 window.titlebarSeparatorStyle = .none
-                window.setFrame(frame, display: false)
+                window.setFrame(NSRect(origin: frame.origin, size: size), display: false)
                 window.setAccessibilitySubrole(.standardWindow)
-                window.isMovableByWindowBackground = true
+                window.isMovable = true
+                window.isMovableByWindowBackground = false
                 window.isOpaque = false
                 window.backgroundColor = .clear
                 window.standardWindowButton(.closeButton)?.isHidden = true
                 window.standardWindowButton(.miniaturizeButton)?.isHidden = true
                 window.standardWindowButton(.zoomButton)?.isHidden = true
                 window.standardWindowButton(.zoomButton)?.isEnabled = false
+                window.standardWindowButton(.closeButton)?.superview?.isHidden = true
+                self?.onTitlebarInset?(max(0, window.frame.height - window.contentLayoutRect.height))
             }
         }
     }

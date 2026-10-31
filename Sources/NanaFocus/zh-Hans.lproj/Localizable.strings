@@ -64,3 +64,19 @@
 "只统计今天已完成的专注" = "只统计今天已完成的专注";
 
 "today_completed_focus_format" = "今日已完成 %lld 次专注";
+
+// Compact timer, completion sounds and statistics.
+"专注完成声音" = "专注完成声音";
+"休息完成声音" = "休息完成声音";
+"关闭通知也会关闭完成声音。音量受系统设置影响。" = "关闭通知也会关闭完成声音。音量受系统设置影响。";
+"次数" = "次数";
+"时长" = "时长";
+"about_version_format" = "版本 %@";
+"statistics_minutes_format" = "%@ 分钟";
+"statistics_hours_format" = "%@ 小时";
+"statistics_hours_minutes_format" = "%@ 小时 %@ 分钟";
+"statistics_less_than_minute" = "<1 分钟";
+"statistics_count_format" = "%@ 次";
+"statistics_previous_period" = "上一时段";
+"statistics_next_period" = "下一时段";
+"selected" = "已选择";
