@@ -1,6 +1,27 @@
-# NanaFlow 1.0 upload checklist
+# NanaFlow App Store update checklist
 
 An unchecked gate is not evidence of completion. Record links or build identifiers beside each checked item.
+
+## Current update — 1.0.1 (4), 2026-11-01
+
+- [x] Read the current review/version inventory before creating the update and again before submission; no other pending submission was present.
+- [x] App and Widget agree on 1.0.1 (4); store scope and persistence formats remain unchanged.
+- [x] 186 affected product checks and one background-isolation check passed; Release build/analyze passed.
+- [x] Universal signed archive and both target entitlements verified; Apple processed the uploaded binary as verified.
+- [x] Fresh current-state UI baseline, original binary preservation and two protected-data copies completed privately.
+- [x] Exact signed Release archive candidate installed locally; normal first launch and quit/relaunch retained visible timer, statistics and supported settings.
+- [x] Window edge, About version/build and native Window menu checked.
+- [x] English/Simplified Chinese 1.0.1 copy saved and build 4 attached to the existing update.
+- [x] Single App Review submission accepted on 2026-11-01; current status: waiting for review.
+- [x] Release after approval is automatic; immediate rollout and existing ratings retained.
+- [ ] Apple approves the update and makes 1.0.1 publicly available.
+- [ ] Confirm a real official-store download provides the new version; a visible listing alone does not pass this check.
+
+Runtime acceptance used the exact development-signed Release archive, not a downloaded TestFlight/App Store variant. TestFlight channel installation and a full historical UUID-set audit were not performed. Notification actions, Widget pixel refresh and real sound audibility are deferred; no completion claim is made for them.
+
+## Historical first-release checklist — 1.0.0 (2)
+
+The following records describe the September 2026 first-release work. They are retained as history, not current 1.0.1 gates. Current evidence is summarized above and in [README.md](README.md).
 
 ## 1. Account and app record
 
@@ -66,7 +87,7 @@ An unchecked gate is not evidence of completion. Record links or build identifie
 - [ ] Submission is configured for manual release after approval.
 - [x] Final submission diff is reviewed by an independent checklist pass before submission.
 
-## Current status
+## Historical status — 2026-09-24
 
 As of 2026-09-24, candidate `1.0.0 (2)` is the only intended review candidate. Calendar/EventKit, App/Web Blocker, Pro-unlock UI, tag catalog CRUD/UI, and iCloud timer sync are absent from the release UI and code paths; only `en` and `zh-Hans` ship. The candidate passed 200 tests, Release Analyze, universal signed Archive, deep signature verification, effective-entitlement inspection, linked-framework/symbol inspection, and App Store upload validation. The App and Widget use Team `LTLULSL8A2`, and the signed entitlements contain only the sandbox, shared App Group, user-selected file access where applicable, and Apple signing identifiers. Named third-party quotations were removed before build 2; all generated Widget quotations are attributed to NanaFlow. The upload was accepted for processing at 2026-09-22 15:43 CST.
 

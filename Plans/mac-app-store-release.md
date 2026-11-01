@@ -1,8 +1,18 @@
 # NanaFlow Mac App Store 发布计划
 
-目标：把 NanaFlow 1.0 作为独立产品提交 Mac App Store，并保证从现有本机版本升级时历史记录可备份、可恢复、不可静默丢失。
+目标：维护 NanaFlow 的 Mac App Store 发布与更新，保留版本、数据安全和实际运行验收边界。
 
-当前结论（2026-09-22）：**代码门禁已通过，签名链路仍在等待 Apple 后台同步**。Apple Developer Program 已激活，Team ID `LTLULSL8A2` 已配置到主 App 与 Widget；230 项测试、Release Analyze 和无签名 Archive 已通过。已注册的 Mac 尚未被 Xcode 的 provisioning 服务识别，因此正式签名 Archive、Validate App 和 App Store Connect 上传仍不能宣称完成。
+## 当前更新状态（2026-11-01）
+
+1.0 已公开上架；1.0.1（4）已单次提交审核，当前等待审核，通过后自动发布。当前商店下载入口为 [NanaFlow](https://apps.apple.com/cn/app/nanaflow/id6814738160)，未将待审更新标为可下载。
+
+1.0.1 已通过 186 项产品检查、1 项后台隔离检查、Release 分析、签名归档及 Apple 二进制验证。使用同一归档的开发签名 Release 候选在本机完成安装、首启、正常退出重开及可见状态保留检查；TestFlight／商店下载变体、完整历史 UUID 集合审计未执行，通知动作、Widget 像素刷新和声音按当前发布决定后移。本次更新由维护者直接复核。
+
+当前商店材料及验收边界见 [AppStore/README.md](../AppStore/README.md)。审核通过后还需核实新版实际可下载；提交成功不等于已上架。以下保留初版规划与历史证据，不把旧测试、旧构建或未勾选项当作本次新通过结果。
+
+## 初版规划记录
+
+历史结论（2026-09-22，不再代表当前状态）：**代码门禁已通过，签名链路仍在等待 Apple 后台同步**。Apple Developer Program 已激活，Team ID `LTLULSL8A2` 已配置到主 App 与 Widget；230 项测试、Release Analyze 和无签名 Archive 已通过。已注册的 Mac 尚未被 Xcode 的 provisioning 服务识别，因此正式签名 Archive、Validate App 和 App Store Connect 上传仍不能宣称完成。
 
 ## 已锁定的产品与发布决策
 
@@ -15,7 +25,7 @@
 - 1.0 由 Mac App Store 更新，不接入 Sparkle，也不把 GitHub Release 当正式更新通道。
 - GitHub 用于源码、测试版和问题反馈；官网用于产品介绍、隐私政策和支持。
 
-## 当前已完成
+## 初版已完成记录
 
 - Apple Developer Program 已激活；主 App 与 Widget 已统一配置 Team ID `LTLULSL8A2`。
 - 230 项测试通过，Release Analyze 通过，无签名 Release Archive 通过。

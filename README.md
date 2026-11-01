@@ -2,6 +2,14 @@
 
 NanaFlow 是一个本地优先的原生 macOS 专注计时器。它用紧凑的单窗口体验帮助你开始专注、完成休息，并通过 D/W/M/Y 统计看清自己的节奏。倒计时与统计在同一个主窗口内切换，菜单栏随时提供状态和控制；用于统计的会话数据保存在本机。
 
+## 下载与版本状态
+
+[在 Mac App Store 免费下载](https://apps.apple.com/cn/app/nanaflow/id6814738160) · [官网](https://nana-fox.github.io/) · [使用帮助](https://nana-fox.github.io/support/)
+
+截至 2026-11-01，商店正式版 **1.0** 已可下载。更新 **1.0.1（4）已提交审核，尚未在商店提供**，审核通过后自动发布。
+
+1.0.1 包含窗口外缘与拖动、菜单本地化及版本显示改进，统计可切换专注次数与净专注时长，专注与休息可分别选择完成声音，并改进通知调度。下方功能范围以 Mac App Store 版为准；正式更新通过商店提供。[GitHub 公测版](https://github.com/nana-fox/NanaFlow/releases/tag/v1.0-beta.1) 是单独的测试渠道。
+
 ## 界面
 
 | 专注计时 | 周统计 |
@@ -103,7 +111,9 @@ open "$APP"
 
 ## 发布状态
 
-NanaFlow 1.0 以 Mac App Store 为主发布渠道。`1.0.0 (2)` 已上传并提交审核；Apple 依据 Guideline 2.1 要求补充实体 Mac 操作录屏和产品说明，目前尚未获批或上架。仓库暂不提供“正式版”下载声明。
+NanaFlow 1.0 已在 Mac App Store 发布。1.0.1（4）已于 2026-11-01 提交审核，当前等待审核，配置为通过后自动发布；这不代表新版已经可下载。
+
+本次更新的 186 项产品检查与 1 项后台隔离检查、Release 分析和签名归档通过，Apple 已处理并验证上传二进制。本机使用同一归档的签名 Release 候选完成首启、退出重开与可见计时／统计／设置保留验收；没有将其当作 TestFlight 下载变体。通知动作、Widget 像素刷新和实际提示音仍待后续验收。
 
 发布范围、数据迁移和门禁见 [`Plans/mac-app-store-release.md`](Plans/mac-app-store-release.md)。代码审查见 [`CODE_AUDIT.md`](CODE_AUDIT.md)，第三方资源说明见 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)。
 
