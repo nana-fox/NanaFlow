@@ -9,6 +9,17 @@ dist/
 *.xcodeproj/xcuserdata/
 *.xcworkspace/xcuserdata/
 
+# Local caches, result bundles and private release material
+.DS_Store
+__pycache__/
+*.py[cod]
+*.profraw
+*.xcresult
+*.xcarchive
+*.private.json
+*.p12
+AuthKey_*.p8
+
 # Web prototype dependencies and generated output
 Design/nanaflow-ui-prototype/node_modules/
 Design/nanaflow-ui-prototype/dist/

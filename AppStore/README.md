@@ -2,16 +2,19 @@
 
 This directory contains the localized store copy and release records. It distinguishes the published version from the update under review.
 
-## Current status — 2026-11-01
+## Current status — checked 2026-11-02
 
-- **Published:** version 1.0 is available on the [Mac App Store](https://apps.apple.com/app/nanaflow/id6814738160).
-- **Submitted update:** 1.0.1 (4), waiting for App Review. Apple has processed and verified the uploaded binary. The existing update was submitted once on November 1; no duplicate version or upload was created.
-- **Release control:** automatically release after approval, immediately to users, retaining existing ratings. Approval and public availability are still pending.
+- **Published:** version 1.0.1 is visible on both the Chinese and U.S. [Mac App Store](https://apps.apple.com/app/nanaflow/id6814738160) listings, with release date November 2, 2026. The exact build 1.0.1 (4) is ready for distribution in App Store Connect.
+- **Submission:** the existing update was submitted once on November 1 and released automatically after approval; no duplicate version, upload or submission was created.
+- **Remaining channel check:** actual acquisition of the official Store-downloaded 1.0.1 (4) is still unverified. Listing visibility and the local Release-archive test are separate evidence.
 - **Source:** the 1.0.1 application changes are commit `2e637935106101ea4719722fbfa702e1783734ca`.
+
+This is a published update, not a new upload task. Copy housekeeping does not require a new binary or another submission. [Maintenance and next work](../Plans/project-maintenance.md) records the channel boundaries and deferred checks.
 
 ## Files
 
-- [`metadata.zh-Hans.md`](metadata.zh-Hans.md) and [`metadata.en-US.md`](metadata.en-US.md): saved localized copy and 1.0.1 release notes.
+- [`metadata.zh-Hans.md`](metadata.zh-Hans.md) and [`metadata.en-US.md`](metadata.en-US.md): localized copy and 1.0.1 release notes, with the inaccurate global-keyboard-shortcut claim narrowed on November 2. The original submitted versions are preserved in [`history/`](history/1.0.1-submitted-20261101.en-US.md). The correction is prepared for the next editable listing version: the published 1.0.1 description fields are disabled in App Store Connect. It has not been saved to Apple; do not claim otherwise or create a duplicate version to bypass the lock.
+- The editable **promotional text** was updated in both languages and read back after reload/locale selection. It describes in-app shortcuts, local data and the released 1.0.1 statistics. This does not remove the older global-shortcut sentence from the locked description; that remaining correction is explicit in the checklist.
 - [`review-notes-1.0.1.txt`](review-notes-1.0.1.txt): the current reviewer access instructions.
 - [`review-notes.md`](review-notes.md): historical 1.0 note templates; not the submitted 1.0.1 note.
 - [`screenshots.md`](screenshots.md): the original screenshot register. Existing build-2 captures are retained; they are not new 1.0.1 captures.
@@ -21,7 +24,7 @@ This directory contains the localized store copy and release records. It disting
 
 ## Store scope
 
-The store app provides focus and break timers, pause/resume/skip/reset, optional automatic starts, same-window D/W/M/Y statistics, menu-bar controls, notifications, completion sounds and keyboard shortcuts. The submitted 1.0.1 update adds a count/net-focus-time selector and separate focus/break sound choices.
+The store app provides focus and break timers, pause/resume/skip/reset, optional automatic starts, same-window D/W/M/Y statistics, menu-bar controls, notifications, completion sounds and in-app keyboard shortcuts. The submitted 1.0.1 update adds a count/net-focus-time selector and separate focus/break sound choices. Global shortcut code exists but its enablement UI is not reachable for a new store user; it is not advertised as available.
 
 Session data and settings stay on the Mac. History-list browsing and backup/import have no reachable store UI entry point and must not be advertised as available features. Do not import the public Beta's Calendar, iCloud, blocker, tag UI, mini timer or Pro scope. Only English and Simplified Chinese ship.
 
@@ -44,3 +47,9 @@ Run before copying localized fields into App Store Connect:
 ```sh
 python3 AppStore/validate_metadata.py
 ```
+
+## Public copy ownership
+
+The website introduces the product and links to the official store; support pages explain reachable controls and known limitations. The store description covers the timer, menu bar, statistics and local data. Version-specific additions belong in the matching update notes. Do not advertise Beta-only features, inaccessible history/backup screens, guaranteed sound delivery, complete migration coverage or unrestricted source-code licensing.
+
+After the official new-version download is verified, update the version status in the project README, this file, the current checklist and release plan, plus both website home pages (`#release-status`) and support pages (`#updates`). Keep the existing static Pages deployment and verify the live result.
