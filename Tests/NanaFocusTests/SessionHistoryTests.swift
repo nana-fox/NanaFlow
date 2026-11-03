@@ -408,8 +408,22 @@ final class SessionHistoryTests: XCTestCase {
         )
         XCTAssertEqual(
             (0 ..< 31).filter { statisticsShowsLabel(at: $0, bucketCount: 31, period: .month) },
-            [0, 4, 9, 14, 19, 24, 29, 30]
+            [0, 4, 9, 14, 19, 24, 30]
         )
+    }
+
+    func testMonthAxisPreservesEndDateWithoutCrowdingLabelsForEveryMonthLength() {
+        for days in 28...31 {
+            let labels = (0..<days).filter {
+                statisticsShowsLabel(at: $0, bucketCount: days, period: .month)
+            }.map { $0 + 1 }
+            let expected = days == 30 ? [1, 5, 10, 15, 20, 25, 30] : [1, 5, 10, 15, 20, 25, days]
+            XCTAssertEqual(labels, expected, "\(days)-day month")
+            XCTAssertEqual(labels.last, days)
+            for (previous, next) in zip(labels, labels.dropFirst()) {
+                XCTAssertGreaterThanOrEqual(next - previous, 3, "Crowded labels \(previous)/\(next) in \(days)-day month")
+            }
+        }
     }
 
     func testStatisticsPeriodTitlesCoverEveryRange() {
