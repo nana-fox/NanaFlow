@@ -1,0 +1,32 @@
+MISSING '专注': Sources/NanaFocus/CustomDurationView.swift:35, Sources/NanaFocus/CustomDurationView.swift:48
+MISSING '专注、休息、继续。': Sources/NanaFocus/HelpViews.swift:39
+MISSING '专注时播放滴答声': Sources/NanaFocus/TimerSettingsView.swift:70
+MISSING '今天': Sources/NanaShared/NanaFlowShared.swift:111
+MISSING '减少%@': Sources/NanaFocus/CustomDurationView.swift:118
+MISSING '增加%@': Sources/NanaFocus/CustomDurationView.swift:125
+MISSING '完整备份': Sources/NanaFocus/StatisticsView.swift:590
+MISSING '导入备份…': Sources/NanaFocus/StatisticsView.swift:594
+MISSING '开始休息': Sources/NanaFocus/TimerOptionsMenuContent.swift:21
+MISSING '循环': Sources/NanaFocus/CustomDurationView.swift:38
+MISSING '打开 NanaFlow 应用。': Sources/NanaShared/NanaFlowShared.swift:195
+MISSING '提醒': Sources/NanaFocus/TimerSettingsView.swift:55
+MISSING '无法处理数据': Sources/NanaFocus/StatisticsView.swift:621
+MISSING '显示统计': Sources/NanaFocus/NanaFocusApp.swift:157
+MISSING '显示计时器': Sources/NanaFocus/NanaFocusApp.swift:153
+MISSING '登录时启动': Sources/NanaFocus/TimerSettingsView.swift:32
+MISSING '短休息': Sources/NanaFocus/CustomDurationView.swift:36
+MISSING '自动开始': Sources/NanaFocus/CustomDurationView.swift:45
+MISSING '计时开始后隐藏窗口': Sources/NanaFocus/TimerSettingsView.swift:35
+MISSING '计时设置': Sources/NanaFocus/CustomDurationView.swift:68, Sources/NanaFocus/TimerOptionsMenuContent.swift:11
+MISSING '计时设置…': Sources/NanaFocus/NanaFocusApp.swift:171
+MISSING '设置…': Sources/NanaFocus/NanaFocusApp.swift:172, Sources/NanaFocus/TimerOptionsMenuContent.swift:16
+MISSING '跳到专注': Sources/NanaFocus/NanaFocusApp.swift:160
+MISSING '跳到休息': Sources/NanaFocus/NanaFocusApp.swift:160
+MISSING '轮': Sources/NanaFocus/CustomDurationView.swift:38
+MISSING '返回专注': Sources/NanaFocus/TimerOptionsMenuContent.swift:21
+MISSING '返回计时器': Sources/NanaFocus/StatisticsView.swift:164
+MISSING '退出 NanaFlow': Sources/NanaFocus/NanaFocusApp.swift:175
+MISSING '重新开始': Sources/NanaFocus/NanaFocusApp.swift:169
+MISSING '长休息': Sources/NanaFocus/CustomDurationView.swift:37
+MISSING '隐藏计时器': Sources/NanaFocus/NanaFocusApp.swift:153
+Audited 216 source keys; 31 missing English entries; 0 non-English translations.
