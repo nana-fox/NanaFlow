@@ -1,0 +1,2 @@
+  PID COMM
+41738 /Applications/NanaFlow.app/Contents/MacOS/NanaFlow

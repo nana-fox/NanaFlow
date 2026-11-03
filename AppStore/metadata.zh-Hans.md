@@ -88,3 +88,13 @@ NanaFlow 追求简单：打开、开始、专注，然后回到工作。
 - 隐私政策 URL：`https://nana-fox.github.io/privacy/`
 - 支持 URL：`https://nana-fox.github.io/support/`
 - 营销 URL：`https://nana-fox.github.io/`
+
+## 1.0.2 版本说明
+
+1.0.2（5）本地草稿。描述已将快捷键范围限定为应用处于活动状态时，与候选版实际入口一致。上方 1.0.1 版本说明保留为历史，1.0.2 使用下方版本说明；本次未修改 Apple 侧字段。
+
+<!-- field:zh-Hans.version_notes -->
+```text
+• 补全英文菜单、设置、计时标签与辅助功能文本
+• 修正阶段切换菜单和时长控件中未翻译的文字
+```

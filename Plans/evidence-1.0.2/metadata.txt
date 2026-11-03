@@ -1,0 +1,13 @@
+zh-Hans.app_name: 8/30 characters
+zh-Hans.subtitle: 11/30 characters
+zh-Hans.promotional_text: 61/170 characters
+zh-Hans.description: 412/4000 characters
+zh-Hans.keywords: 72/100 bytes
+zh-Hans.version_notes: 46/4000 characters
+en-US.app_name: 8/30 characters
+en-US.subtitle: 24/30 characters
+en-US.promotional_text: 158/170 characters
+en-US.description: 1169/4000 characters
+en-US.keywords: 84/100 bytes
+en-US.version_notes: 137/4000 characters
+metadata validation passed

@@ -1,0 +1,74 @@
+{
+  "version": "1.0.2",
+  "build": "5",
+  "ui_source_commit": "8fd36e09eda6a8299e549058e544029e165f71de",
+  "identity": "com.nanafox.NanaFlow.Screenshots",
+  "method": "Shipping SwiftUI views at 4x and native menu/settings windows with 4x backing; opaque marketing canvas; no prototype or reconstructed controls",
+  "timer_digit_ink_height_px": 203,
+  "images": [
+    {
+      "path": "AppStore/Screenshots/1.0.2/en-US/01-focus-menu.png",
+      "bytes": 2943743,
+      "sha256": "88c627afaa0d8ae736725d8e4d360c3aec7a9e915f31be935c066a00da63f8c3",
+      "width": 2880,
+      "height": 1800,
+      "hasAlpha": false
+    },
+    {
+      "path": "AppStore/Screenshots/1.0.2/en-US/02-week-count.png",
+      "bytes": 3437327,
+      "sha256": "25337bb94b0661500fe0574b3832772880520b7598ccf843802a4bb1f0fbbe53",
+      "width": 2880,
+      "height": 1800,
+      "hasAlpha": false
+    },
+    {
+      "path": "AppStore/Screenshots/1.0.2/en-US/03-month-duration.png",
+      "bytes": 3454742,
+      "sha256": "2455a707d5e84090fcab1015603d76a19efdd333d407283ad6616075b5d9a7c8",
+      "width": 2880,
+      "height": 1800,
+      "hasAlpha": false
+    },
+    {
+      "path": "AppStore/Screenshots/1.0.2/en-US/04-completion-sounds.png",
+      "bytes": 3486715,
+      "sha256": "042743fae1b12f9a6b5f7177432b5679f026d597790c92ff5d52073a67c63b29",
+      "width": 2880,
+      "height": 1800,
+      "hasAlpha": false
+    },
+    {
+      "path": "AppStore/Screenshots/1.0.2/zh-Hans/01-focus-menu.png",
+      "bytes": 2934027,
+      "sha256": "a7f4d0822c51020f5a4269f65ebfe95c01adc173147ef8de7684a27f6b8fa454",
+      "width": 2880,
+      "height": 1800,
+      "hasAlpha": false
+    },
+    {
+      "path": "AppStore/Screenshots/1.0.2/zh-Hans/02-week-count.png",
+      "bytes": 3429106,
+      "sha256": "59dcdc7ee5ab9a761436c9c7515c272174ee09424ace85b945dabf3a61515626",
+      "width": 2880,
+      "height": 1800,
+      "hasAlpha": false
+    },
+    {
+      "path": "AppStore/Screenshots/1.0.2/zh-Hans/03-month-duration.png",
+      "bytes": 3464150,
+      "sha256": "7e4c75c6218e957bafbd15cd33c5de204f8fdde3caa843281c9a8ad566df18b0",
+      "width": 2880,
+      "height": 1800,
+      "hasAlpha": false
+    },
+    {
+      "path": "AppStore/Screenshots/1.0.2/zh-Hans/04-completion-sounds.png",
+      "bytes": 3485815,
+      "sha256": "0f58df1fcbbff5082056c4b0db4b95f717543e8d1c4fec6b6c849d2011a08980",
+      "width": 2880,
+      "height": 1800,
+      "hasAlpha": false
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+/Users/oyd/orca/workspaces/NanaFlow/release-1.0.2/AppStore/Screenshots/1.0.2/en-US/01-focus-menu.png
+  pixelWidth: 2880
+  pixelHeight: 1800
+  hasAlpha: no
+/Users/oyd/orca/workspaces/NanaFlow/release-1.0.2/AppStore/Screenshots/1.0.2/en-US/02-week-count.png
+  pixelWidth: 2880
+  pixelHeight: 1800
+  hasAlpha: no
+/Users/oyd/orca/workspaces/NanaFlow/release-1.0.2/AppStore/Screenshots/1.0.2/en-US/03-month-duration.png
+  pixelWidth: 2880
+  pixelHeight: 1800
+  hasAlpha: no
+/Users/oyd/orca/workspaces/NanaFlow/release-1.0.2/AppStore/Screenshots/1.0.2/en-US/04-completion-sounds.png
+  pixelWidth: 2880
+  pixelHeight: 1800
+  hasAlpha: no
+/Users/oyd/orca/workspaces/NanaFlow/release-1.0.2/AppStore/Screenshots/1.0.2/zh-Hans/01-focus-menu.png
+  pixelWidth: 2880
+  pixelHeight: 1800
+  hasAlpha: no
+/Users/oyd/orca/workspaces/NanaFlow/release-1.0.2/AppStore/Screenshots/1.0.2/zh-Hans/02-week-count.png
+  pixelWidth: 2880
+  pixelHeight: 1800
+  hasAlpha: no
+/Users/oyd/orca/workspaces/NanaFlow/release-1.0.2/AppStore/Screenshots/1.0.2/zh-Hans/03-month-duration.png
+  pixelWidth: 2880
+  pixelHeight: 1800
+  hasAlpha: no
+/Users/oyd/orca/workspaces/NanaFlow/release-1.0.2/AppStore/Screenshots/1.0.2/zh-Hans/04-completion-sounds.png
+  pixelWidth: 2880
+  pixelHeight: 1800
+  hasAlpha: no

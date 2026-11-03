@@ -88,3 +88,13 @@ focus timer,pomodoro,productivity,time management,menu bar,statistics,break remi
 - Privacy Policy URL: `https://nana-fox.github.io/en/privacy/`
 - Support URL: `https://nana-fox.github.io/en/support/`
 - Marketing URL: `https://nana-fox.github.io/en/`
+
+## Version 1.0.2 notes
+
+Local draft for 1.0.2 (5). The existing description already limits shortcuts to NanaFlow while active and matches the reachable candidate UI. The 1.0.1 note above is retained as history; use the following version notes for 1.0.2. No Apple fields have been changed for this release.
+
+<!-- field:en-US.version_notes -->
+```text
+• Completed English menus, settings, timer labels and accessibility text
+• Fixed untranslated stage-switch commands and duration controls
+```

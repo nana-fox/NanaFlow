@@ -98,6 +98,7 @@ import SwiftUI
         // ScrollView and NSViewRepresentable must be laid out in a real window.
         RunLoop.current.run(until: Date().addingTimeInterval(0.15))
         host.layoutSubtreeIfNeeded()
+
         func configureScale(_ layer: CALayer) {
             layer.contentsScale = 4
             layer.rasterizationScale = 4
@@ -112,6 +113,7 @@ import SwiftUI
         try bitmap.representation(using: .png, properties: [:])!.write(to: output.appendingPathComponent(name + ".png"))
         window.close()
     }
+
 
     func render<V: View>(_ view: V, name: String, width: CGFloat, height: CGFloat) throws {
         let renderer = ImageRenderer(content: view.environment(\.locale, Locale.current).environment(\.colorScheme, .light))

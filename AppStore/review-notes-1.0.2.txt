@@ -1,0 +1,9 @@
+NanaFlow 1.0.2 (5) completes English localization for the existing native macOS focus timer. No account or sign-in is required.
+
+Launch NanaFlow and choose OK in the first-launch welcome screen. NanaFlow is a menu-bar utility with no Dock icon. Left-click the countdown and choose Show Timer if its window is hidden. Right-click or Control-click the countdown to start or pause.
+
+Use the circular button to start/pause. The chart button opens day/week/month/year statistics in the same window. Count and Duration switch between completed focus sessions and net focus time; hover over a bar for its value. The timer's More menu opens Timer Settings, Statistics, Settings and About NanaFlow. Settings provides separate focus/break completion sounds and a volume control. Notifications are off by default; enabling them requests macOS permission, and the timer works if permission is denied.
+
+This update completes English text in menus, timer settings, alerts and accessibility labels, including commands selected dynamically at runtime. English and Simplified Chinese provide the same features. Keyboard shortcuts advertised in the description work while NanaFlow is active.
+
+The existing Widget extension and local App Group storage remain. There is no Calendar integration, iCloud sync, blocker, paywall, tag workflow, or online account service. Session-list browsing and JSON backup/import have no entry point in the store UI. App text and Widget quotations are NanaFlow-authored; Phosphor Icons use their included license. No third-party online service is required.

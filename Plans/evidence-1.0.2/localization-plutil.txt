@@ -1,0 +1,4 @@
+Sources/NanaFocus/en.lproj/Localizable.strings: OK
+Sources/NanaFocus/en.lproj/Localizable.stringsdict: OK
+Sources/NanaFocus/zh-Hans.lproj/Localizable.strings: OK
+Sources/NanaFocus/zh-Hans.lproj/Localizable.stringsdict: OK

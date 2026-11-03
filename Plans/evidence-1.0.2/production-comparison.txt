@@ -1,0 +1,2 @@
+Read-only receipt: 85 entries; build/release-1.0.2/evidence/production-after.json
+DIFFERENT: 2 files (paths, mtimes and hashes only; do not inspect contents)

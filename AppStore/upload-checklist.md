@@ -93,3 +93,15 @@ The following records describe the September 2026 first-release work. They are r
 As of 2026-09-24, candidate `1.0.0 (2)` is the only intended review candidate. Calendar/EventKit, App/Web Blocker, Pro-unlock UI, tag catalog CRUD/UI, and iCloud timer sync are absent from the release UI and code paths; only `en` and `zh-Hans` ship. The candidate passed 200 tests, Release Analyze, universal signed Archive, deep signature verification, effective-entitlement inspection, linked-framework/symbol inspection, and App Store upload validation. The App and Widget use Team `LTLULSL8A2`, and the signed entitlements contain only the sandbox, shared App Group, user-selected file access where applicable, and Apple signing identifiers. Named third-party quotations were removed before build 2; all generated Widget quotations are attributed to NanaFlow. The upload was accepted for processing at 2026-09-22 15:43 CST.
 
 Build `1.0.0 (2)` is attached to macOS version 1.0 and saved. The signed TestFlight candidate is installed and verified, the three real candidate screenshots are uploaded for both listing locales, and the listing copy is saved in Chinese and English. App Privacy is published as “Data Not Collected”, content rights are set to no third-party content, and App Store Connect accepted the version for review on 2026-09-24. The price is free, all 175 storefronts are available, and the EU DSA non-trader declaration is valid. Apple notes that review may take up to 48 hours.
+
+
+## 1.0.2（5）— 由所有者确认后执行
+
+本地准备与截图不代表已上传或发布。以下外部步骤全部保留未勾选，须经所有者确认；此工作分支没有执行它们。
+
+- [ ] 所有者确认候选版和本地验收报告后，使用 Xcode Organizer 上传 1.0.2（5）。
+- [ ] 等待处理完成，在 App Store Connect 的 1.0.2 版本选择构建 5。
+- [ ] 按 `screenshots.md` 的 1.0.2 登记表顺序替换 zh-Hans 和 en-US 各 4 张截图。
+- [ ] 保存两种语言已修正快捷键范围的描述，以及新增的 1.0.2 版本说明。
+- [ ] 保存 `review-notes-1.0.2.txt`，由所有者核对审核联系人、出口合规和发布方式。
+- [ ] 所有者最终确认后提交审核；不自动发布。

@@ -1,0 +1,3 @@
+Archive app + Widget: 1.0.2 (5), strict signatures valid; signing identity and Team match 1.0.1.
+Executable SHA256: 850975fb37e03da0bb4e8405a3a0efdb3e18142b27efe0a15b8d124f9b537e93
+Export app + Widget: Apple Distribution / LTLULSL8A2; signed local package: build/release-1.0.2/ExportRelease/NanaFlow.pkg

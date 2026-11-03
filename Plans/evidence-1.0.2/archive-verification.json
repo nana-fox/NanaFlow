@@ -1,0 +1,31 @@
+{
+  "archive_path": "/Users/oyd/Library/Developer/NanaFlow-ReleaseArchives.noindex/NanaFlow-1.0.2-build5.xcarchive",
+  "bundles": {
+    "app": {
+      "CFBundleIdentifier": "com.nanafox.NanaFlow",
+      "CFBundleShortVersionString": "1.0.2",
+      "CFBundleVersion": "5",
+      "signature": "Executable=/Users/oyd/Library/Developer/NanaFlow-ReleaseArchives.noindex/NanaFlow-1.0.2-build5.xcarchive/Products/Applications/NanaFlow.app/Contents/MacOS/NanaFlow\nIdentifier=com.nanafox.NanaFlow\nFormat=app bundle with Mach-O universal (x86_64 arm64)\nCodeDirectory v=20400 size=2072 flags=0x0(none) hashes=54+7 location=embedded\nSignature size=4766\nAuthority=Apple Development: Nio D (SA88DN9S45)\nAuthority=Apple Worldwide Developer Relations Certification Authority\nAuthority=Apple Root CA\nSigned Time=3 Nov 2026 at 6:07:55\u202fPM\nInfo.plist entries=28\nTeamIdentifier=LTLULSL8A2\nSealed Resources version=2 rules=13 files=59\nInternal requirements count=1 size=176\nTotal signatures=1\nChosen signature=1\n"
+    },
+    "widget": {
+      "CFBundleIdentifier": "com.nanafox.NanaFlow.Widget",
+      "CFBundleShortVersionString": "1.0.2",
+      "CFBundleVersion": "5",
+      "signature": "Executable=/Users/oyd/Library/Developer/NanaFlow-ReleaseArchives.noindex/NanaFlow-1.0.2-build5.xcarchive/Products/Applications/NanaFlow.app/Contents/PlugIns/NanaFlowWidget.appex/Contents/MacOS/NanaFlowWidget\nIdentifier=com.nanafox.NanaFlow.Widget\nFormat=bundle with Mach-O universal (x86_64 arm64)\nCodeDirectory v=20400 size=671 flags=0x0(none) hashes=10+7 location=embedded\nSignature size=4766\nAuthority=Apple Development: Nio D (SA88DN9S45)\nAuthority=Apple Worldwide Developer Relations Certification Authority\nAuthority=Apple Root CA\nSigned Time=3 Nov 2026 at 6:07:47\u202fPM\nInfo.plist entries=21\nTeamIdentifier=LTLULSL8A2\nSealed Resources version=2 rules=13 files=6\nInternal requirements count=1 size=184\nTotal signatures=1\nChosen signature=1\n"
+    }
+  },
+  "matching_signing_identity": "Apple Development: Nio D (SA88DN9S45)",
+  "team": "LTLULSL8A2",
+  "executable_sha256": "850975fb37e03da0bb4e8405a3a0efdb3e18142b27efe0a15b8d124f9b537e93",
+  "architecture": "x86_64 arm64",
+  "export": {
+    "package": "build/release-1.0.2/ExportRelease/NanaFlow.pkg",
+    "signatures": [
+      "Executable=/Users/oyd/orca/workspaces/NanaFlow/release-1.0.2/build/release-1.0.2/ExportReleaseExpanded/com.nanafox.NanaFlow.pkg/Payload/NanaFlow.app/Contents/MacOS/NanaFlow\nIdentifier=com.nanafox.NanaFlow\nFormat=app bundle with Mach-O universal (x86_64 arm64)\nCodeDirectory v=20400 size=2072 flags=0x0(none) hashes=54+7 location=embedded\nSignature size=4740\nAuthority=Apple Distribution: Nio D (LTLULSL8A2)\nAuthority=Apple Worldwide Developer Relations Certification Authority\nAuthority=Apple Root CA\nSigned Time=3 Nov 2026 at 6:10:42\u202fPM\nInfo.plist entries=28\nTeamIdentifier=LTLULSL8A2\nSealed Resources version=2 rules=13 files=59\nInternal requirements count=1 size=176\nTotal signatures=1\nChosen signature=1\n",
+      "Executable=/Users/oyd/orca/workspaces/NanaFlow/release-1.0.2/build/release-1.0.2/ExportReleaseExpanded/com.nanafox.NanaFlow.pkg/Payload/NanaFlow.app/Contents/PlugIns/NanaFlowWidget.appex/Contents/MacOS/NanaFlowWidget\nIdentifier=com.nanafox.NanaFlow.Widget\nFormat=bundle with Mach-O universal (x86_64 arm64)\nCodeDirectory v=20400 size=671 flags=0x0(none) hashes=10+7 location=embedded\nSignature size=4740\nAuthority=Apple Distribution: Nio D (LTLULSL8A2)\nAuthority=Apple Worldwide Developer Relations Certification Authority\nAuthority=Apple Root CA\nSigned Time=3 Nov 2026 at 6:10:41\u202fPM\nInfo.plist entries=21\nTeamIdentifier=LTLULSL8A2\nSealed Resources version=2 rules=13 files=6\nInternal requirements count=1 size=184\nTotal signatures=1\nChosen signature=1\n"
+    ],
+    "package_signature": "Package \"NanaFlow.pkg\":\n   Status: signed by a developer certificate issued by Apple (Development)\n   Certificate Chain:\n    1. 3rd Party Mac Developer Installer: Nio D (LTLULSL8A2)\n       Expires: 2027-09-22 06:45:45 +0000\n       SHA256 Fingerprint:\n           2E 8F 90 B4 07 6B 54 DA C0 B2 F8 BC 0C AD 47 F2 E0 A3 8D 67 AF 88 \n           80 FD 78 21 69 5D E4 A0 55 62\n       ------------------------------------------------------------------------\n    2. Apple Worldwide Developer Relations Certification Authority\n       Expires: 2030-02-20 00:00:00 +0000\n       SHA256 Fingerprint:\n           DC F2 18 78 C7 7F 41 98 E4 B4 61 4F 03 D6 96 D8 9C 66 C6 60 08 D4 \n           24 4E 1B 99 16 1A AC 91 60 1F\n       ------------------------------------------------------------------------\n    3. Apple Root CA\n       Expires: 2035-02-09 21:40:36 +0000\n       SHA256 Fingerprint:\n           B0 B1 73 0E CB C7 FF 45 05 14 2C 49 F1 29 5E 6E DA 6B CA ED 7E 2C \n           68 C5 BE 91 B5 A1 10 01 F0 24\n\n",
+    "package_bytes": 10510922,
+    "package_sha256": "cb1280ef6cb0eb821a873de88eb933fc61ef0889f5edb86de1f5897694912749"
+  }
+}
