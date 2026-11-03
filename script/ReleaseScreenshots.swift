@@ -5,6 +5,10 @@ import SwiftUI
 
 @MainActor private final class RenderWindow: NSWindow {
     override var backingScaleFactor: CGFloat { 4 }
+    override var canBecomeKey: Bool { true }
+    override var canBecomeMain: Bool { true }
+    override var isKeyWindow: Bool { true }
+    override var isMainWindow: Bool { true }
 }
 
 @MainActor private struct DemoTimerStore: TimerPersisting {
@@ -49,6 +53,12 @@ import SwiftUI
     let calendar = Calendar(identifier: .gregorian)
 
     func applicationDidFinishLaunching(_: Notification) {
+        NSApp.activate(ignoringOtherApps: true)
+        // Activation/key-window events are delivered after launch completes.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { self.runScreenshots() }
+    }
+
+    func runScreenshots() {
         do {
             try FileManager.default.createDirectory(at: output, withIntermediateDirectories: true)
             NSApp.appearance = NSAppearance(named: .aqua)
@@ -92,12 +102,26 @@ import SwiftUI
     func renderHosted<V: View>(_ view: V, name: String) throws {
         let window = RenderWindow(contentRect: NSRect(x: 150, y: 300, width: 380, height: 272), styleMask: [.borderless], backing: .buffered, defer: false)
         window.isReleasedWhenClosed = false
-        let host = NSHostingView(rootView: view.environment(\.locale, Locale.current).environment(\.colorScheme, .light).environment(\.displayScale, 4))
+        let host = NSHostingView(rootView: view.environment(\.locale, Locale.current).environment(\.colorScheme, .light).environment(\.displayScale, 4).environment(\.controlActiveState, .key))
         window.contentView = host
-        window.orderFront(nil)
+        NSApp.activate(ignoringOtherApps: true)
+        window.makeKeyAndOrderFront(nil)
         // ScrollView and NSViewRepresentable must be laid out in a real window.
         RunLoop.current.run(until: Date().addingTimeInterval(0.15))
         host.layoutSubtreeIfNeeded()
+        print("Hosted \(name): forced key appearance, applicationActive=\(NSApp.isActive), appearance=\(window.effectiveAppearance.name.rawValue)")
+        var notificationControlTop: CGFloat?
+        func inspectControls(_ view: NSView) {
+            if let control = view as? NSSwitch {
+                let rect = host.convert(control.bounds, from: control)
+                if name == "settings", control.state == .on, rect.minY >= 42, rect.maxY < 180 {
+                    notificationControlTop = rect.minY
+                    print("Notification ON control: \(rect)")
+                }
+            }
+            view.subviews.forEach(inspectControls)
+        }
+        inspectControls(host)
 
         func configureScale(_ layer: CALayer) {
             layer.contentsScale = 4
@@ -110,7 +134,17 @@ import SwiftUI
         guard let bitmap = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: 1520, pixelsHigh: 1088, bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: .deviceRGB, bytesPerRow: 0, bitsPerPixel: 0) else { throw NSError(domain: "Screenshot", code: 3) }
         bitmap.size = bounds.size
         host.cacheDisplay(in: bounds, to: bitmap)
-        try bitmap.representation(using: .png, properties: [:])!.write(to: output.appendingPathComponent(name + ".png"))
+        if name == "settings" {
+            try bitmap.representation(using: .png, properties: [:])!.write(to: output.appendingPathComponent("settings-full.png"))
+            // A contiguous crop aligned to the same real notification control
+            // in each locale: headers excluded, all sound/volume rows retained.
+            guard let notificationControlTop else { throw NSError(domain: "NotificationControl", code: 1) }
+            let cropY = ((notificationControlTop - 3) * 4).rounded()
+            print("Settings crop: x=0, y=\(cropY), width=1520, height=700")
+            try png(bitmap.cgImage!.cropping(to: CGRect(x: 0, y: cropY, width: 1520, height: 700))!, name: name)
+        } else {
+            try bitmap.representation(using: .png, properties: [:])!.write(to: output.appendingPathComponent(name + ".png"))
+        }
         window.close()
     }
 
@@ -159,6 +193,7 @@ import SwiftUI
 
     func captureStatusMenu() {
         let menu = service.makeMenu()
+        print("Menu symbol images attached: \(menu.items.filter { $0.image != nil }.count); native visibility policy unchanged")
         activeMenu = menu
         menuCaptureTimer = Timer(timeInterval: 0.5, repeats: false) { _ in
             MainActor.assumeIsolated {
@@ -240,7 +275,7 @@ private struct MarketingCanvas: View {
                 .position(x: 720, y: 143)
             Image(nsImage: primary)
                 .resizable()
-                .frame(width: 760, height: 544)
+                .frame(width: 760, height: CGFloat(primary.representations[0].pixelsHigh) / 2)
                 .clipShape(RoundedRectangle(cornerRadius: 23, style: .continuous))
                 .shadow(color: .black.opacity(0.16), radius: 25, y: 18)
                 .position(x: menu == nil ? 720 : 520, y: menu == nil ? 555 : 585)

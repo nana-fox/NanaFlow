@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Compile the actual release views into a separate, in-memory demo identity."""
 import json
+import plistlib
 from pathlib import Path
 import shutil
 import subprocess
@@ -26,6 +27,8 @@ def main():
     subprocess.run([shutil.which('xcodegen') or '/opt/homebrew/bin/xcodegen', 'generate', '--spec', str(WORK / 'project.json')], cwd=WORK, check=True)
     subprocess.run(['xcodebuild', 'build', '-project', str(WORK / 'NanaFlowIsolated.xcodeproj'), '-scheme', 'Screenshots', '-configuration', 'Release', '-derivedDataPath', str(WORK / 'DerivedData')], cwd=WORK, check=True)
     binary = WORK / 'DerivedData/Build/Products/Release/NanaFlowScreenshots.app/Contents/MacOS/NanaFlowScreenshots'
+    bundle = binary.parent.parent.parent
+    assert plistlib.loads((bundle / 'Contents/Info.plist').read_bytes())['CFBundleIdentifier'] == IDENTITY
     for locale, language in [('en-US', 'en'), ('zh-Hans', 'zh-Hans')]:
         destination = WORK / locale
         destination.mkdir(exist_ok=True)

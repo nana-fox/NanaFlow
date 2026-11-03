@@ -11,6 +11,23 @@ for locale in ["en-US", "zh-Hans"] {
         precondition(bitmap.pixelsWide == 2880 && bitmap.pixelsHigh == 1800, file.path)
         precondition(!bitmap.hasAlpha, "Screenshot must be opaque: \(file.path)")
         print("\(locale)/\(file.lastPathComponent): 2880x1800, hasAlpha=no")
+        if file.lastPathComponent == "04-completion-sounds.png" {
+            // The first-row ON switch must retain its active green accent.
+            // The old inactive grey render has no such pixels in this region.
+            var accentPixels = 0
+            for y in 760..<875 {
+                for x in 1800..<2125 {
+                    let color = bitmap.colorAt(x: x, y: y)!.usingColorSpace(.deviceRGB)!
+                    if color.greenComponent > 0.4,
+                       color.greenComponent - color.redComponent > 0.12,
+                       color.greenComponent - color.blueComponent > 0.03 {
+                        accentPixels += 1
+                    }
+                }
+            }
+            precondition(accentPixels >= 500, "Notification ON switch must have active accent color")
+            print("  notification ON-switch accent pixels: \(accentPixels) (>=500)")
+        }
         if file.lastPathComponent == "01-focus-menu.png" {
             // This fixed rectangle contains only the real timer digits in the
             // final marketing frame, excluding the phase title and cycle dots.

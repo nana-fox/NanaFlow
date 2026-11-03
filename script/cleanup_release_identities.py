@@ -81,6 +81,9 @@ def main():
     remaining = registrations()
     print('Exact LaunchServices queries:', json.dumps(remaining, sort_keys=True))
     assert all(not path for path in remaining.values()), remaining
+    # Only the disposable screenshot identity: never reset the owner's app or
+    # any global privacy database. Window-list capture is not used by the fixture.
+    subprocess.run(['tccutil', 'reset', 'ScreenCapture', 'com.nanafox.NanaFlow.Screenshots'], check=True)
 
 
 if __name__ == '__main__':
