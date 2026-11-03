@@ -2,8 +2,12 @@ import SwiftUI
 
 func customDurationValue(_ value: Int, unit: String, bundle: Bundle = .main) -> String {
     if unit == "轮" {
-        return String.localizedStringWithFormat(
-            NSLocalizedString("duration_rounds_format", bundle: bundle, comment: "Cycle length in rounds"), value
+        // Plural rules follow the selected app language, even when the system's
+        // regional locale uses a different plural category (e.g. English on zh).
+        return String(
+            format: NSLocalizedString("duration_rounds_format", bundle: bundle, comment: "Cycle length in rounds"),
+            locale: Locale(identifier: bundle.preferredLocalizations.first ?? Locale.current.identifier),
+            arguments: [value]
         )
     }
     return String(
