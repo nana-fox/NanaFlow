@@ -38,6 +38,10 @@ After a fresh private backup and live UI baseline, the exact signed Release arch
 
 This is a development-signed Release archive test, not an App Store/TestFlight-downloaded variant. TestFlight channel installation was not covered by this update’s runtime checks. Real preferences/history were not semantically decoded through the CLI, and full historical UUID-set equality was not audited. Notification actions, Widget pixel refresh and actual sound audibility remain deferred. These are not recorded as passed.
 
+## November 3 official-download follow-up
+
+The installed Store build 1.0.1 (4) was independently rechecked without quitting or replacing the running app. Both App and Widget pass strict signature verification, Gatekeeper reports `source=Mac App Store`, the Store receipt is present, and there is one main process and one registered official Widget. See the [official-download receipt](official-download-1.0.1.md) for executable digests and the distinction from the earlier development-signed runtime checks. The 1.0.1 acquisition gate is closed; this does not mark the deferred system checks as passed.
+
 ## First-release history
 
 Build 1.0.0 (2) passed its original test, signing, TestFlight and submission steps in September 2026; version 1.0 subsequently became publicly available. Those older checks do not establish fresh 1.0.1 runtime results. The checklist and asset register retain their source build labels.
