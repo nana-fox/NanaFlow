@@ -1,0 +1,16 @@
+diff --git a/Sources/NanaFocus/StatisticsView.swift b/Sources/NanaFocus/StatisticsView.swift
+index 7ef73b5..b096f9d 100644
+--- a/Sources/NanaFocus/StatisticsView.swift
++++ b/Sources/NanaFocus/StatisticsView.swift
+@@ -97,7 +97,11 @@ func statisticsShowsLabel(
+     case .week, .year:
+         return true
+     case .month:
+-        return index == 0 || (index + 1).isMultiple(of: 5) || index == bucketCount - 1
++        // Always show the final date, reserving room before it so 30/31 do
++        // not collide in the compact chart. Other month lengths keep 25.
++        let lastIndex = bucketCount - 1
++        return index == 0 || index == lastIndex
++            || ((index + 1).isMultiple(of: 5) && lastIndex - index >= 3)
+     }
+ }

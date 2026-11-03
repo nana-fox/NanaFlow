@@ -1,0 +1,2 @@
+  PID STARTED                      COMM
+41738 Tue Nov  3 16:24:19 2026     /Applications/NanaFlow.app/Contents/MacOS/NanaFlow

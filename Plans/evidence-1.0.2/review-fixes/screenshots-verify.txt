@@ -1,0 +1,12 @@
+en-US/01-focus-menu.png: 2880x1800, hasAlpha=no
+  actual timer digit ink height: 203px (>=160px)
+en-US/02-week-count.png: 2880x1800, hasAlpha=no
+en-US/03-month-duration.png: 2880x1800, hasAlpha=no
+en-US/04-completion-sounds.png: 2880x1800, hasAlpha=no
+  notification ON-switch accent pixels: 6969 (>=500)
+zh-Hans/01-focus-menu.png: 2880x1800, hasAlpha=no
+  actual timer digit ink height: 203px (>=160px)
+zh-Hans/02-week-count.png: 2880x1800, hasAlpha=no
+zh-Hans/03-month-duration.png: 2880x1800, hasAlpha=no
+zh-Hans/04-completion-sounds.png: 2880x1800, hasAlpha=no
+  notification ON-switch accent pixels: 6969 (>=500)

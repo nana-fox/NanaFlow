@@ -1,43 +1,43 @@
-# NanaFlow 1.0.2 worker report
+# NanaFlow 1.0.2 — independent-review fixes
 
-Branch: `release/1.0.2`; base `d029f64`; shipping UI/source commit `8fd36e09eda6a8299e549058e544029e165f71de`. Final delivery commit is in the worker_done receipt and `git rev-parse HEAD`. No push, merge, upload, submission, Apple metadata edits or website changes were performed.
+Branch `release/1.0.2`; shipping source `d706c738379a5570a1d4fdc83556b6aa5631bf55`; screenshot harness `eed2e7b55a39b131fa0a7e0631fb2398136ce87a`; final delivery commit is in the worker_done receipt. No push, merge, upload, submission, Apple metadata edit or website change.
 
 | Criterion | Result | Evidence |
 |---|---|---|
-| A — English localization | PASS | 259 audited keys, 0 missing; pre-fix 31-key failure retained; XCTest gate; four English surface images |
-| B — Version/project | PASS | 1.0.2 (5), App/Widget effective Info match; XcodeGen drift exit 0 |
-| C — Unit tests/archive/export | PASS | 214/214 tests; universal strict-signed archive matches 1.0.1 Development identity/Team; local Apple Distribution export succeeds |
-| D — Screenshots | PASS | Eight 2880×1800 opaque PNGs; real shipping views/native menus; timer digit ink 203px; separate locale processes and fictional data |
-| E — Metadata | PASS | Corrected description retained; bilingual 1.0.2 notes, review notes and unchecked owner upload steps; metadata validator exit 0 |
-| Constraint 1 — Running store app | PASS | PID 41738 remains `/Applications/NanaFlow.app/Contents/MacOS/NanaFlow`; no quit, kill, relaunch or replacement |
-| Constraint 2 — Production-data comparison | DIFF, coordinator reviewed | Same 85 entries; 2 preference hashes differ; mtime attribution to running store timer accepted by coordinator, contents unread, no action |
-| Constraint 3 — Production identity launch gate | PASS | Only ReleaseTests / Screenshots hosts launched; separate App Group, minimal test entry; production candidate never launched |
-| Constraint 4 — Fixture cleanup | PASS | Exact containers/preferences/groups removed or absent; exact Widget and LaunchServices queries empty |
-| Constraint 5 — Local-only work | PASS | Local branch/commits only; export destination=export; no outward publication actions |
-| Constraint 6 — Historical text | PASS | Existing history and 1.0.1 notes untouched; current metadata/register/checklist/README only appended |
+| Fix 1: active ON toggle / clean equal framing | PASS | Both 04 images show a green ON track (6969 accent pixels); section/page headers excluded completely; same 1520×700 continuous crop aligned to the actual control; production settings unchanged |
+| Fix 2: menu icons | DROPPED BY COORDINATOR | macOS 27 automatic image policy retained; no preferredImageVisibility override or menu production diff; final in-process native menu capture requires no Screen Recording grant; exact TCC reset succeeded |
+| Fix 3: month-end labels | PASS | Failing test first b95d356; fix d706c73; 28/29/30/31-day cases preserve the last date with spacing; both 03 images regenerated |
+| A: localization | PASS | 259 audited keys / 0 missing; full XCTest gate retained |
+| B: version/project | PASS | 1.0.2 (5), App/Widget versions match; drift check exit 0 |
+| C: tests/archive/export | PASS | 215/215 tests; new universal archive and local signed distribution export validated |
+| D: screenshot assets | PASS | 8 opaque 2880×1800 PNGs; real candidate controls, 203px timer ink; four revised images inspected; 01 unchanged byte-for-byte |
+| E: metadata | PASS | Validator exit 0; current release notes also mention the real month-end label repair; owner upload steps remain unchecked |
+| Constraint 1: running store app | PASS | PID 41738 continuously started 16:24:19; installed path still /Applications/NanaFlow.app; no quit/kill/relaunch/replace |
+| Constraint 2: data receipts | DIFF / no attribution | DIFF: 1 preference file changed among 85 unchanged paths; contents not decoded, no attribution or corrective write made. |
+| Constraint 3: production launch gate | PASS | Only isolated screenshot/test hosts; separate suites; production archive never launched |
+| Constraint 4: identity cleanup | PASS | Exact fixture containers/preferences/Widget/LaunchServices cleaned; exact ScreenCapture reset; temporary archive registration removed |
+| Constraint 5: local-only | PASS | Local branch/commits, destination=export only |
+| Constraint 6: historical text | PASS | 1.0.1 history untouched; plan and screenshot register append superseding review records |
 
-Archive: `/Users/oyd/Library/Developer/NanaFlow-ReleaseArchives.noindex/NanaFlow-1.0.2-build5.xcarchive`. Main executable SHA-256: `850975fb37e03da0bb4e8405a3a0efdb3e18142b27efe0a15b8d124f9b537e93`. Export: `build/release-1.0.2/ExportRelease/NanaFlow.pkg` (10,510,922 bytes; App and Widget Apple Distribution / LTLULSL8A2).
+Archive: `/Users/oyd/Library/Developer/NanaFlow-ReleaseArchives.noindex/NanaFlow-1.0.2-build5.xcarchive` (overwritten with 1.0.2 build 5). Main executable SHA-256: `abd19732001008099166356db2460a0a96f402b306ceebe868655c3a0e5c68d3`. Export: `build/release-1.0.2/ExportReviewFixes/NanaFlow.pkg` (10,511,003 bytes; App/Widget Apple Distribution / LTLULSL8A2; strict signature checks pass).
 
 | Screenshot | Bytes | Dimensions | Alpha |
 |---|---:|---|---|
 | `AppStore/Screenshots/1.0.2/en-US/01-focus-menu.png` | 2,943,743 | 2880×1800 | no |
 | `AppStore/Screenshots/1.0.2/en-US/02-week-count.png` | 3,437,327 | 2880×1800 | no |
-| `AppStore/Screenshots/1.0.2/en-US/03-month-duration.png` | 3,454,742 | 2880×1800 | no |
-| `AppStore/Screenshots/1.0.2/en-US/04-completion-sounds.png` | 3,486,715 | 2880×1800 | no |
+| `AppStore/Screenshots/1.0.2/en-US/03-month-duration.png` | 3,454,250 | 2880×1800 | no |
+| `AppStore/Screenshots/1.0.2/en-US/04-completion-sounds.png` | 3,946,183 | 2880×1800 | no |
 | `AppStore/Screenshots/1.0.2/zh-Hans/01-focus-menu.png` | 2,934,027 | 2880×1800 | no |
 | `AppStore/Screenshots/1.0.2/zh-Hans/02-week-count.png` | 3,429,106 | 2880×1800 | no |
-| `AppStore/Screenshots/1.0.2/zh-Hans/03-month-duration.png` | 3,464,150 | 2880×1800 | no |
-| `AppStore/Screenshots/1.0.2/zh-Hans/04-completion-sounds.png` | 3,485,815 | 2880×1800 | no |
+| `AppStore/Screenshots/1.0.2/zh-Hans/03-month-duration.png` | 3,463,657 | 2880×1800 | no |
+| `AppStore/Screenshots/1.0.2/zh-Hans/04-completion-sounds.png` | 3,943,142 | 2880×1800 | no |
 
-Extra English timer-options evidence: `Plans/evidence-1.0.2/A-en-timer-options.png` (3,178,682 bytes). Image hashes/source details: `AppStore/Screenshots/1.0.2/manifest.json`.
 
-DIFF in 2 preference plists, attributed by mtime pattern to the owner's running store app (25-minute session interval); contents not read; no action taken. Coordinator reviewed 2026-11-03.
-
-| Changed preference file | Before mtime (UTC+08) | After mtime (UTC+08) | Bytes |
+| Changed file | Before mtime (UTC+08) | After mtime (UTC+08) | Bytes |
 |---|---|---|---|
-| `~/Library/Containers/com.nanafox.NanaFlow/Data/Library/Preferences/com.nanafox.NanaFlow.plist` | 2026-11-03T17:34:33.264839+08:00 | 2026-11-03T17:59:42.515009+08:00 | 52733 → 52869 |
-| `~/Library/Group Containers/group.com.nanafox.NanaFlow/Library/Preferences/group.com.nanafox.NanaFlow.plist` | 2026-11-03T17:34:22.519155+08:00 | 2026-11-03T17:59:42.517845+08:00 | 50460 → 50648 |
+| `~/Library/Containers/com.nanafox.NanaFlow/Data/Library/Preferences/com.nanafox.NanaFlow.plist` | 2026-11-03T17:59:42.515009+08:00 | 2026-11-03T18:50:52.533305+08:00 | 52869 → 52921 |
 
-Open issues: no code/test/build/export blockers. The two production-preference DIFFs are disclosed and reviewed, with no remediation. Coordinator independent review and owner-confirmed upload/submission remain; the worker has not published anything. The archive temporary LaunchServices registration was removed by its exact generated path, and production resolution reads `/Applications/NanaFlow.app`.
 
-Full per-criterion commands, summaries, audit table and failure history: `Plans/release-1.0.2.md`. Verbose local evidence and private hash receipts: `build/release-1.0.2/evidence/`. Concise committed evidence: `Plans/evidence-1.0.2/`.
+Production inventory/hash receipts remain local under `build/release-1.0.2/evidence/review-fixes/`, without decoding their contents. The prior run's two-file DIFF and its coordinator-reviewed mtime attribution remain historical in the plan; this repair-run DIFF is reported separately without an invented cause.
+
+No code/test/build/export blockers remain; the data comparison is disclosed for coordinator review. Coordinator independent visual review and owner-confirmed upload/submission remain; no outward release action was taken. Full commands and audit trail: the final review section in `Plans/release-1.0.2.md`; concise committed receipts in `Plans/evidence-1.0.2/review-fixes/`; current image hashes in `AppStore/Screenshots/1.0.2/manifest.json`.

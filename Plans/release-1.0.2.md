@@ -418,3 +418,47 @@ python3 script/verify_release_archive.py \
 - 清理脚本最初在已未注册的插件/应用上重试删除得到非零，日志 `cleanup-initial.txt` 与 `cleanup-already-unregistered.txt` 已保留；最终脚本先做精确身份查询，幂等清理后 exit 0，并再次证明两个独立身份均未注册。
 - 截图只验收本计划要求的实际像素与演示状态；没有声称完成 App Store 上传、提审、真实商店升级、Widget Gallery 或真实通知/声音的额外运行验收。没有改动通知声音实现。
 - 无代码、测试、归档或导出阻塞；生产数据的 2 个 DIFF 已按协调者复核记录且未采取动作。协调者独立复核与所有者确认上传/提审仍是后续步骤，不在本 worker 的外发权限内。
+
+
+## 2026-11-03 独立复核后的修订记录
+
+本节为当前候选的最终记录，取代上方早期候选的对应结果；早期记录与旧 SHA 保留为历史。归档路径已按要求覆盖，版本仍为 **1.0.2（5）**，正式源码提交 `d706c738379a5570a1d4fdc83556b6aa5631bf55`，截图工具提交 `eed2e7b55a39b131fa0a7e0631fb2398136ce87a`；本轮任务 `task_08235066a970` / `ctx_89dee02ea9da`。
+
+| 复核项 / 检查 | 结果 | 命令与输出摘要 | 证据 |
+|---|---|---|---|
+| 1：设置 ON 外观 | PASS | `python3 script/render_release_screenshots.py`：独立 RenderWindow 强制 key/main 外观并传入 controlActiveState.key；两种语言 ON 开关均为绿色，像素检查各 6969 ≥500 | `script/ReleaseScreenshots.swift`；`Plans/evidence-1.0.2/review-fixes/screenshots-verify.txt` |
+| 1：分节标题 / 相同取景 | PASS | 依据真实 NSSwitch 在窗口中的位置连续裁切：en y=184、zh y=240，均 1520×700；顶部留同样 12px 边距，页标题与“提醒”均完全不入镜，通知/专注/休息/音量及说明完整；没有拼接或重绘控件 | 两种语言 `04-completion-sounds.png`；`manifest.json` |
+| 2：菜单图标 | 按协调者更正撤销图标修改 | macOS 27 SDK `NSMenuItem.h` 明确 Automatic 通常隐藏图像；`preferredImageVisibility=.visible` 草稿已全部撤回，正式 `NanaFocusApp.swift` 相比 `97b732a` 无差异；最终使用原进程内原生菜单渲染，不覆盖系统策略 | Orca `msg_a66af162a2ad`、`msg_64ec22b960d2`；截图登记表 |
+| 2：屏幕录制权限 | 已清理，不依赖 | 窗口 ID 路径曾尝试，独立身份权限未授予，已停止该路线；最终工具不调用 screencapture / ScreenCaptureKit；`tccutil reset ScreenCapture com.nanafox.NanaFlow.Screenshots` exit 0，且在注销该身份之前执行 | `review-fixes/cleanup.txt`；`tcc-cleanup.txt` |
+| 3：先失败测试 | PASS（预期失败） | `python3 script/run_isolated_tests.py -only-testing:NanaFlowTests/SessionHistoryTests/testMonthAxisPreservesEndDateWithoutCrowdingLabelsForEveryMonthLength`：修复前 1 test / 2 failures，31 天出现 30/31 相邻；提交 b95d356 | `Plans/evidence-1.0.2/review-fixes/month-axis-before.txt` |
+| 3：月末标签修复 | PASS | 保留最后一天，前一个五日标签至少间隔 3 天；28/29/30/31 均保留 1/5/10/15/20/25/末日；31 天不再显示 30；提交 d706c73 | `Sources/NanaFocus/StatisticsView.swift`；`Tests/NanaFocusTests/SessionHistoryTests.swift`；两种语言 `03-month-duration.png` |
+| 全量隔离单测 | PASS | `script/test.sh`：215 tests / 0 failures，未排除用例 | `build/release-1.0.2/evidence/review-fixes/tests.txt`；提交的 tests-summary |
+| 本地化 / 工程漂移 / 文案 | PASS | `python3 script/check_localization.py --audit Plans/evidence-1.0.2/review-fixes/localization-audit.md`：259/0；`script/check_xcodegen_drift.sh` exit 0；`python3 AppStore/validate_metadata.py` exit 0；版本说明补充真实月末标签修复 | 同目录 localization / drift / metadata 记录 |
+| 截图验证 | PASS | `swift script/verify_release_screenshots.swift AppStore/Screenshots/1.0.2`：8 张 2880×1800、无 alpha；两种语言计时数字 203px；通知 ON 强调色各 6969px；`sips -g pixelWidth -g pixelHeight -g hasAlpha …` 一致 | screenshots-verify / screenshot-properties；逐张目视检查四张修改图；01 与 97b732a 字节相同 |
+| Release 重归档 | PASS | `xcodebuild archive -project NanaFlow.xcodeproj -scheme NanaFlow -configuration Release -destination 'generic/platform=macOS' -archivePath ~/Library/Developer/NanaFlow-ReleaseArchives.noindex/NanaFlow-1.0.2-build5.xcarchive -derivedDataPath build/release-1.0.2/ArchiveDerivedData`：ARCHIVE SUCCEEDED | review-fixes/archive.txt；archive-verification.json |
+| 最新归档 / 导出校验 | PASS | `xcodebuild -exportArchive`，仍为 method=app-store-connect / destination=export，输出 ExportReviewFixes；`pkgutil --expand-full` 后 `python3 script/verify_release_archive.py --archive … --previous … --export-app … --package … --output …`：App / Widget 1.0.2(5)，开发归档身份匹配 1.0.1，同 Team，严格签名通过；导出为 Apple Distribution | `build/release-1.0.2/ExportReviewFixes/NanaFlow.pkg`；review-fixes/archive-verification.json |
+| 生产数据收据 | DIFF，未归因 | `python3 script/release_data_snapshot.py build/release-1.0.2/evidence/review-fixes/production-after.json --compare build/release-1.0.2/evidence/review-fixes/production-before.json`：DIFF: 1 preference file changed among 85 unchanged paths; contents not decoded, no attribution or corrective write made. | 本地 before / after / comparison JSON；下方 mtime 表 |
+| 原有边界 / 清理 | PASS | 未启动生产 ID，未读/解码/回写生产内容，无 push/merge/upload/提审/Apple 字段编辑/网站变更；生产 PID 41738 启动于 16:24:19，仍解析至 `/Applications/NanaFlow.app`；精确清理两个 fixture identity、Widget、容器、偏好、TCC；归档临时注册路径精确注销 | review-fixes/production-process.txt、production-app-resolution.txt、cleanup.txt；archive-registration-cleanup.txt |
+
+当前归档主程序 SHA-256：`abd19732001008099166356db2460a0a96f402b306ceebe868655c3a0e5c68d3`。当前本地导出包 `build/release-1.0.2/ExportReviewFixes/NanaFlow.pkg`：10,511,003 字节，SHA-256 `c79508dac6ca88e663b92ae6dda19c5ad32ae579b9040c640f2893cc32e1d266`。本轮唯一正式产品源码改动为月统计标签策略；设置代码及菜单工厂未改动。
+
+| Changed file | Before mtime (UTC+08) | After mtime (UTC+08) | Bytes |
+|---|---|---|---|
+| `~/Library/Containers/com.nanafox.NanaFlow/Data/Library/Preferences/com.nanafox.NanaFlow.plist` | 2026-11-03T17:59:42.515009+08:00 | 2026-11-03T18:50:52.533305+08:00 | 52869 → 52921 |
+
+
+完整生产数据清单只保留于本地 build 目录，未提交；本轮不对 mtime 变化作未经核对的归因，也未因差异执行任何数据恢复。上一轮 2 文件差异及协调者对其时间模式的归因仍保留在上方历史记录，不等同于本轮结论。
+
+| Screenshot | Bytes | Dimensions | Alpha |
+|---|---:|---|---|
+| `AppStore/Screenshots/1.0.2/en-US/01-focus-menu.png` | 2,943,743 | 2880×1800 | no |
+| `AppStore/Screenshots/1.0.2/en-US/02-week-count.png` | 3,437,327 | 2880×1800 | no |
+| `AppStore/Screenshots/1.0.2/en-US/03-month-duration.png` | 3,454,250 | 2880×1800 | no |
+| `AppStore/Screenshots/1.0.2/en-US/04-completion-sounds.png` | 3,946,183 | 2880×1800 | no |
+| `AppStore/Screenshots/1.0.2/zh-Hans/01-focus-menu.png` | 2,934,027 | 2880×1800 | no |
+| `AppStore/Screenshots/1.0.2/zh-Hans/02-week-count.png` | 3,429,106 | 2880×1800 | no |
+| `AppStore/Screenshots/1.0.2/zh-Hans/03-month-duration.png` | 3,463,657 | 2880×1800 | no |
+| `AppStore/Screenshots/1.0.2/zh-Hans/04-completion-sounds.png` | 3,943,142 | 2880×1800 | no |
+
+
+本轮截图调试曾发生：启动时机导致非 key 外观；更长等待和单独 GUI 启动未形成可靠捕获；曾尝试仅非可见滚动定位标记，但已完全撤回。最终未更改任何生产设置布局或菜单图标策略，仅通过独立窗口 key 外观及连续取景修正图片。TCC 清理最初放在 LaunchServices 注销之后而返回“无此 bundle ID”，已调整为先精确解析/临时登记该 fixture、重置其 ScreenCapture，再注销并读回两个身份都不存在；最终清理 exit 0，完整失败输出留在本地 `cleanup-before-ordering.txt`。

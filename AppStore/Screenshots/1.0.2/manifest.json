@@ -1,9 +1,29 @@
 {
   "version": "1.0.2",
   "build": "5",
-  "ui_source_commit": "8fd36e09eda6a8299e549058e544029e165f71de",
+  "ui_source_commit": "d706c738379a5570a1d4fdc83556b6aa5631bf55",
+  "capture_harness_commit": "eed2e7b55a39b131fa0a7e0631fb2398136ce87a",
   "identity": "com.nanafox.NanaFlow.Screenshots",
-  "method": "Shipping SwiftUI views at 4x and native menu/settings windows with 4x backing; opaque marketing canvas; no prototype or reconstructed controls",
+  "method": "Shipping SwiftUI views/native menu at 4x; settings forced key/active control appearance and one continuous crop aligned to the real ON control; no Screen Recording/window-list capture in final harness",
+  "menu_image_policy": "macOS 27 automatic image visibility retained; no preferredImageVisibility override",
+  "settings_source_crop": {
+    "en-US": [
+      0,
+      184,
+      1520,
+      700
+    ],
+    "zh-Hans": [
+      0,
+      240,
+      1520,
+      700
+    ]
+  },
+  "notification_on_accent_pixels": {
+    "en-US": 6969,
+    "zh-Hans": 6969
+  },
   "timer_digit_ink_height_px": 203,
   "images": [
     {
@@ -24,16 +44,16 @@
     },
     {
       "path": "AppStore/Screenshots/1.0.2/en-US/03-month-duration.png",
-      "bytes": 3454742,
-      "sha256": "2455a707d5e84090fcab1015603d76a19efdd333d407283ad6616075b5d9a7c8",
+      "bytes": 3454250,
+      "sha256": "f9df5b21a382b29bed4fefd15c3ceb108f2cabfe6fbcbf9370fcd863b61a06cb",
       "width": 2880,
       "height": 1800,
       "hasAlpha": false
     },
     {
       "path": "AppStore/Screenshots/1.0.2/en-US/04-completion-sounds.png",
-      "bytes": 3486715,
-      "sha256": "042743fae1b12f9a6b5f7177432b5679f026d597790c92ff5d52073a67c63b29",
+      "bytes": 3946183,
+      "sha256": "2af48e5922c4cc9b4d37e6372785001b5648bb3e9ba868ce4af60681f3d1e6ea",
       "width": 2880,
       "height": 1800,
       "hasAlpha": false
@@ -56,16 +76,16 @@
     },
     {
       "path": "AppStore/Screenshots/1.0.2/zh-Hans/03-month-duration.png",
-      "bytes": 3464150,
-      "sha256": "7e4c75c6218e957bafbd15cd33c5de204f8fdde3caa843281c9a8ad566df18b0",
+      "bytes": 3463657,
+      "sha256": "7d4a24adf79b504100ba8c15c03736bc0b5cd3ef19a892900625e100651517d6",
       "width": 2880,
       "height": 1800,
       "hasAlpha": false
     },
     {
       "path": "AppStore/Screenshots/1.0.2/zh-Hans/04-completion-sounds.png",
-      "bytes": 3485815,
-      "sha256": "0f58df1fcbbff5082056c4b0db4b95f717543e8d1c4fec6b6c849d2011a08980",
+      "bytes": 3943142,
+      "sha256": "e31162f7f5e6c17eda0c62f1cc9ccf9d2b95c9b5bb661d52db5db75f80f2794f",
       "width": 2880,
       "height": 1800,
       "hasAlpha": false

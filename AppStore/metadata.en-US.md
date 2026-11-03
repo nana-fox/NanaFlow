@@ -97,4 +97,5 @@ Local draft for 1.0.2 (5). The existing description already limits shortcuts to 
 ```text
 • Completed English menus, settings, timer labels and accessibility text
 • Fixed untranslated stage-switch commands and duration controls
+• Prevented overlapping date labels at the end of monthly charts
 ```

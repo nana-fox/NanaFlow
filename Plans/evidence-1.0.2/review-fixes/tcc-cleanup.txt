@@ -1,0 +1,1 @@
+Successfully reset ScreenCapture approval status for com.nanafox.NanaFlow.Screenshots

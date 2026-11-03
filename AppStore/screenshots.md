@@ -64,3 +64,23 @@ visual localization until a separate English-locale capture is made.
 | zh-Hans | 4 | 1.0.2（5） | `Screenshots/1.0.2/zh-Hans/04-completion-sounds.png` | 3,485,815 | 2880×1800 / no | 通过 | 未上传 |
 
 文件 SHA-256 与来源记录：`Screenshots/1.0.2/manifest.json`。额外英文“⋯”菜单证据：`../Plans/evidence-1.0.2/A-en-timer-options.png`（只作本地化验收，不列入商店四张序列）。
+
+
+## 1.0.2 独立复核修订 — 2026-11-03
+
+本节为上方 1.0.2 图片登记的当前版本。03 已重拍，31 天月份的末尾只标 31，不再同时标相邻的 30。04 通过独立截图窗口的 key/main 外观与 controlActiveState.key 显示绿色 ON，按真实通知开关位置连续裁切，两个语言均 1520×700 源像素、顶部 12px 留白，不显示分节/页标题；通知、两种声音、音量与说明完整可见。没有拼接或重画控件，生产设置路径不变。
+
+菜单说明更正：本机 macOS 27 SDK 的 NSMenuItem.h 指明 Automatic 图标可见性通常隐藏图像。经协调者 `msg_a66af162a2ad` / `msg_64ec22b960d2` 更正，本版不覆盖该系统策略，01 沿用进程内的正式原生菜单渲染。曾尝试窗口 ID 捕获，但不请求/依赖独立截图身份的 Screen Recording 权限；最终工具无该捕获路径，已仅对 `com.nanafox.NanaFlow.Screenshots` 执行 ScreenCapture 重置并精确注销身份。
+
+来源正式代码 `d706c738379a5570a1d4fdc83556b6aa5631bf55`，截图工具 `eed2e7b55a39b131fa0a7e0631fb2398136ce87a`；版本 1.0.2（5）不变。全套仍为 2880×1800、opaque PNG，计时数字 ink 203px；04 的 ON 开关两种语言各 6969 个强调色像素。下表与 manifest 为当前字节数；早期登记保留历史含义，所有图片均未上传。
+
+| Screenshot | Bytes | Dimensions | Alpha |
+|---|---:|---|---|
+| `AppStore/Screenshots/1.0.2/en-US/01-focus-menu.png` | 2,943,743 | 2880×1800 | no |
+| `AppStore/Screenshots/1.0.2/en-US/02-week-count.png` | 3,437,327 | 2880×1800 | no |
+| `AppStore/Screenshots/1.0.2/en-US/03-month-duration.png` | 3,454,250 | 2880×1800 | no |
+| `AppStore/Screenshots/1.0.2/en-US/04-completion-sounds.png` | 3,946,183 | 2880×1800 | no |
+| `AppStore/Screenshots/1.0.2/zh-Hans/01-focus-menu.png` | 2,934,027 | 2880×1800 | no |
+| `AppStore/Screenshots/1.0.2/zh-Hans/02-week-count.png` | 3,429,106 | 2880×1800 | no |
+| `AppStore/Screenshots/1.0.2/zh-Hans/03-month-duration.png` | 3,463,657 | 2880×1800 | no |
+| `AppStore/Screenshots/1.0.2/zh-Hans/04-completion-sounds.png` | 3,943,142 | 2880×1800 | no |

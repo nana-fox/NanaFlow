@@ -1,0 +1,7 @@
+Successfully reset ScreenCapture approval status for com.nanafox.NanaFlow.Screenshots
+Exact fixture app already unregistered: com.nanafox.NanaFlow.ReleaseTests
+Exact fixture Widget already unregistered: com.nanafox.NanaFlow.ReleaseTests.Widget
+Exact Widget registration query: com.nanafox.NanaFlow.Screenshots.Widget (no matches) exit 0
+Exact Widget registration query: com.nanafox.NanaFlow.ReleaseTests.Widget (no matches) exit 0
+Both disposable identities cleaned; production identity was excluded.
+Exact LaunchServices queries: {"com.nanafox.NanaFlow.ReleaseTests": "", "com.nanafox.NanaFlow.Screenshots": ""}
