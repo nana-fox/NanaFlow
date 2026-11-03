@@ -66,3 +66,26 @@
 状态变化必须写明证据：2026-11-02 已核实 Apple 后台可分发、中美公开页面提供 1.0.1；官方实际下载安装仍单列待验，不能混写。商店文件保留已提交版本的快照；后台字段锁定时保留修正稿，等下一正常可编辑版本，不为整理文案重复提交。
 
 不承诺“永不丢数据”“所有系统稳定发声”“实时同步”或已通过全部系统验收；不以竞品品牌、视觉素材或未提供的功能引流。隐私条款与许可只有事实或所有者决定发生变化时才修改。
+
+## 2026-11-03 · 上架后全面清理与后续计划
+
+商店 1.0.1 已公开（App ID 6814738160，中国区、美区 lookup 均返回 1.0.1，发布时间 2026-11-02T01:35Z）。所有者要求上线后清理全部旧包并改用商店版，本轮已执行：
+
+- 本地未提交的 R1 改动完整提交到 `r1/product-iteration-wip`（6884f64），本地 `main` 快进到 `origin/main`（735e162）。
+- 已发布构建只保留归档（含 dSYM）：`~/Library/Developer/NanaFlow-ReleaseArchives.noindex/NanaFlow-1.0-build3.xcarchive`、`NanaFlow-1.0.1-build4.xcarchive`；`.noindex` 让它们不再出现在 Spotlight。
+- 已删除：仓库与 orca 工作区的 `build/`、外接盘 `NanaFlow-R1*` / `NanaFlow-AppStore-*`、`NanaFlow Release Backups`、`~/Applications/NanaFlow R1 System Review.app`、Xcode DerivedData，以及所有 `R1*` 测试身份的容器、组容器和偏好。前文引用的 `build/...` 证据路径因此已失效，历史报告仅作文字记录。
+- 已保留：正式数据 `com.nanafox.NanaFlow`、`.Widget` 容器和 `group.com.nanafox.NanaFlow`。
+- 已移除开发签名的 `/Applications/NanaFlow.app`，正在改装商店版（`mas install` 需要管理员密码，改为在 App Store 页面安装）。
+
+> 注意：Debug/开发构建与商店版的 bundle ID 相同，会共用同一个沙盒数据。运行单测或 `script/build_and_run.sh` 前先退出商店版，并备份当前数据。
+
+### 后续工作（取代上文“下次只接这些工作”）
+
+| 顺序 | 工作 | 结束条件 |
+| --- | --- | --- |
+| 1 | 商店版实际下载验收 | `/Applications/NanaFlow.app` 为 1.0.1（4），有 `_MASReceipt`，签名为 Apple Mac OS Application Signing；首次启动能看到原有历史与设置；Widget 来自商店包。然后把 AppStore/README 的“官方下载待验”改为已核实。 |
+| 2 | 通知有卡片无声音 | 先排除环境原因：系统设置 → 通知 → NanaFlow 的“播放通知声音”、提醒音量、专注模式。音频格式已确认合规（AIFF lpcm 16-bit，约 1 秒，位于包顶层 Resources）。如果环境正常仍然无声，1.0.2 改为在应用运行时由 App 自己播放完成提示音，通知改为静音，避免同一次完成响两遍；补充单测。 |
+| 3 | 通知动作与 Widget 一次刷新 | 在商店版上实际操作一次，看阶段、运行状态和 Widget 画面是否一致；有问题再开缺陷。 |
+| 4 | 1.0.2 商店文案 | 修正已发布描述中“全局快捷键”的措辞（只写应用内快捷键）。 |
+| 5 | R1 分支取舍 | 对比 `r1/product-iteration-wip` 与 main，只挑仍有价值且不在 1.0.1 里的单项改动，按“测试复现 → 修复”的流程逐个合入 1.0.2；R1 的统计溢出 P2-01 在 main 上已有 `statisticsFiniteDuration` 修复，P2-02 与后台测试问题属于已删除的 R1 工具，均关闭。 |
+| 所有者决定 | 源码许可证 | 未选择前不宣传可复用。 |
