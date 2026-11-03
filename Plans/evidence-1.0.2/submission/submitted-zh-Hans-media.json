@@ -1,0 +1,47 @@
+{
+  "locale": "zh-Hans",
+  "version": "1.0.2",
+  "view": "Mac media manager",
+  "hardReload": true,
+  "verifiedAt": "2026-11-03T13:57:29.816Z",
+  "url": "https://appstoreconnect.apple.com/apps/6814738160/distribution/macos/version/inflight/media-manager",
+  "images": [
+    {
+      "position": 1,
+      "name": "01-focus-menu.png",
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/ccQHcXPAvN0e8Vm3A_5wJA/720x450bb.png",
+      "headline": "专注，节奏尽在眼前",
+      "headlineVisuallyMatchedToSource": true,
+      "sourcePath": "AppStore/Screenshots/1.0.2/zh-Hans/01-focus-menu.png",
+      "thumbnailSHA256": "ab3d9d95488968e1934080b36628deedf77a9d849ebd7483feeaeec3a4170662"
+    },
+    {
+      "position": 2,
+      "name": "02-week-count.png",
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/kY8M8Sh3I8nHiHjBJHutDA/720x450bb.png",
+      "headline": "一周专注，一眼看清",
+      "headlineVisuallyMatchedToSource": true,
+      "sourcePath": "AppStore/Screenshots/1.0.2/zh-Hans/02-week-count.png",
+      "thumbnailSHA256": "e892c88fd2f30df61a18bd974a25a1cfb810aff82518514dff58b76e2ae49679"
+    },
+    {
+      "position": 3,
+      "name": "03-month-duration.png",
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Pubd-EZXBu2mmV3Y8yvJ8w/720x450bb.png",
+      "headline": "让每一段专注都有分量",
+      "headlineVisuallyMatchedToSource": true,
+      "sourcePath": "AppStore/Screenshots/1.0.2/zh-Hans/03-month-duration.png",
+      "thumbnailSHA256": "ba3c2f9b8fe606c4bc775f3c06897b1d2d60ac75d37e36d472942724d3ff6b53"
+    },
+    {
+      "position": 4,
+      "name": "04-completion-sounds.png",
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/qFqsgFK03epHnxQwXtprXg/720x450bb.png",
+      "headline": "专注与休息，各有声音",
+      "headlineVisuallyMatchedToSource": true,
+      "sourcePath": "AppStore/Screenshots/1.0.2/zh-Hans/04-completion-sounds.png",
+      "thumbnailSHA256": "967002a9bf2ecf8f5aa8be219fbbbe871b2a7c19caba34e06abfd79131f2a21c"
+    }
+  ],
+  "readOnly": true
+}

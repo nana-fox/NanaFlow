@@ -1,0 +1,23 @@
+{
+  "appID": "6814738160",
+  "buildID": "fcf3ab94-cc49-482c-9af7-c5935af341f2",
+  "status": "Waiting for Review",
+  "displayStatus": "正在等待审核",
+  "verifiedAt": "2026-11-03T13:50:34.351Z",
+  "url": "https://appstoreconnect.apple.com/apps/6814738160/distribution/macos/version/inflight",
+  "sidebar": "1.0.2 正在等待审核",
+  "version": "1.0.2",
+  "releaseType": "AFTER_APPROVAL",
+  "build": "1.0.2 (5)",
+  "exportCompliancePromptShown": false,
+  "submittedThrough": "Add for Review then Submit for Review",
+  "recheckedAfterReadOnlyMediaVerificationAt": "2026-11-03T14:01:04.245Z",
+  "submittedLocaleMediaVerified": [
+    "zh-Hans",
+    "en-US"
+  ],
+  "readOnlyVerificationNoEdits": true,
+  "reviewSubmissionID": "3a317db5-6522-45ce-abe0-c5a8805f7765",
+  "reviewSubmissionDisplayedTime": "2026-11-03 21:49 UTC+08",
+  "reviewSubmissionStatus": "等待审核"
+}

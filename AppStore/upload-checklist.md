@@ -99,9 +99,14 @@ Build `1.0.0 (2)` is attached to macOS version 1.0 and saved. The signed TestFli
 
 本地准备与截图不代表已上传或发布。以下外部步骤全部保留未勾选，须经所有者确认；此工作分支没有执行它们。
 
-- [ ] 所有者确认候选版和本地验收报告后，使用 Xcode Organizer 上传 1.0.2（5）。
-- [ ] 等待处理完成，在 App Store Connect 的 1.0.2 版本选择构建 5。
-- [ ] 按 `screenshots.md` 的 1.0.2 登记表顺序替换 zh-Hans 和 en-US 各 4 张截图。
-- [ ] 保存两种语言已修正快捷键范围的描述，以及新增的 1.0.2 版本说明。
-- [ ] 保存 `review-notes-1.0.2.txt`，由所有者核对审核联系人、出口合规和发布方式。
-- [ ] 所有者最终确认后提交审核；不自动发布。
+- [x] 所有者确认候选版和本地验收报告后，使用 Xcode Organizer 上传 1.0.2（5）。（2026-11-03 明确授权后以 xcodebuild -exportArchive / destination=upload 完成；20:54:46 Upload succeeded。）
+- [x] 等待处理完成，在 App Store Connect 的 1.0.2 版本选择构建 5。（构建 ID fcf3ab94-cc49-482c-9af7-c5935af341f2；已保存。）
+- [x] 按 `screenshots.md` 的 1.0.2 登记表顺序替换 zh-Hans 和 en-US 各 4 张截图。（重新载入核对：各 4 张、01–04 顺序；英文使用独立素材。）
+- [x] 保存两种语言已修正快捷键范围的描述，以及新增的 1.0.2 版本说明。（重新载入后与源文件逐字一致。）
+- [x] 保存 `review-notes-1.0.2.txt`，由所有者核对审核联系人、出口合规和发布方式。（备注逐字核对；联系人未改；未出现新的出口问题；依所有者指示沿用 1.0.1 的 AFTER_APPROVAL 自动发布。）
+- [x] 所有者最终确认后提交审核；不自动发布。（2026-11-03 已进入 Waiting for Review；旧默认值“不自动发布”由本轮所有者明确要求的“沿用 1.0.1 发布设置”取代，实际为 AFTER_APPROVAL。）
+
+
+### 2026-11-03 执行结果
+
+所有者已明确批准截图、文案、上传及提审，协调者再次复核提交前双语言页面，并授权保留 1.0.1 推广文本与 AFTER_APPROVAL 发布设置。以上 6 项已完成；已提交 1.0.2（5），当前 Waiting for Review；不是已审核通过或已公开发布。提交后独立只读会话强制刷新并分别核对两种语言 Mac 媒体管理，4 张截图标题和顺序均匹配源图；未撤回、未改字段、未重新提交。证据见 `Plans/evidence-1.0.2/submission/` 与 `Plans/worker-report-1.0.2.md` 末尾。

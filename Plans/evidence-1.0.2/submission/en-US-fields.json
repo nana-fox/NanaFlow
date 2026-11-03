@@ -1,0 +1,17 @@
+{
+  "description": "NanaFlow is a native macOS focus timer that keeps timing and statistics in one compact window. A menu-bar countdown keeps the controls close while you work.\n\nStart focusing\n• Use the default 25-minute focus, 5-minute short break, and 30-minute long break cycle\n• Pause, resume, skip, or restart a cycle\n• Optionally start the next focus session or break automatically\n• Get completion sounds and system notifications when a stage ends\n\nStay in your workflow\n• See the remaining time in the menu bar\n• Optionally show today's completed focus count beside the countdown\n• Start, pause, switch stages, or open the main window from the menu bar\n• Use keyboard shortcuts while NanaFlow is active\n\nUnderstand your rhythm\n• Switch between day, week, month, and year statistics in the main window\n• Review 24 hours, 7 days, every day of the selected month, or all 12 months\n• Switch between completed focus count and net focus time; hover over a bar for details\n\nKeep control of your data\n• Session data used for statistics and settings stay on your Mac\n• No cloud sync is required\n• No account required\n\nNanaFlow stays simple: open it, start, focus, and get back to your work.",
+  "whatsNew": "• Completed English menus, settings, timer labels and accessibility text\n• Fixed untranslated stage-switch commands and duration controls\n• Prevented overlapping date labels at the end of monthly charts",
+  "notesMatch": true,
+  "persistedReloadVerified": true,
+  "otherVersionFieldsUnchanged": true,
+  "releaseType": "AFTER_APPROVAL",
+  "screenshots": [
+    "01-focus-menu.png",
+    "02-week-count.png",
+    "03-month-duration.png",
+    "04-completion-sounds.png"
+  ],
+  "promotionalText": "Focus from a compact window or the menu bar. Review sessions and net focus time. Keyboard shortcuts work in NanaFlow. No account; your data stays on your Mac.",
+  "promotionalTextSourceVersion": "1.0.1",
+  "promotionalTextMatchesMetadata": true
+}

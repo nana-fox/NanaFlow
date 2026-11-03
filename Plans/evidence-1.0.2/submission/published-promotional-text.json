@@ -1,0 +1,11 @@
+{
+  "sourceVersion": "1.0.1",
+  "promotionalText": {
+    "zh-Hans": "在紧凑窗口或菜单栏开始专注，用次数和净专注时长回顾节奏。快捷键在 NanaFlow 内使用；无需注册，专注记录保存在本机。",
+    "en-US": "Focus from a compact window or the menu bar. Review sessions and net focus time. Keyboard shortcuts work in NanaFlow. No account; your data stays on your Mac."
+  },
+  "matchesMetadata": {
+    "zh-Hans": true,
+    "en-US": true
+  }
+}

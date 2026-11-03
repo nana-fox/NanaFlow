@@ -1,0 +1,16 @@
+{
+  "description": "NanaFlow 是一款原生 macOS 专注计时器。它把计时和统计放进一个紧凑窗口，也在菜单栏保留随手可用的倒计时与控制。\n\n开始专注\n• 默认 25 分钟专注、5 分钟短休息、30 分钟长休息\n• 可暂停、继续、跳过和重新开始\n• 可选择自动开始下一段专注或休息\n• 通过完成声音与系统通知及时获知阶段结束\n\n无需离开当前工作\n• 在菜单栏查看剩余时间\n• 可选择同时显示今天已完成的专注数量\n• 从菜单栏开始、暂停、切换阶段或打开主窗口\n• 支持应用内键盘快捷键\n\n看清自己的节奏\n• 在主窗口切换日、周、月、年统计\n• 日视图按 24 小时，周视图按 7 天，月视图按实际天数，年视图按 12 个月展示\n• 可切换专注次数与净专注时长，悬停柱形可查看对应数值\n\n数据由你掌握\n• 用于统计的会话数据与设置保存在本机\n• 不依赖云端同步\n• 无需注册账号\n\nNanaFlow 追求简单：打开、开始、专注，然后回到工作。",
+  "whatsNew": "• 补全英文菜单、设置、计时标签与辅助功能文本\n• 修正阶段切换菜单和时长控件中未翻译的文字\n• 修正月统计中月底日期标签重叠的问题",
+  "notesMatch": true,
+  "persistedReloadVerified": true,
+  "releaseType": "AFTER_APPROVAL",
+  "screenshots": [
+    "01-focus-menu.png",
+    "02-week-count.png",
+    "03-month-duration.png",
+    "04-completion-sounds.png"
+  ],
+  "promotionalText": "在紧凑窗口或菜单栏开始专注，用次数和净专注时长回顾节奏。快捷键在 NanaFlow 内使用；无需注册，专注记录保存在本机。",
+  "promotionalTextSourceVersion": "1.0.1",
+  "promotionalTextMatchesMetadata": true
+}

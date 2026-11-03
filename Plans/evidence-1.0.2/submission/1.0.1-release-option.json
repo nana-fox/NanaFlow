@@ -1,0 +1,23 @@
+[
+  {
+    "name": "releaseType",
+    "value": "MANUAL",
+    "checked": false,
+    "disabled": true,
+    "label": "手动发布此版本"
+  },
+  {
+    "name": "releaseType",
+    "value": "AFTER_APPROVAL",
+    "checked": true,
+    "disabled": true,
+    "label": "自动发布此版本"
+  },
+  {
+    "name": "releaseType",
+    "value": "SCHEDULED",
+    "checked": false,
+    "disabled": true,
+    "label": "在 App 审核后自动发布此版本，时间不早于"
+  }
+]

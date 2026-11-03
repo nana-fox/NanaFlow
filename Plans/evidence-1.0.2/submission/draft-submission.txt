@@ -1,0 +1,51 @@
+dialog "草稿提交由欧阳丹于今天 下午9:48开始" [ref=833]
+      document
+        container
+          heading
+            paragraph
+              text "草稿提交"
+            paragraph
+              text "由欧阳丹于今天 下午9:48开始"
+          button "关闭" [ref=834, loc=css:button[aria-label="关闭"]]
+            svg_root
+        text "下方添加的项目将与 macOS 版本 1.0.2 一起审核"
+        container
+          heading
+            text "准备提交项目"
+          list "准备提交项目"
+            list_item "1.0.2"
+              container
+                image "App 图标"
+                container
+                  paragraph
+                    anchor [ref=835, url=https://appstoreconnect.apple.com/apps/6814738160/distribution/macos/version/inflight]
+                      text "macOS App 1.0.2"
+                  paragraph
+                    text "1.0.2 (5)"
+                  paragraph
+              button "删除" [ref=836, loc=css:button[aria-label="删除"]]
+                svg_root
+          container
+            text "最后由欧阳丹于今天 下午9:48更新"
+            button [ref=837]
+              text "提交以供审核"
+  contentinfo
+    unordered_list
+      list_item
+        anchor [ref=823, url=https://appstoreconnect.apple.com/apps]
+          text "App Store Connect"
+    unordered_list
+      list_item
+        text "Copyright © 2026 Apple Inc. 保留所有权利。"
+        text "|"
+      list_item
+        anchor [ref=824, loc=href:/WebObjects/iTunesConnect.woa/wa/termsOfService, url=https://appstoreconnect.apple.com/WebObjects/iTunesConnect.woa/wa/termsOfService]
+          text "服务条款"
+        text "|"
+      list_item
+        anchor [ref=825, loc=href:https://www.apple.com/legal/privacy, url=https://www.apple.com/legal/privacy]
+          text "隐私政策"
+        text "|"
+      list_item
+        anchor [ref=826, loc=href:/contact-us, url=https://appstoreconnect.apple.com/contact-us]
+          text "联系我们"

@@ -1,0 +1,31 @@
+{
+  "readOnly": true,
+  "changedAppleFields": false,
+  "removedFromReview": false,
+  "resubmitted": false,
+  "result": "PASS",
+  "locales": {
+    "zh-Hans": {
+      "count": 4,
+      "order": "01,02,03,04",
+      "headlines": [
+        "专注，节奏尽在眼前",
+        "一周专注，一眼看清",
+        "让每一段专注都有分量",
+        "专注与休息，各有声音"
+      ],
+      "evidence": "Plans/evidence-1.0.2/submission/submitted-zh-Hans-media.json"
+    },
+    "en-US": {
+      "count": 4,
+      "order": "01,02,03,04",
+      "headlines": [
+        "Focus. Keep your rhythm.",
+        "See your week at a glance.",
+        "Make your focus time count.",
+        "A sound for focus. A sound for rest."
+      ],
+      "evidence": "Plans/evidence-1.0.2/submission/submitted-en-US-media.json"
+    }
+  }
+}

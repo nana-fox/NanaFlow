@@ -1,0 +1,221 @@
+[p1 "App Store Connect" | space "NanaFlow submitted screenshots read-only verification"(4): 1 managed, 0 untracked — p1* "App Store Connect"]
+root
+  container "App Store Connect"
+    container
+      heading
+        anchor [ref=270, loc=href:/, url=https://appstoreconnect.apple.com/]
+      container "全球"
+        unordered_list
+          list_item
+            anchor [ref=271, url=https://appstoreconnect.apple.com/apps]
+              text "App"
+          list_item
+            anchor [ref=272, loc=href:/teams/1600bdef-71bf-4104-972c-f3fb6a158c48/xcode-cloud, url=https://appstoreconnect.apple.com/teams/1600bdef-71bf-4104-972c-f3fb6a158c48/xcode-cloud]
+              text "Xcode Cloud"
+          list_item
+            anchor [ref=273, loc=href:/trends, url=https://appstoreconnect.apple.com/trends]
+              text "趋势"
+          list_item
+            anchor [ref=274, loc=href:/itc/payments_and_financial_reports, url=https://appstoreconnect.apple.com/itc/payments_and_financial_reports]
+              text "报告"
+          list_item
+            anchor [ref=275, loc=href:/business, url=https://appstoreconnect.apple.com/business]
+              text "商务"
+          list_item
+            anchor [ref=276, loc=href:/access/users, url=https://appstoreconnect.apple.com/access/users]
+              text "用户和访问"
+      button "丹 欧阳 Nio D Account name menu" [ref=277, loc=role:button[name="丹 欧阳 Nio D Account name menu"]]
+        text "丹 欧阳"
+        text "Nio D"
+        svg_root
+    canvas
+  container
+    button "App 菜单，已选择NanaFlow" [ref=278, loc=role:button[name="App 菜单，已选择NanaFlow"]]
+      container
+        image "NanaFlow"
+        text "NanaFlow"
+      svg_root
+    container "App"
+      unordered_list
+        list_item
+          anchor [ref=279, loc=href:/apps/6814738160/distribution, url=https://appstoreconnect.apple.com/apps/6814738160/distribution]
+            text "分发"
+        list_item
+          anchor [ref=280, loc=href:/apps/6814738160/analytics, url=https://appstoreconnect.apple.com/apps/6814738160/analytics]
+            text "分析"
+        list_item
+          anchor [ref=281, loc=href:/teams/1600bdef-71bf-4104-972c-f3fb6a158c48/apps/6814738160/testflight, url=https://appstoreconnect.apple.com/teams/1600bdef-71bf-4104-972c-f3fb6a158c48/apps/6814738160/testflight]
+            text "TestFlight"
+  container
+    navigation "分发"
+      unordered_list
+        list_item
+          container
+            heading
+              text "macOS App"
+            unordered_list
+              list_item
+                anchor [ref=282, loc=href:/apps/6814738160/distribution/macos/version/inflight, url=https://appstoreconnect.apple.com/apps/6814738160/distribution/macos/version/inflight]
+                  svg_root
+                  text "1.0.2"
+                  text "正在等待审核"
+              list_item
+                anchor [ref=283, loc=href:/apps/6814738160/distribution/macos/version/deliverable, url=https://appstoreconnect.apple.com/apps/6814738160/distribution/macos/version/deliverable]
+                  svg_root
+                  text "1.0.1"
+                  text "可分发"
+          button [ref=284]
+            text "添加平台"
+        list_item
+        list_item
+          heading
+            text "综合"
+          unordered_list
+            list_item
+              anchor [ref=285, loc=href:/apps/6814738160/distribution/info, url=https://appstoreconnect.apple.com/apps/6814738160/distribution/info]
+                text "App 信息"
+            list_item
+              anchor [ref=286, loc=href:/apps/6814738160/distribution/reviewsubmissions, url=https://appstoreconnect.apple.com/apps/6814738160/distribution/reviewsubmissions]
+                text "App 审核"
+            list_item
+              anchor [ref=287, loc=href:/apps/6814738160/distribution/activity/macos/versions, url=https://appstoreconnect.apple.com/apps/6814738160/distribution/activity/macos/versions]
+                text "历史记录"
+        list_item
+        list_item
+          heading
+            text "App Store"
+          container
+            heading
+              text "信任和安全性"
+            unordered_list
+              list_item
+                anchor [ref=288, loc=href:/apps/6814738160/distribution/privacy, url=https://appstoreconnect.apple.com/apps/6814738160/distribution/privacy]
+                  text "App 隐私"
+              list_item
+                anchor [ref=289, loc=href:/apps/6814738160/distribution/accessibility, url=https://appstoreconnect.apple.com/apps/6814738160/distribution/accessibility]
+                  text "App 辅助功能"
+              list_item
+                anchor [ref=290, loc=href:/apps/6814738160/distribution/ratings/macos, url=https://appstoreconnect.apple.com/apps/6814738160/distribution/ratings/macos]
+                  text "评分与评论"
+          container
+            heading
+              text "增长和营销"
+            unordered_list
+              list_item
+                anchor [ref=291, loc=href:/apps/6814738160/distribution/asset-library, url=https://appstoreconnect.apple.com/apps/6814738160/distribution/asset-library]
+                  text "素材库"
+                  paragraph
+                    text "新功能"
+              list_item
+                anchor [ref=292, loc=href:/apps/6814738160/distribution/promo_codes/generate, url=https://appstoreconnect.apple.com/apps/6814738160/distribution/promo_codes/generate]
+                  text "促销代码"
+              list_item
+                anchor [ref=293, loc=href:/apps/6814738160/distribution/gamecenter, url=https://appstoreconnect.apple.com/apps/6814738160/distribution/gamecenter]
+                  text "Game Center"
+          container
+            heading
+              text "营利"
+            unordered_list
+              list_item
+                anchor [ref=294, loc=href:/apps/6814738160/distribution/pricing, url=https://appstoreconnect.apple.com/apps/6814738160/distribution/pricing]
+                  text "价格与销售范围"
+              list_item
+                anchor [ref=295, loc=href:/apps/6814738160/distribution/iaps, url=https://appstoreconnect.apple.com/apps/6814738160/distribution/iaps]
+                  text "App 内购买项目"
+              list_item
+                anchor [ref=296, loc=href:/apps/6814738160/distribution/subscriptions, url=https://appstoreconnect.apple.com/apps/6814738160/distribution/subscriptions]
+                  text "订阅"
+          container
+            heading
+              text "精选"
+            unordered_list
+              list_item
+                anchor [ref=297, loc=href:/apps/6814738160/distribution/nominations, url=https://appstoreconnect.apple.com/apps/6814738160/distribution/nominations]
+                  text "提名"
+    container
+      container
+        heading
+          text "App 审核"
+        paragraph
+          text "所有提交至 App 审核的项目以及你与 Apple 的交流消息显示如下。"
+      container
+        heading
+          text "提交内容"
+        container
+          paragraph
+            text "你可在下方查看过去 180 天内最新 10 项已完成的提交内容。"
+          grid "提交内容" [ref=302, loc=role:grid[name="提交内容"]]
+            row
+              columnheader [ref=303]
+                text "提交日期"
+              columnheader [ref=304]
+                text "版本"
+              columnheader [ref=305]
+                text "提交者"
+              columnheader [ref=306]
+                text "项目"
+              columnheader [ref=307]
+                text "状态"
+              columnheader "操作" [ref=308, loc=role:columnheader[name="操作"]]
+            row "今天 下午9:49" [ref=309, loc=role:row[name="今天 下午9:49"]]
+              rowheader [ref=310]
+                anchor [ref=311, url=https://appstoreconnect.apple.com/apps/6814738160/distribution/reviewsubmissions/details/3a317db5-6522-45ce-abe0-c5a8805f7765]
+                  text "今天 下午9:49"
+              gridcell [ref=312]
+                text "macOS 1.0.2"
+              gridcell [ref=313]
+                text "欧阳丹"
+              gridcell [ref=314]
+                text "1 个项目"
+              gridcell [ref=315]
+                svg_root
+                text "等待审核"
+              gridcell [ref=316]
+            row "星期日上午10:09" [ref=317, loc=role:row[name="星期日上午10:09"]]
+              rowheader [ref=318]
+                anchor [ref=319, url=https://appstoreconnect.apple.com/apps/6814738160/distribution/reviewsubmissions/details/d583cb21-9f73-4090-a922-06a88f1786c9]
+                  text "星期日上午10:09"
+              gridcell [ref=320]
+                text "macOS 1.0.1"
+              gridcell [ref=321]
+                text "欧阳丹"
+              gridcell [ref=322]
+                text "1 个项目"
+              gridcell [ref=323]
+                svg_root
+                text "已完成审核"
+              gridcell [ref=324]
+            row "9月30日下午4:39" [ref=325, loc=role:row[name="9月30日下午4:39"]]
+              rowheader [ref=326]
+                anchor [ref=327, url=https://appstoreconnect.apple.com/apps/6814738160/distribution/reviewsubmissions/details/46555ed9-df7d-43e2-ae4d-5c548bb32dbb]
+                  text "9月30日下午4:39"
+              gridcell [ref=328]
+                text "macOS 1.0"
+              gridcell [ref=329]
+                text "欧阳丹"
+              gridcell [ref=330]
+                text "1 个项目"
+              gridcell [ref=331]
+                svg_root
+                text "已完成审核"
+              gridcell [ref=332]
+  contentinfo
+    unordered_list
+      list_item
+        anchor [ref=298, url=https://appstoreconnect.apple.com/apps]
+          text "App Store Connect"
+    unordered_list
+      list_item
+        text "Copyright © 2026 Apple Inc. 保留所有权利。"
+        text "|"
+      list_item
+        anchor [ref=299, loc=href:/WebObjects/iTunesConnect.woa/wa/termsOfService, url=https://appstoreconnect.apple.com/WebObjects/iTunesConnect.woa/wa/termsOfService]
+          text "服务条款"
+        text "|"
+      list_item
+        anchor [ref=300, loc=href:https://www.apple.com/legal/privacy, url=https://www.apple.com/legal/privacy]
+          text "隐私政策"
+        text "|"
+      list_item
+        anchor [ref=301, loc=href:/contact-us, url=https://appstoreconnect.apple.com/contact-us]
+          text "联系我们"

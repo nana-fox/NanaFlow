@@ -1,0 +1,50 @@
+{
+  "locale": "en-US",
+  "version": "1.0.2",
+  "view": "Mac media manager",
+  "hardReload": true,
+  "localeReselectedAfterHardReload": true,
+  "verifiedAt": "2026-11-03T14:02:34.199Z",
+  "url": "https://appstoreconnect.apple.com/apps/6814738160/distribution/macos/version/inflight/media-manager",
+  "images": [
+    {
+      "position": 1,
+      "name": "01-focus-menu.png",
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Deis0pE0b76w3am5LRnqnQ/720x450bb.png",
+      "headline": "Focus. Keep your rhythm.",
+      "headlineVisuallyMatchedToSource": true,
+      "sourcePath": "AppStore/Screenshots/1.0.2/en-US/01-focus-menu.png",
+      "thumbnailSHA256": "e14a65158772bac6df6cc9a395b606d777f25f0860ace17975c6ee5e9e0a83bb"
+    },
+    {
+      "position": 2,
+      "name": "02-week-count.png",
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/xD3dWt65BYVtgX91ZviKmA/720x450bb.png",
+      "headline": "See your week at a glance.",
+      "headlineVisuallyMatchedToSource": true,
+      "sourcePath": "AppStore/Screenshots/1.0.2/en-US/02-week-count.png",
+      "thumbnailSHA256": "dcc6a47d08097843e866fd18d1ec25b740d5d919243e582cfc26dbeb5a975498"
+    },
+    {
+      "position": 3,
+      "name": "03-month-duration.png",
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/_zsgH3kxvc75xAULOvnaMA/720x450bb.png",
+      "headline": "Make your focus time count.",
+      "headlineVisuallyMatchedToSource": true,
+      "sourcePath": "AppStore/Screenshots/1.0.2/en-US/03-month-duration.png",
+      "thumbnailSHA256": "083c0e846949991fa48f17f3a89521e702e76b79f9354491aac723b8ca8e0c47"
+    },
+    {
+      "position": 4,
+      "name": "04-completion-sounds.png",
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/jrLcY9ap08Vwext21kFXQg/720x450bb.png",
+      "headline": "A sound for focus. A sound for rest.",
+      "headlineVisuallyMatchedToSource": true,
+      "sourcePath": "AppStore/Screenshots/1.0.2/en-US/04-completion-sounds.png",
+      "thumbnailSHA256": "bbf3f3c59437802b7c2ad72f5d873ed31c7504bb0fa9bd52d5b45312b1499218"
+    }
+  ],
+  "readOnly": true,
+  "hardReloadReturnedToVersionPage": true,
+  "mediaManagerReopenedAfterHardReload": true
+}

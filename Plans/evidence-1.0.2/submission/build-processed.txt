@@ -1,0 +1,210 @@
+[p1 "App Store Connect" | space "NanaFlow 1.0.2 App Review submission"(2): 1 managed, 0 untracked — p1* "App Store Connect"]
+root
+  container "App Store Connect"
+    container
+      heading
+        anchor [ref=15, loc=href:/, url=https://appstoreconnect.apple.com/]
+      container "全球"
+        unordered_list
+          list_item
+            anchor [ref=92, url=https://appstoreconnect.apple.com/apps]
+              text "App"
+          list_item
+            anchor [ref=93, loc=href:/teams/1600bdef-71bf-4104-972c-f3fb6a158c48/xcode-cloud, url=https://appstoreconnect.apple.com/teams/1600bdef-71bf-4104-972c-f3fb6a158c48/xcode-cloud]
+              text "Xcode Cloud"
+          list_item
+            anchor [ref=94, loc=href:/trends, url=https://appstoreconnect.apple.com/trends]
+              text "趋势"
+          list_item
+            anchor [ref=95, loc=href:/itc/payments_and_financial_reports, url=https://appstoreconnect.apple.com/itc/payments_and_financial_reports]
+              text "报告"
+          list_item
+            anchor [ref=96, loc=href:/business, url=https://appstoreconnect.apple.com/business]
+              text "商务"
+          list_item
+            anchor [ref=97, loc=href:/access/users, url=https://appstoreconnect.apple.com/access/users]
+              text "用户和访问"
+      button "丹 欧阳 Nio D Account name menu" [ref=22, loc=role:button[name="丹 欧阳 Nio D Account name menu"]]
+        text "丹 欧阳"
+        text "Nio D"
+        svg_root
+    canvas
+  container
+    button "App 菜单，已选择NanaFlow" [ref=23, loc=role:button[name="App 菜单，已选择NanaFlow"]]
+      container
+        image "NanaFlow"
+        text "NanaFlow"
+      svg_root
+    container "App"
+      unordered_list
+        list_item
+          anchor [ref=24, loc=href:/apps/6814738160/distribution, url=https://appstoreconnect.apple.com/apps/6814738160/distribution]
+            text "分发"
+        list_item
+          anchor [ref=25, loc=href:/apps/6814738160/analytics, url=https://appstoreconnect.apple.com/apps/6814738160/analytics]
+            text "分析"
+        list_item
+          anchor [ref=26, loc=href:/teams/1600bdef-71bf-4104-972c-f3fb6a158c48/apps/6814738160/testflight, url=https://appstoreconnect.apple.com/teams/1600bdef-71bf-4104-972c-f3fb6a158c48/apps/6814738160/testflight]
+            text "TestFlight"
+  container
+    navigation "TestFlight"
+      unordered_list
+        list_item
+          heading
+            text "构建版本"
+          unordered_list
+            list_item
+              anchor [ref=98, loc=href:/teams/1600bdef-71bf-4104-972c-f3fb6a158c48/apps/6814738160/testflight/macos, url=https://appstoreconnect.apple.com/teams/1600bdef-71bf-4104-972c-f3fb6a158c48/apps/6814738160/testflight/macos]
+                text "macOS"
+        list_item
+        list_item
+          heading
+            text "反馈"
+          unordered_list
+            list_item
+              anchor [ref=99, loc=href:/teams/1600bdef-71bf-4104-972c-f3fb6a158c48/apps/6814738160/testflight/crashes, url=https://appstoreconnect.apple.com/teams/1600bdef-71bf-4104-972c-f3fb6a158c48/apps/6814738160/testflight/crashes]
+                text "崩溃"
+            list_item
+              anchor [ref=100, url=https://appstoreconnect.apple.com/teams/1600bdef-71bf-4104-972c-f3fb6a158c48/apps/6814738160/testflight/screenshots]
+                text "截屏"
+        list_item
+        list_item
+          heading
+            text "测试员"
+          unordered_list
+            list_item
+              anchor [ref=101, loc=href:/teams/1600bdef-71bf-4104-972c-f3fb6a158c48/apps/6814738160/testflight/testers, url=https://appstoreconnect.apple.com/teams/1600bdef-71bf-4104-972c-f3fb6a158c48/apps/6814738160/testflight/testers]
+                text "全部"
+          container
+            container
+              heading
+                text "内部测试"
+              button "新群组" [ref=102]
+                svg_root
+            unordered_list
+              list_item
+                anchor [ref=103, url=https://appstoreconnect.apple.com/teams/1600bdef-71bf-4104-972c-f3fb6a158c48/apps/6814738160/testflight/groups/e27263c4-76ae-4c66-9012-7555e55ab291]
+                  text "N内"
+                  text "NanaFlow 内部测试"
+                button [ref=104]
+                  svg_root
+                  text "Delete"
+          container
+            container
+              heading
+                text "外部测试"
+              button "新群组" [ref=105]
+                svg_root
+            unordered_list
+        list_item
+        list_item
+          heading
+            text "其他"
+          unordered_list
+            list_item
+              anchor [ref=106, loc=href:/teams/1600bdef-71bf-4104-972c-f3fb6a158c48/apps/6814738160/testflight/test-info, url=https://appstoreconnect.apple.com/teams/1600bdef-71bf-4104-972c-f3fb6a158c48/apps/6814738160/testflight/test-info]
+                text "测试信息"
+            list_item
+              text "关于 TestFlight 数据"
+              button [ref=107]
+                text "?"
+    container
+      container
+        heading
+          text "macOS 构建版本"
+        paragraph
+          text "以下构建版本可供测试。"
+          anchor [ref=108, url=https://developer.apple.com/help/app-store-connect/test-a-beta-version/view-build-status-and-metrics]
+            text "进一步了解构建版本状态和指标"
+      button [ref=109]
+        svg_root
+        heading
+          text "构建版本上传"
+      container
+        container
+          button [ref=110]
+            svg_root
+            heading
+              text "版本 1.0.2"
+          region "版本 1.0.2"
+            grid "构建版本" [ref=111, loc=role:grid[name="构建版本"]]
+              row
+                columnheader [ref=112]
+                  button [ref=113]
+                    text "构建版本"
+                    svg_root
+                columnheader [ref=114]
+                  text "状态"
+                columnheader [ref=115]
+                  text "群组"
+                columnheader [ref=116]
+                  text "邀请"
+                columnheader [ref=117]
+                  text "安装"
+                columnheader [ref=118]
+                  text "APP 使用次数"
+                columnheader [ref=119]
+                  text "崩溃"
+                columnheader [ref=120]
+                  text "反馈"
+              row "构建版本5" [ref=121]
+                rowheader [ref=122]
+                  anchor [ref=123, url=https://appstoreconnect.apple.com/teams/1600bdef-71bf-4104-972c-f3fb6a158c48/apps/6814738160/testflight/macos/fcf3ab94-cc49-482c-9af7-c5935af341f2]
+                    image "App 图标"
+                    container
+                      text "构建版本"
+                      text "5"
+                gridcell [ref=124]
+                  container
+                    svg_root
+                    text "准备提交"
+                  text "90 天后过期"
+                gridcell [ref=125]
+                  container
+                    text "N内"
+                    text "NanaFlow 内部测试"
+                  button "添加群组" [ref=126, loc=css:button[aria-label="添加群组"]]
+                    svg_root
+                gridcell [ref=127]
+                  paragraph
+                    text "1"
+                gridcell [ref=128]
+                  paragraph
+                    text "–"
+                gridcell [ref=129]
+                  paragraph
+                    text "–"
+                gridcell [ref=130]
+                  paragraph
+                    text "–"
+                gridcell [ref=131]
+                  paragraph
+                    text "–"
+        button [ref=132]
+          svg_root
+          heading
+            text "版本 1.0.1"
+        button [ref=133]
+          svg_root
+          heading
+            text "版本 1.0.0"
+  contentinfo
+    unordered_list
+      list_item
+        anchor [ref=134, url=https://appstoreconnect.apple.com/apps]
+          text "App Store Connect"
+    unordered_list
+      list_item
+        text "Copyright © 2026 Apple Inc. 保留所有权利。"
+        text "|"
+      list_item
+        anchor [ref=12, loc=href:/WebObjects/iTunesConnect.woa/wa/termsOfService, url=https://appstoreconnect.apple.com/WebObjects/iTunesConnect.woa/wa/termsOfService]
+          text "服务条款"
+        text "|"
+      list_item
+        anchor [ref=13, loc=href:https://www.apple.com/legal/privacy, url=https://www.apple.com/legal/privacy]
+          text "隐私政策"
+        text "|"
+      list_item
+        anchor [ref=14, loc=href:/contact-us, url=https://appstoreconnect.apple.com/contact-us]
+          text "联系我们"
