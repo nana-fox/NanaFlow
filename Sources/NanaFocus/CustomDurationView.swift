@@ -1,5 +1,18 @@
 import SwiftUI
 
+func customDurationValue(_ value: Int, unit: String, bundle: Bundle = .main) -> String {
+    if unit == "轮" {
+        return String.localizedStringWithFormat(
+            NSLocalizedString("duration_rounds_format", bundle: bundle, comment: "Cycle length in rounds"), value
+        )
+    }
+    return String(
+        format: NSLocalizedString("duration_value_unit_format", bundle: bundle, comment: "Duration and abbreviated unit"),
+        value,
+        NSLocalizedString(unit, bundle: bundle, comment: "Duration unit")
+    )
+}
+
 enum CustomDurationContract {
     static let title = String(localized: "自定义持续时间")
     static let explanation = String(localized: "为您的 NanaFlows 和休息设置自定义持续时间。")
@@ -118,7 +131,7 @@ struct CustomDurationView: View {
                 stepperButton("minus", accessibilityLabel: String(format: String(localized: "减少%@"), String(localized: String.LocalizationValue(title)))) {
                     value.wrappedValue = max(range.lowerBound, value.wrappedValue - step)
                 }
-                Text(String(format: String(localized: "duration_value_unit_format"), value.wrappedValue, String(localized: String.LocalizationValue(unit))))
+                Text(customDurationValue(value.wrappedValue, unit: unit))
                     .font(.system(size: 13, weight: .semibold))
                     .lineLimit(1)
                     .minimumScaleFactor(0.85)

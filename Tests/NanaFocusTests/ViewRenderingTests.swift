@@ -310,7 +310,7 @@ final class ViewRenderingTests: XCTestCase {
 
         XCTAssertTrue(durations.contains("String(localized: \"自定义持续时间\")"))
         XCTAssertTrue(durations.contains("Text(LocalizedStringKey(title))"))
-        XCTAssertTrue(durations.contains("String(localized: \"duration_value_unit_format\")"))
+        XCTAssertTrue(durations.contains("Text(customDurationValue(value.wrappedValue, unit: unit))"))
     }
 
     func testEnglishBackgroundAndSystemStringsShipInTheAppBundle() throws {

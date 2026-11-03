@@ -36,7 +36,7 @@ def source_keys():
     # Explicit non-Chinese localization calls are checked too.
     for path in sorted((ROOT / 'Sources').rglob('*.swift')):
         source = path.read_text()
-        for match in re.finditer(r'(?:String\(localized:\s*|unit:\s*)"([^"\\]*)"', source):
+        for match in re.finditer(r'(?:String\(localized:\s*|NSLocalizedString\(\s*|unit:\s*)"([^"\\]*)"', source):
             key = match[1]
             location = f"{path.relative_to(ROOT)}:{source.count(chr(10), 0, match.start()) + 1}"
             if location not in keys.get(key, []):

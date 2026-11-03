@@ -16,5 +16,19 @@
 			<string>%lld 次</string>
 		</dict>
 	</dict>
+	<key>duration_rounds_format</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@rounds@</string>
+		<key>rounds</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>other</key>
+			<string>%lld轮</string>
+		</dict>
+	</dict>
 </dict>
 </plist>
