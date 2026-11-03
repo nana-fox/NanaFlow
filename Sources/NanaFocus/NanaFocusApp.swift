@@ -135,6 +135,14 @@ final class AppStatusItemService: NSObject {
     }
 
     private func showMenu() {
+        let menu = makeMenu()
+        statusItem.menu = menu
+        statusItem.button?.performClick(nil)
+        statusItem.menu = nil
+    }
+
+    // Shared by the live status item and the isolated screenshot harness.
+    func makeMenu() -> NSMenu {
         let menu = NSMenu()
 
         let status = NSMenuItem(
@@ -174,9 +182,7 @@ final class AppStatusItemService: NSObject {
         menu.addItem(.separator())
         menu.addItem(item("退出 NanaFlow", systemImage: "power", action: #selector(quit)))
 
-        statusItem.menu = menu
-        statusItem.button?.performClick(nil)
-        statusItem.menu = nil
+        return menu
     }
 
     private func item(_ title: String, systemImage: String, action: Selector) -> NSMenuItem {

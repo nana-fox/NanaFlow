@@ -310,7 +310,7 @@ final class ViewRenderingTests: XCTestCase {
 
         XCTAssertTrue(durations.contains("String(localized: \"自定义持续时间\")"))
         XCTAssertTrue(durations.contains("Text(LocalizedStringKey(title))"))
-        XCTAssertTrue(durations.contains("Text(\"\\(value.wrappedValue)\\(unit)\")"))
+        XCTAssertTrue(durations.contains("String(localized: \"duration_value_unit_format\")"))
     }
 
     func testEnglishBackgroundAndSystemStringsShipInTheAppBundle() throws {
@@ -896,9 +896,9 @@ final class ViewRenderingTests: XCTestCase {
             encoding: .utf8
         )
 
-        XCTAssertTrue(source.contains("accessibilityLabel: \"减少\\(title)\""))
-        XCTAssertTrue(source.contains("accessibilityLabel: \"增加\\(title)\""))
-        XCTAssertTrue(source.contains(".accessibilityLabel(Text(LocalizedStringKey(accessibilityLabel)))"))
+        XCTAssertTrue(source.contains("String(localized: \"减少%@\")"))
+        XCTAssertTrue(source.contains("String(localized: \"增加%@\")"))
+        XCTAssertTrue(source.contains(".accessibilityLabel(accessibilityLabel)"))
         XCTAssertTrue(source.contains(".accessibilityLabel(Text(LocalizedStringKey(title)))"))
     }
 

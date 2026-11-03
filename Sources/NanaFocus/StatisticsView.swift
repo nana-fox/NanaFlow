@@ -143,10 +143,22 @@ struct StatisticsView: View {
     @State private var period: StatisticsPeriod = .week
     @State private var anchor = Date()
     @State private var metric: StatisticsMetric = .count
+    private let initialHoveredBucketID: Date?
 
-    init(controller: TimerController, onBack: @escaping () -> Void = {}) {
+    init(
+        controller: TimerController,
+        onBack: @escaping () -> Void = {},
+        initialPeriod: StatisticsPeriod = .week,
+        initialAnchor: Date = Date(),
+        initialMetric: StatisticsMetric = .count,
+        initialHoveredBucketID: Date? = nil
+    ) {
         self.controller = controller
         self.onBack = onBack
+        _period = State(initialValue: initialPeriod)
+        _anchor = State(initialValue: initialAnchor)
+        _metric = State(initialValue: initialMetric)
+        self.initialHoveredBucketID = initialHoveredBucketID
     }
 
     var body: some View {
@@ -205,7 +217,7 @@ struct StatisticsView: View {
             }
             .frame(height: StatisticsVisualMetrics.metricSwitcherHeight)
 
-            StatisticsBars(buckets: statistics.buckets, period: period, metric: metric)
+            StatisticsBars(buckets: statistics.buckets, period: period, metric: metric, initialHoveredBucketID: initialHoveredBucketID)
                 .frame(height: StatisticsVisualMetrics.chartHeight)
                 .accessibilityElement(children: .contain)
                 .accessibilityLabel("统计图表")
@@ -314,6 +326,13 @@ private struct StatisticsBars: View {
     let period: StatisticsPeriod
     let metric: StatisticsMetric
     @State private var hoveredBucketID: Date?
+
+    init(buckets: [StatisticsBucket], period: StatisticsPeriod, metric: StatisticsMetric, initialHoveredBucketID: Date? = nil) {
+        self.buckets = buckets
+        self.period = period
+        self.metric = metric
+        _hoveredBucketID = State(initialValue: initialHoveredBucketID)
+    }
 
     var body: some View {
         GeometryReader { proxy in

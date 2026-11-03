@@ -463,7 +463,7 @@ final class SessionHistoryTests: XCTestCase {
         )
     }
 
-    func testSessionRowDateMatchesFlowNumericFormat() {
+    func testSessionRowDateUsesSelectedLocaleAndCalendarTimeZone() {
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = TimeZone(secondsFromGMT: 8 * 3600)!
         let date = calendar.date(from: DateComponents(
@@ -474,7 +474,15 @@ final class SessionHistoryTests: XCTestCase {
             minute: 32
         ))!
 
-        XCTAssertEqual(sessionRowDateText(date, calendar: calendar), "2026/8/27 22:32")
+        let english = sessionRowDateText(date, calendar: calendar, locale: Locale(identifier: "en_US"))
+        XCTAssertTrue(english.contains("8/27/2026"), english)
+        XCTAssertTrue(english.contains("10:32"), english)
+        XCTAssertTrue(english.contains("PM"), english)
+
+        let chinese = sessionRowDateText(date, calendar: calendar, locale: Locale(identifier: "zh_Hans_CN"))
+        XCTAssertTrue(chinese.contains("2026"), chinese)
+        XCTAssertTrue(chinese.contains("22:32"), chinese)
+        XCTAssertNotEqual(chinese, english)
     }
 
     func testSessionDetailOnlyShowsInterruptionDurationWhenItAddsInformation() {

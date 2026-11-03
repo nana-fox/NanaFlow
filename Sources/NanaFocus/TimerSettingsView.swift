@@ -7,6 +7,7 @@ struct TimerSettingsView: View {
     let controller: TimerController
     let onBack: () -> Void
     let permissionClient: PermissionSystemClient
+    private let initialScrollAnchor: UnitPoint
 
     @State private var launchAtLoginEnabled = SMAppService.mainApp.status == .enabled
     @State private var launchError: String?
@@ -15,11 +16,13 @@ struct TimerSettingsView: View {
     init(
         controller: TimerController,
         onBack: @escaping () -> Void,
-        permissionClient: PermissionSystemClient = .live
+        permissionClient: PermissionSystemClient = .live,
+        initialScrollAnchor: UnitPoint = .top
     ) {
         self.controller = controller
         self.onBack = onBack
         self.permissionClient = permissionClient
+        self.initialScrollAnchor = initialScrollAnchor
     }
 
     var body: some View {
@@ -78,6 +81,7 @@ struct TimerSettingsView: View {
                 .padding(.bottom, SettingsVisualMetrics.bottomPadding)
             }
             .scrollIndicators(.visible)
+            .defaultScrollAnchor(initialScrollAnchor)
             .contentMargins(
                 .trailing,
                 SettingsVisualMetrics.scrollIndicatorTrailingInset,

@@ -93,6 +93,7 @@
 		C361D9FD0744D86A9859B14E /* TimerPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1455337F53D4F6E24B60EB /* TimerPersistence.swift */; };
 		C81A554BE4362CEF3CC901B3 /* TimerSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DF6506CBB537888C1D7C56 /* TimerSettingsView.swift */; };
 		D637BB407D664446C015102D /* TimerPreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E720062209550B26D92A50C0 /* TimerPreferencesTests.swift */; };
+		DB4FC69458DBE3238B786825 /* WindowDragSurface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2903B48774DA3EA17C8DDE11 /* WindowDragSurface.swift */; };
 		DC352877C3E871D4A74BEC8F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7EDE9B11109A8D3F7D6AB100 /* InfoPlist.strings */; };
 		DFAC6A8A9274416D60D903BD /* PermissionParityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D32A52B4B14ABFBFD66E88 /* PermissionParityTests.swift */; };
 		E2D6DCF0B3DAC123A62DE28A /* NanaFlow-ripple.aiff in Resources */ = {isa = PBXBuildFile; fileRef = B82C05DB43C7DB370292857D /* NanaFlow-ripple.aiff */; };
@@ -106,7 +107,6 @@
 		FC6880AE1A379D62527B3A4D /* NanaFlow-bells-v1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = CDB74F9E52839D02A7368DEA /* NanaFlow-bells-v1.aiff */; };
 		FDF2FF13DF65C99176A30A71 /* NanaFlow-chord-v3.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 2B7973B5651C67092EC36C43 /* NanaFlow-chord-v3.aiff */; };
 		FE86D5C01B6B049ABA25A26D /* SessionHistoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2025B0B869051A21F2F47D07 /* SessionHistoryTests.swift */; };
-		F863A1A2ED54900100000001 /* WindowDragSurface.swift in Sources */ = {isa = PBXBuildFile; fileRef = F863A1A2ED54900100000002 /* WindowDragSurface.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -163,6 +163,7 @@
 		2712A37FF3CDCD6DDBECF091 /* PermissionViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionViews.swift; sourceTree = "<group>"; };
 		282EED14E7CC3DD4C6207D74 /* NanaFlow-bell-v2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-bell-v2.aiff"; sourceTree = "<group>"; };
 		28C66332C88D0033535EDC8C /* NanaFlow-milestone-v3.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-milestone-v3.aiff"; sourceTree = "<group>"; };
+		2903B48774DA3EA17C8DDE11 /* WindowDragSurface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDragSurface.swift; sourceTree = "<group>"; };
 		2B7973B5651C67092EC36C43 /* NanaFlow-chord-v3.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-chord-v3.aiff"; sourceTree = "<group>"; };
 		2BF45926A3280FE738C6D7B5 /* AppWindowActivation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWindowActivation.swift; sourceTree = "<group>"; };
 		2F112A46B428396E73191DFB /* TimerOptionsMenuContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerOptionsMenuContent.swift; sourceTree = "<group>"; };
@@ -246,7 +247,6 @@
 		FA6E41CB03539DAC3EEE5F94 /* PhosphorIcons-LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "PhosphorIcons-LICENSE.txt"; sourceTree = "<group>"; };
 		FB001599710A5FBE5A53E195 /* NanaFlow-harp-v2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-harp-v2.aiff"; sourceTree = "<group>"; };
 		FE6B68284E64588712E228C3 /* NanaFlow-bells-v2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-bells-v2.aiff"; sourceTree = "<group>"; };
-		F863A1A2ED54900100000002 /* WindowDragSurface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDragSurface.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -304,8 +304,8 @@
 				49DF6506CBB537888C1D7C56 /* TimerSettingsView.swift */,
 				39232441BB21ABEB7DB1A33C /* TimerTickSound.swift */,
 				E45F191F9B54830CC5B45C6F /* TimerView.swift */,
-				F863A1A2ED54900100000002 /* WindowDragSurface.swift */,
 				91381825E11524504B7CB359 /* WelcomeView.swift */,
+				2903B48774DA3EA17C8DDE11 /* WindowDragSurface.swift */,
 				BE25D749C5AF7CCC0B7A535B /* Localizable.strings */,
 				0D4B0E722EA065DCDE6D8D67 /* Localizable.stringsdict */,
 				7E0C30D1249014BDD1F70589 /* Sounds */,
@@ -506,8 +506,8 @@
 			projectRoot = "";
 			targets = (
 				F5A71727D1AA94E59C942E13 /* NanaFlow */,
-				DA6C4602A34B4348E4F57090 /* NanaFlowTests */,
 				D02A12EA7AF5752EDA81264E /* NanaFlowWidget */,
+				DA6C4602A34B4348E4F57090 /* NanaFlowTests */,
 			);
 		};
 /* End PBXProject section */
@@ -634,8 +634,8 @@
 				C81A554BE4362CEF3CC901B3 /* TimerSettingsView.swift in Sources */,
 				A7D1DBB9E119DCDA071F8BD1 /* TimerTickSound.swift in Sources */,
 				BD485419788422276A06C898 /* TimerView.swift in Sources */,
-				F863A1A2ED54900100000001 /* WindowDragSurface.swift in Sources */,
 				C23EF939C220AD75D257EEB4 /* WelcomeView.swift in Sources */,
+				DB4FC69458DBE3238B786825 /* WindowDragSurface.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -816,7 +816,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -829,7 +829,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -874,7 +874,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -893,7 +893,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
