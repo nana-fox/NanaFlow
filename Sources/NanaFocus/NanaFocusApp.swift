@@ -182,7 +182,7 @@ final class AppStatusItemService: NSObject {
     private func item(_ title: String, systemImage: String, action: Selector) -> NSMenuItem {
         let item = NSMenuItem(title: String(localized: String.LocalizationValue(title)), action: action, keyEquivalent: "")
         item.target = self
-        item.image = NSImage(systemSymbolName: systemImage, accessibilityDescription: title)
+        item.image = NSImage(systemSymbolName: systemImage, accessibilityDescription: item.title)
         return item
     }
 

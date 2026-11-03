@@ -80,3 +80,8 @@
 "statistics_previous_period" = "上一时段";
 "statistics_next_period" = "下一时段";
 "selected" = "已选择";
+
+/* Localized variable labels and units. */
+"减少%@" = "减少%@";
+"增加%@" = "增加%@";
+"duration_value_unit_format" = "%1$lld%2$@";

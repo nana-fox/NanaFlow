@@ -115,14 +115,14 @@ struct CustomDurationView: View {
             Text(LocalizedStringKey(title))
             Spacer()
             HStack(spacing: 0) {
-                stepperButton("minus", accessibilityLabel: "减少\(title)") {
+                stepperButton("minus", accessibilityLabel: String(format: String(localized: "减少%@"), String(localized: String.LocalizationValue(title)))) {
                     value.wrappedValue = max(range.lowerBound, value.wrappedValue - step)
                 }
-                Text("\(value.wrappedValue)\(unit)")
+                Text(String(format: String(localized: "duration_value_unit_format"), value.wrappedValue, String(localized: String.LocalizationValue(unit))))
                     .font(.system(size: 13, weight: .semibold))
                     .monospacedDigit()
                     .frame(width: 62)
-                stepperButton("plus", accessibilityLabel: "增加\(title)") {
+                stepperButton("plus", accessibilityLabel: String(format: String(localized: "增加%@"), String(localized: String.LocalizationValue(title)))) {
                     value.wrappedValue = min(range.upperBound, value.wrappedValue + step)
                 }
             }
@@ -145,7 +145,7 @@ struct CustomDurationView: View {
                 .background(Color.primary.opacity(0.055), in: RoundedRectangle(cornerRadius: 7))
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(Text(LocalizedStringKey(accessibilityLabel)))
+        .accessibilityLabel(accessibilityLabel)
     }
 
     private func planToggleRow(

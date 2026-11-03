@@ -112,7 +112,7 @@ struct NanaFlowStatisticsWidgetContent: View {
                 .font(.system(size: 10, weight: .medium))
             Text("\(value)")
                 .font(.system(size: 31, weight: .regular, design: .rounded))
-            Text(unit)
+            Text(LocalizedStringKey(unit))
                 .font(.system(size: 9, weight: .regular))
         }
         .foregroundStyle(WidgetVisualMetrics.foregroundColor)

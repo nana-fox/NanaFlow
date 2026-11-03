@@ -379,3 +379,37 @@
 "statistics_previous_period" = "Previous period";
 "statistics_next_period" = "Next period";
 "selected" = "Selected";
+
+/* 1.0.2: all compact UI and runtime-selected menu keys. */
+"专注" = "Focus";
+"专注、休息、继续。" = "Focus. Rest. Repeat.";
+"专注时播放滴答声" = "Play ticking sound during focus";
+"今天" = "Today";
+"减少%@" = "Decrease %@";
+"增加%@" = "Increase %@";
+"完整备份" = "Full Backup";
+"导入备份…" = "Import Backup…";
+"开始休息" = "Start Break";
+"循环" = "Cycle";
+"打开 NanaFlow 应用。" = "Open the NanaFlow app.";
+"提醒" = "Alerts";
+"无法处理数据" = "Unable to Process Data";
+"显示统计" = "Show Statistics";
+"显示计时器" = "Show Timer";
+"登录时启动" = "Launch at Login";
+"短休息" = "Short Break";
+"自动开始" = "Auto-Start";
+"计时开始后隐藏窗口" = "Hide window when timer starts";
+"计时设置" = "Timer Settings";
+"计时设置…" = "Timer Settings…";
+"设置…" = "Settings…";
+"跳到专注" = "Skip to Focus";
+"跳到休息" = "Skip to Break";
+"轮" = "Rounds";
+"返回专注" = "Return to Focus";
+"返回计时器" = "Back to Timer";
+"退出 NanaFlow" = "Quit NanaFlow";
+"重新开始" = "Restart Cycle";
+"长休息" = "Long Break";
+"隐藏计时器" = "Hide Timer";
+"duration_value_unit_format" = "%1$lld %2$@";
