@@ -15,7 +15,7 @@ An unchecked gate is not evidence of completion. Record links or build identifie
 - [x] Single App Review submission accepted on 2026-11-01; approved and automatically released on 2026-11-02.
 - [x] Release after approval is automatic; immediate rollout and existing ratings retained.
 - [x] Apple backend shows exact 1.0.1 (4) ready for distribution; public CN and US Lookup both return 1.0.1, released 2026-11-02T01:35:25Z.
-- [ ] Confirm a real official-store download provides the new version; a visible listing alone does not pass this check.
+- [x] Confirm a real official-store download provides the new version; a visible listing alone does not pass this check. Verified 2026-11-03: installed 1.0.1 (4) has `_MASReceipt`, `Apple Mac OS Application Signing` and its embedded Widget is the only registered copy.
 - [ ] Apply the prepared localized shortcut-description correction in the next normally editable listing version; published 1.0.1 fields are disabled. No duplicate update is created for this housekeeping task.
 
 Runtime acceptance used the exact development-signed Release archive, not a downloaded TestFlight/App Store variant. TestFlight channel installation and a full historical UUID-set audit were not performed. Notification actions, Widget pixel refresh and real sound audibility are deferred; no completion claim is made for them.

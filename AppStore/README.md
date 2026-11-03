@@ -6,7 +6,7 @@ This directory contains the localized store copy and release records. It disting
 
 - **Published:** version 1.0.1 is visible on both the Chinese and U.S. [Mac App Store](https://apps.apple.com/app/nanaflow/id6814738160) listings, with release date November 2, 2026. The exact build 1.0.1 (4) is ready for distribution in App Store Connect.
 - **Submission:** the existing update was submitted once on November 1 and released automatically after approval; no duplicate version, upload or submission was created.
-- **Remaining channel check:** actual acquisition of the official Store-downloaded 1.0.1 (4) is still unverified. Listing visibility and the local Release-archive test are separate evidence.
+- **Official download:** verified 2026-11-03. The Store-downloaded 1.0.1 (4) carries `_MASReceipt`, is signed by `Apple Mac OS Application Signing`, and its Widget is the only registered copy.
 - **Source:** the 1.0.1 application changes are commit `2e637935106101ea4719722fbfa702e1783734ca`.
 
 This is a published update, not a new upload task. Copy housekeeping does not require a new binary or another submission. [Maintenance and next work](../Plans/project-maintenance.md) records the channel boundaries and deferred checks.
