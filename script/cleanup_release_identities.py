@@ -30,6 +30,16 @@ def main():
         ROOT / 'build/release-1.0.2/isolated-tests/DerivedData/Build/Products/Debug/NanaFlow.app',
     ]
     registered_apps = registrations()
+    screenshot = apps[0]
+    if screenshot.exists():
+        info = plistlib.loads((screenshot / 'Contents/Info.plist').read_bytes())
+        assert info['CFBundleIdentifier'] == IDENTITIES[0]
+        # tccutil needs LaunchServices to resolve this exact disposable bundle.
+        # Reset first, then unregister it below; never use a global TCC reset.
+        if not registered_apps.get(IDENTITIES[0]):
+            subprocess.run([LSREGISTER, '-f', str(screenshot)], check=True)
+            registered_apps[IDENTITIES[0]] = str(screenshot)
+        subprocess.run(['tccutil', 'reset', 'ScreenCapture', IDENTITIES[0]], check=True)
     for app, identity in zip(apps, IDENTITIES):
         if any(str(app / 'Contents/MacOS') in row for row in processes.splitlines()):
             raise SystemExit(f'Disposable host still running; no cleanup attempted: {app}')
@@ -81,9 +91,6 @@ def main():
     remaining = registrations()
     print('Exact LaunchServices queries:', json.dumps(remaining, sort_keys=True))
     assert all(not path for path in remaining.values()), remaining
-    # Only the disposable screenshot identity: never reset the owner's app or
-    # any global privacy database. Window-list capture is not used by the fixture.
-    subprocess.run(['tccutil', 'reset', 'ScreenCapture', 'com.nanafox.NanaFlow.Screenshots'], check=True)
 
 
 if __name__ == '__main__':
