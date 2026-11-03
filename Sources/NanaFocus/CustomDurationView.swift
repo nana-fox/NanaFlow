@@ -32,9 +32,9 @@ struct CustomDurationView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     sectionLabel("时长")
                     VStack(spacing: 0) {
-                        durationRow("专注", value: $focusMinutes, range: 5 ... 90, step: 5, unit: "分钟")
-                        durationRow("短休息", value: $shortBreakMinutes, range: 1 ... 30, step: 1, unit: "分钟")
-                        durationRow("长休息", value: $longBreakMinutes, range: 5 ... 60, step: 5, unit: "分钟")
+                        durationRow("专注", value: $focusMinutes, range: 5 ... 90, step: 5, unit: "duration_minutes_unit")
+                        durationRow("短休息", value: $shortBreakMinutes, range: 1 ... 30, step: 1, unit: "duration_minutes_unit")
+                        durationRow("长休息", value: $longBreakMinutes, range: 5 ... 60, step: 5, unit: "duration_minutes_unit")
                         durationRow("循环", value: $cycles, range: 1 ... 8, step: 1, unit: "轮")
                     }
                     .background(
@@ -120,6 +120,8 @@ struct CustomDurationView: View {
                 }
                 Text(String(format: String(localized: "duration_value_unit_format"), value.wrappedValue, String(localized: String.LocalizationValue(unit))))
                     .font(.system(size: 13, weight: .semibold))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
                     .monospacedDigit()
                     .frame(width: 62)
                 stepperButton("plus", accessibilityLabel: String(format: String(localized: "增加%@"), String(localized: String.LocalizationValue(title)))) {

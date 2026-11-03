@@ -103,6 +103,7 @@
 		E8187476F51E44FA9DA54FE5 /* NanaFlowShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0789DA272FB909EF43E3B8E1 /* NanaFlowShared.swift */; };
 		EF5249D52A0C881C9355D677 /* NanaFlow-bell.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 3867D7D196EA6A6767A0674B /* NanaFlow-bell.aiff */; };
 		F3C80245F7788C34D1789037 /* CustomDurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134F77F20C4FF4A6C969ED94 /* CustomDurationView.swift */; };
+		F45465C5CE195714DD50EF85 /* LocalizationAuditTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B60C03878608E08B4E576B5 /* LocalizationAuditTests.swift */; };
 		F4DA45CB61AB10E4CBB48AD0 /* NanaFlowWelcomeBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A842B23E902FBFE9253B97A /* NanaFlowWelcomeBackground.png */; };
 		FC6880AE1A379D62527B3A4D /* NanaFlow-bells-v1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = CDB74F9E52839D02A7368DEA /* NanaFlow-bells-v1.aiff */; };
 		FDF2FF13DF65C99176A30A71 /* NanaFlow-chord-v3.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 2B7973B5651C67092EC36C43 /* NanaFlow-chord-v3.aiff */; };
@@ -198,6 +199,7 @@
 		68C2C56D932C8112899304EB /* NanaFlow-bowl-v3.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-bowl-v3.aiff"; sourceTree = "<group>"; };
 		6A42BE66F2687975BFB42D4F /* NanaFlow-pulse-v2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-pulse-v2.aiff"; sourceTree = "<group>"; };
 		6ABBC5A63BEEF2E43D635C58 /* NanaFlow-whistle.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-whistle.aiff"; sourceTree = "<group>"; };
+		6B60C03878608E08B4E576B5 /* LocalizationAuditTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationAuditTests.swift; sourceTree = "<group>"; };
 		6DE692CC9131BEA759CE6A35 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		71ADE1FC63A2598B8DCB8940 /* NanaFlow-chord.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "NanaFlow-chord.aiff"; sourceTree = "<group>"; };
 		7703C7DE827A3873AAACB2F9 /* GlobalHotkeyMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalHotkeyMonitor.swift; sourceTree = "<group>"; };
@@ -381,6 +383,7 @@
 			children = (
 				13E3B82B6B7445DE574F4DF3 /* AutomationParityTests.swift */,
 				7E9017CF768696A56F50CBC5 /* GlobalHotkeyTests.swift */,
+				6B60C03878608E08B4E576B5 /* LocalizationAuditTests.swift */,
 				F79B2A3145FB4F2057056AA8 /* MenuBarAndJumpTests.swift */,
 				1E32D3EEC01BB0592261A56F /* NotificationCopyTests.swift */,
 				D4D32A52B4B14ABFBFD66E88 /* PermissionParityTests.swift */,
@@ -591,6 +594,7 @@
 			files = (
 				9734A1620F62BAE3183E83C2 /* AutomationParityTests.swift in Sources */,
 				500F7F332710D18ABA69D101 /* GlobalHotkeyTests.swift in Sources */,
+				F45465C5CE195714DD50EF85 /* LocalizationAuditTests.swift in Sources */,
 				296BDE0ABC44F61AC7C4F6AC /* MenuBarAndJumpTests.swift in Sources */,
 				2DA1B817F7745226178C38E0 /* NotificationCopyTests.swift in Sources */,
 				DFAC6A8A9274416D60D903BD /* PermissionParityTests.swift in Sources */,

@@ -85,3 +85,4 @@
 "减少%@" = "减少%@";
 "增加%@" = "增加%@";
 "duration_value_unit_format" = "%1$lld%2$@";
+"duration_minutes_unit" = "分钟";

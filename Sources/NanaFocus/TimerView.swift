@@ -11,12 +11,16 @@ struct TimerView: View {
     @State private var menuIsHovered = false
     @State private var nativeTitlebarInset: CGFloat = 0
     let controller: TimerController
+    // Offscreen rendering excludes only invisible AppKit event/configuration surfaces.
+    private let rendersPlatformSurfaces: Bool
 
     init(
         controller: TimerController,
-        initiallyShowsToolbar: Bool = false
+        initiallyShowsToolbar: Bool = false,
+        rendersPlatformSurfaces: Bool = true
     ) {
         self.controller = controller
+        self.rendersPlatformSurfaces = rendersPlatformSurfaces
         _ = initiallyShowsToolbar
     }
 
@@ -53,12 +57,18 @@ struct TimerView: View {
         // outline; a separate SwiftUI clip leaves transparent crescents inside it.
         .frame(width: 380, height: TimerVisualMetrics.windowContentHeight - nativeTitlebarInset, alignment: .top)
         .overlay(alignment: .top) {
-            WindowDragSurface(regions: windowDragRegions)
-                .frame(width: 380, height: TimerVisualMetrics.windowFrameHeight)
-                .accessibilityHidden(true)
+            if rendersPlatformSurfaces {
+                WindowDragSurface(regions: windowDragRegions)
+                    .frame(width: 380, height: TimerVisualMetrics.windowFrameHeight)
+                    .accessibilityHidden(true)
+            }
         }
         .ignoresSafeArea()
-        .background(MainWindowConfigurator { nativeTitlebarInset = $0 })
+        .background {
+            if rendersPlatformSurfaces {
+                MainWindowConfigurator { nativeTitlebarInset = $0 }
+            }
+        }
         .onAppear {
             NSApplication.shared.activate()
             configureInitialWindows()
@@ -272,24 +282,26 @@ struct TimerView: View {
                 TimerMenuIcon(foregroundColor: toolbarForegroundColor)
                     .allowsHitTesting(false)
 
-                Menu {
-                    TimerOptionsMenuContent(
-                        controller: controller,
-                        onTimerSettings: { page = .durations },
-                        onStatistics: { page = .statistics },
-                        onSettings: { page = .settings },
-                        onAbout: { page = .about }
-                    )
-                } label: {
-                    Color.clear
-                        .frame(width: 28, height: 28)
-                        .contentShape(Rectangle())
+                if rendersPlatformSurfaces {
+                    Menu {
+                        TimerOptionsMenuContent(
+                            controller: controller,
+                            onTimerSettings: { page = .durations },
+                            onStatistics: { page = .statistics },
+                            onSettings: { page = .settings },
+                            onAbout: { page = .about }
+                        )
+                    } label: {
+                        Color.clear
+                            .frame(width: 28, height: 28)
+                            .contentShape(Rectangle())
+                    }
+                    .menuStyle(.borderlessButton)
+                    .menuIndicator(.hidden)
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("菜单")
+                    .help("菜单")
                 }
-                .menuStyle(.borderlessButton)
-                .menuIndicator(.hidden)
-                .buttonStyle(.plain)
-                .accessibilityLabel("菜单")
-                .help("菜单")
             }
             .frame(
                 width: TimerVisualMetrics.toolbarControlDiameter,

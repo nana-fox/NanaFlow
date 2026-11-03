@@ -413,3 +413,4 @@
 "长休息" = "Long Break";
 "隐藏计时器" = "Hide Timer";
 "duration_value_unit_format" = "%1$lld %2$@";
+"duration_minutes_unit" = "min";

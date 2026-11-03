@@ -121,3 +121,10 @@ NanaFlow 1.0.1（4）已通过审核并于 2026-11-02 自动发布，Apple 后�
 ## 许可
 
 本仓库尚未选择开源许可证。在许可证明确前，代码的复制、修改和分发权限不作额外授权。
+
+
+## 1.0.2 release verification
+
+Run `script/test.sh` to check every source localization key and run the complete XCTest suite with the disposable `com.nanafox.NanaFlow.ReleaseTests` host and `group.com.nanafox.NanaFlow.ReleaseTests` suite. The copied host does not start the production app delegate or shared timer. The localization audit is also an XCTest, so it runs with the normal test scheme. Do not launch tests hosted in the production bundle ID while an owner's app or data must remain untouched.
+
+`python3 script/render_release_screenshots.py` renders the shipping views and native menus with fictional in-memory data under `com.nanafox.NanaFlow.Screenshots`; it writes the bilingual 1.0.2 asset sets. After both disposable processes exit, run `python3 script/cleanup_release_identities.py` to unregister and remove only their exact identities. See `Plans/release-1.0.2.md` for the release contract and evidence.

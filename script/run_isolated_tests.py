@@ -19,7 +19,7 @@ IDENTITY = 'com.nanafox.NanaFlow.ReleaseTests'
 
 def prepare(work=WORK, identity=IDENTITY):
     work.mkdir(parents=True, exist_ok=True)
-    for name in ('Sources', 'Tests', 'NanaFlow.xcodeproj'):
+    for name in ('Sources', 'Tests', 'NanaFlow.xcodeproj', 'script'):
         shutil.copytree(ROOT / name, work / name, dirs_exist_ok=True)
     main = work / 'Sources/NanaFocus/NanaFocusApp.swift'
     main.write_text(main.read_text().replace('@main\n', ''))
